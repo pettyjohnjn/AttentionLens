@@ -16,6 +16,7 @@ input_text = "The cat sat on the mat and"
 input_ids = tokenizer.encode(input_text, return_tensors='pt').to(device)
 
 inject_tensor = torch.load('toxic_memory_injection.pt').to(device)
+
 #inject_tensor = None
 inject_layer = 10
 inject_head = 4
