@@ -20,7 +20,7 @@ def get_args() -> argparse.Namespace:
         "--model_name",
         default="gpt2",
         type=str,
-        choices=["gpt2"],
+        choices=["gpt2", "/grand/SuperBERT/aswathy/models/models--meta-llama--Meta-Llama-3-8B-Instruct"],
     )
     parser.add_argument(
         "--mixed_precision",

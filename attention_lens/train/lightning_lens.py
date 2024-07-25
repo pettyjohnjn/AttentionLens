@@ -21,7 +21,7 @@ class LightningLens(pl.LightningModule):
     ):
         super().__init__(**kwargs)
         self.model_name = model_name
-        self.model, self.tokenizer = get_model(
+        self.model, self.tokenizer, self.config = get_model(
             model_name=self.model_name, device=self.device
         )
         if isinstance(lens_cls, str):
@@ -33,22 +33,24 @@ class LightningLens(pl.LightningModule):
                 f"{list(Lens.registry.keys())}"
             )
 
-        if self.model.lm_head.bias == None:
-            #self.bias = torch.zeros(self.model.config.vocab_size).to(self.device)
-            self.bias = torch.load('b_U.pt').to(self.device)
+        #self.bias = torch.zeros(self.model.config.vocab_size).to(self.device)
+        self.bias = torch.zeros(self.config.vocab_size).to(self.device)
+        #self.bias = torch.load('b_U.pt').to(self.device)
         
-        self.weights = torch.load('W_U.pt').to(self.device)
+        #self.weights = torch.load('W_U.pt').to(self.device)
         #self.weights = self.model.lm_head.weight.T
-        
+        self.weights = self.model.lm_head.weight
+
+
         self.layer_num = layer_num
         self.lr = lr
 
         self.attn_lens = lens_cls(
             unembed= self.weights,
             bias= self.bias,
-            n_head=self.model.config.num_attention_heads,
-            d_model=self.model.config.hidden_size,
-            d_vocab=self.model.config.vocab_size,
+            n_head=self.config.num_attention_heads,
+            d_model=self.config.hidden_size,
+            d_vocab=self.config.vocab_size,
         )
 
     def kl_loss(self, logits, lens_logits) -> torch.Tensor:
@@ -94,7 +96,7 @@ class LightningLens(pl.LightningModule):
         #       additional setup in this setting, but `__init__` is only called on the master CPU. So, `self.model`
         #       and `self.hooked_model` are separate desppite being initialized identically. We need to confirm if
         #       they must be named differently for Lightning to work.
-        self.model, self.tokenizer = get_model(
+        self.model, self.tokenizer, self.config = get_model(
             model_name=self.model_name,
             device=self.trainer.strategy.root_device,
         )
@@ -145,7 +147,8 @@ class LightningLens(pl.LightningModule):
 
         with torch.no_grad():
             outputs = self.model(**inputs)
-            cache = self.model.transformer.h[self.layer_num].attn.head_out
+            #cache = self.model.transformer.h[self.layer_num].attn.head_out
+            cache = self.model.model.layers[self.layer_num].self_attn.head_out
             logits = outputs.logits
 
         lens_logits = self.forward(cache)
