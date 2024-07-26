@@ -1,7 +1,7 @@
 import torch.types
 
 from typing import Union
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, AutoConfig
 
 
 def get_model(
@@ -19,12 +19,14 @@ def get_model(
     Returns:
         The light-weight hooked model and tokenizer.
     """
-    model = AutoModelForCausalLM.from_pretrained(model_name)
-    model.to(device)
     
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     tokenizer.pad_token = tokenizer.eos_token
 
+    config = AutoConfig.from_pretained(model_name)
+
+    model = AutoModelForCausalLM.from_pretrained(model_name, config = config)
+    model.to(device)
 
     print("Model initialized on device: ", device)
     return model, tokenizer
