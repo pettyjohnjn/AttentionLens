@@ -14,7 +14,7 @@ def get_args() -> argparse.Namespace:
         type=int,
         help="maximum number of ckpts to save",
     )
-    parser.add_argument("--batch_size", default=4, type=int)
+    parser.add_argument("--batch_size", default=1, type=int)
     parser.add_argument("--num_nodes", default=1, type=int)
     parser.add_argument(
         "--model_name",

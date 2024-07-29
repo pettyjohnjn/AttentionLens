@@ -23,10 +23,9 @@ def get_model(
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     tokenizer.pad_token = tokenizer.eos_token
 
-    config = AutoConfig.from_pretained(model_name)
+    config = AutoConfig.from_pretrained(model_name)
 
-    model = AutoModelForCausalLM.from_pretrained(model_name, config = config)
-    model.to(device)
+    model = AutoModelForCausalLM.from_pretrained(model_name, config = config, device_map = "auto", load_in_4bit=True)
 
     print("Model initialized on device: ", device)
-    return model, tokenizer
+    return model, tokenizer, config
