@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 #PBS -l select=1
 #PBS -l walltime=00:10:00
 #PBS -q debug
@@ -28,14 +28,40 @@ PRELOAD+="source ~/.bashrc ; "
 # time python process to ensure timely job exit
 TIMER="timeout 718m "
 
-# torchrun launch configuration
-LAUNCHER="python -m torch.distributed.run "
-LAUNCHER+="--nnodes=$NNODES --nproc_per_node=auto --max_restarts 0 " 
-if [[ "$NNODES" -eq 1 ]]; then
-    LAUNCHER+="--standalone "
-else
-    LAUNCHER+="--master_port=1222 --master_addr=$MASTER_RANK "
-fi
+# Generate accelerate config
+echo "Generating accelerate config..."
+cat <<EOL > accelerate_config.yaml
+compute_environment: LOCAL_MACHINE
+debug: false
+distributed_type: MULTI_GPU
+downcast_bf16: 'YES'
+enable_cpu_affinity: false
+gpu_ids: all
+machine_rank: 0
+main_process_ip: ${MASTER_RANK}
+main_process_port: 1222
+main_training_function: main
+mixed_precision: bf16
+num_machines: ${NNODES}
+num_processes: 4
+rdzv_backend: static
+same_network: true
+tpu_env: []
+tpu_use_cluster: false
+tpu_use_sudo: false
+use_cpu: false
+EOL
+
+CMD="accelerate config update --config_file accelerate_config.yaml"
+
+
+RANK=0
+for NODE in $RANKS; do
+    if [[ "$NODE" == "$MASTER_RANK" ]]; then
+        sed -i "s/machine_rank: 0/machine_rank: $RANK/" accelerate_config.yaml
+    fi
+    RANK=$((RANK+1))
+done
 
 # Training script and parameters
 echo "ckpt dir: "$ckpt
@@ -46,7 +72,7 @@ CMD="../train.py --num_nodes $NNODES --model_name $model_name --checkpoint_dir $
 RANK=0
 for NODE in $RANKS; do
     NODERANK=" --node_rank=$RANK "
-    FULL_CMD=" $PRELOAD $LAUNCHER $NODERANK $CMD $@ "
+    FULL_CMD=" $PRELOAD accelerate launch --config_file accelerate_config.yaml $CMD $@ "
     echo "Training Command: $FULL_CMD"
 
     if [[ "$NODE" == "$HOSTNAME" ]]; then

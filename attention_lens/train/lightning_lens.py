@@ -51,8 +51,8 @@ class LightningLens(pl.LightningModule):
             print(f"- GPU {i} - Reserved: {reserved:.2f} MB, Allocated: {allocated:.2f} MB")
 
         self.attn_lens = lens_cls(
-            unembed= self.weights.cpu(),
-            bias= self.bias.cpu(),
+            unembed= self.weights,
+            bias= self.bias,
             n_head=self.config.num_attention_heads,
             d_model=self.config.hidden_size,
             d_vocab=self.config.vocab_size,
