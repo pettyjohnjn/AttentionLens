@@ -1,12 +1,14 @@
 import sys
 sys.path.append("..")
 
-from attention_lens.model.get_model import get_model
+#from attention_lens.model.get_model import get_model
 from attention_lens.lens import Lens
 import torch
 import glob
 import os
 import argparse
+
+from transformers import AutoModelForCausalLM, AutoTokenizer, AutoConfig
 
 # Print the current working directory
 current_directory = os.getcwd()
@@ -17,14 +19,16 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument(
     "--ckpt_dir",
-    default="/home/pettyjohnjn/AttentionLens/checkpoint3/gpt2/ckpt_7/",
+    #default="/home/pettyjohnjn/AttentionLens/checkpoint3/gpt2/ckpt_7/",
+    default="/lus/grand/projects/SuperBERT/pettyjohnjn/AttentionLens_restored/gpt2/ckpt_11/",
     type=str,
     help="path to dir containing all latest ckpts for a lens",
 )
 
 parser.add_argument(
     "--save_dir",
-    default="/home/pettyjohnjn/AttentionLens/extracted_lens3/layer_7",
+    #default="/home/pettyjohnjn/AttentionLens/extracted_lens3/layer_7",
+    default = "/lus/grand/projects/SuperBERT/pettyjohnjn/Extracted_lens/gpt2/layer_11/",
     type=str,
     help="path to dir where script should save all extracted lenses",
 )
@@ -34,10 +38,15 @@ args = parser.parse_args()
 # Single Device
 device = "cpu"
 
-# Initialize lens
-model, _ = get_model(device=device)
+# Initialize model
 
-bias = torch.load('../attention_lens/b_U.pt').to(device)
+model_name = "gpt2"
+
+config = AutoConfig.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name, config= config)
+
+#bias = torch.load('../attention_lens/b_U.pt').to(device)
+bias = tensor = torch.zeros(50257).to(device)
 
 lens_cls = "lensa"
 lens_cls = Lens.get_lens(lens_cls)
@@ -55,7 +64,8 @@ def change_dict_key(d, old_key, new_key, default_value=None):
 
 def extract_and_save_lense_from_ckpt(ckpt_filepath, save_filepath):
     print(f"Loading checkpoint from {ckpt_filepath}")
-    attn_lens_cls = torch.load(ckpt_filepath, map_location="cpu")
+    attn_lens_cls = torch.load(ckpt_filepath, map_location="cpu", weights_only = True)
+    print("test")
     a = attn_lens_cls["state_dict"]
     for key in list(a.keys()):
         if not key.startswith("attn_lens"):
