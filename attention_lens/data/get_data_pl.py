@@ -1,24 +1,19 @@
 import lightning.pytorch as pl
-import transformers
-
 from datasets import load_dataset
 from torch.utils.data import DataLoader
 
 
 class DataModule(pl.LightningDataModule):
-    """Initializes a DataLoader object for "bookcorpus". Support for more datasets coming soon.
-
-    Examples:
-        >>> data  = DataModule()
-    """
+    """Initializes a DataLoader object for a dataset with chunking support."""
 
     def __init__(
         self,
         name: str = "bookcorpus",
         split: str = "train",
-        batch_size: int = 4,
+        batch_size: int = 32,
         num_workers: int = 16,
         pin_memory: bool = True,
+        chunk_size: int = 384  # added chunk size parameter
     ) -> None:
         super().__init__()
         self.name = name
@@ -26,17 +21,27 @@ class DataModule(pl.LightningDataModule):
         self.batch_size = batch_size
         self.num_workers = num_workers
         self.pin_memory = pin_memory
+        self.chunk_size = chunk_size
+
+    def chunk_examples(self, examples):
+        # Ensure the correct field name based on your dataset
+        chunks = []
+        for sentence in examples["text"]:  # Assume "text" is the correct column
+            # Chunk the sentence based on the chunk_size
+            chunks += [sentence[i:i+self.chunk_size] for i in range(0, len(sentence), self.chunk_size)]
+        return {"text": chunks}  # Returning the chunks correctly
 
     def setup(self, stage) -> None:
-        """Initializes a huggingface dataset: bookcorpus."""
+        """Initializes a huggingface dataset and applies chunking."""
+        # Load the dataset
         self.data = load_dataset(self.name, split=self.split)
 
-    def train_dataloader(self) -> DataLoader:
-        """Creates instance of ``DataLoader``.
+        # Apply the chunking function using `map`
+        self.data = self.data.map(self.chunk_examples, batched=True, remove_columns=self.data.column_names)
 
-        Returns:
-            A DataLoader for a specified dataset.
-        """
+    def train_dataloader(self) -> DataLoader:
+        """Creates an instance of `DataLoader` with the processed (chunked) data."""
+        print(f"Batch size: {self.batch_size}")
         return DataLoader(
             self.data,
             batch_size=self.batch_size,

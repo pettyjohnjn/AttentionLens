@@ -44,7 +44,7 @@ fi
 echo "ckpt dir: "$ckpt
 echo "layer num: "$l_num
 echo "model name: "$model_name
-CMD="../train.py --num_nodes $NNODES --model_name $model_name --checkpoint_dir $ckpt --layer_number $l_num"
+CMD="../train.py --num_nodes $NNODES --model_name $model_name --checkpoint_dir $ckpt --layer_number $l_num --batch_size 4"
 
 RANK=0
 for NODE in $RANKS; do

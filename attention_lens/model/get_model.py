@@ -26,5 +26,5 @@ def get_model(
     tokenizer.pad_token = tokenizer.eos_token
 
 
-    print("Model initialized on device: ", device)
+    print("Language model initialized on device: ", device)
     return model, tokenizer

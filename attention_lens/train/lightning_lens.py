@@ -10,6 +10,27 @@ from attention_lens.lens import Lens
 from attention_lens.model.get_model import get_model
 
 
+import torch
+import psutil
+
+def save_memory_usage():
+    # Open the file in write mode
+    with open("memory_usage.txt", "a") as f:
+        # GPU memory usage
+        num_gpus = torch.cuda.device_count()
+        for i in range(num_gpus):
+            allocated = torch.cuda.memory_allocated(i) / 1024 ** 2
+            cached = torch.cuda.memory_reserved(i) / 1024 ** 2
+            max_allocated = torch.cuda.max_memory_allocated(i) / 1024 ** 2
+            max_cached = torch.cuda.max_memory_reserved(i) / 1024 ** 2
+
+            # Write GPU memory info to the file
+            if max_allocated > 0:
+                f.write(f"GPU {i} Max Allocated: {max_allocated:.2f} MB\n")
+            if max_cached > 0:
+                f.write(f"GPU {i} Max Cached: {max_cached:.2f} MB\n")
+
+
 class LightningLens(pl.LightningModule):
     def __init__(
         self,
@@ -35,11 +56,11 @@ class LightningLens(pl.LightningModule):
 
         if self.model.lm_head.bias == None:
 
-            #self.bias = torch.zeros(self.model.config.vocab_size).to(self.device)
-            self.bias = torch.load('b_U.pt').to(self.device)
+            self.bias = torch.zeros(self.model.config.vocab_size).to(self.device)
+            #self.bias = torch.load('b_U.pt').to(self.device)
         
-        self.weights = torch.load('W_U.pt').to(self.device)
-        #self.weights = self.model.lm_head.weight.T
+        #self.weights = torch.load('W_U.pt').to(self.device)
+        self.weights = self.model.lm_head.weight.T
         
         self.layer_num = layer_num
         self.lr = lr
@@ -98,7 +119,7 @@ class LightningLens(pl.LightningModule):
         #       they must be named differently for Lightning to work.
         self.model, self.tokenizer = get_model(
             model_name=self.model_name,
-            device=self.trainer.strategy.root_device,
+            device=torch.device("cpu"),
         )
 
 
@@ -143,6 +164,7 @@ class LightningLens(pl.LightningModule):
         Returns:
             torch.Tensor: The loss for the current training step. 
         """
+
         prompt = train_batch["text"]
         inputs = self.tokenizer(
             prompt,
@@ -159,8 +181,8 @@ class LightningLens(pl.LightningModule):
         lens_logits = self.forward(cache)
         loss = self.kl_loss(logits, lens_logits)
         self.log("train_loss", loss, prog_bar=True)
-        # my_dict = {"train_loss":loss}
-        # wandb.log(my_dict, step=trainer.global_step)
+
+        save_memory_usage()
         return loss
 
     def configure_optimizers(self) -> torch.optim.Optimizer:
@@ -175,7 +197,7 @@ class LightningLens(pl.LightningModule):
         print(f'Learning Rate: {self.lr}')
 
 
-        optimizer = torch.optim.Adam(self.parameters(), lr=self.lr)
+        optimizer = torch.optim.Adam(self.trainer.model.parameters(), lr=self.lr)
         return optimizer
 
     # TODO(MS): register an early stopping call back which quits training if the loss/some metric drops below a certain pont

@@ -7,9 +7,9 @@ from typing import Optional
 @dataclass
 class TrainConfig:
     # Lightning arguments
-    lr: float = field(default=1e-3)
+    lr: float = field(default=1e-2)
     epochs: int = field(default=3)
-    max_checkpoint_num: int = field(default=1)
+    max_checkpoint_num: int = field(default=10)
     batch_size: int = field(default=1)
     num_nodes: int = field(default=1)
     mixed_precision: bool = field(default=True)

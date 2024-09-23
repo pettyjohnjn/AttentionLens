@@ -1,5 +1,7 @@
 import argparse
 
+import torch
+
 from lightning.pytorch.callbacks import EarlyStopping, ModelCheckpoint, DeviceStatsMonitor
 
 from attention_lens.data.get_data_pl import DataModule
@@ -14,6 +16,7 @@ basicConfig(format="%(levelname)s:%(message)s")
 
 
 def main(args: argparse.Namespace):
+
     arg_dict = vars(args)
     config = TrainConfig(**arg_dict)
 
@@ -37,7 +40,7 @@ def main(args: argparse.Namespace):
         filename=filename_template,
         every_n_train_steps=config.num_steps_per_checkpoint,
     )
-    device_stats = DeviceStatsMonitor()
+    device_stats = DeviceStatsMonitor(cpu_stats = False)
 
     callbacks = []
     lens = LightningLens(config.model_name, "lensa", config.layer_number, config.lr)

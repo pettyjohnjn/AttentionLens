@@ -12,10 +12,11 @@ do
         declare -i num_layers=36
     fi
 
-    for (( layer=0; layer<8; layer++ ))
+    for (( layer=8; layer<9; layer++ ))
     do
         echo $layer
-        ckpt_dir="/home/pettyjohnjn/AttentionLens/checkpoint3/${model_name}/ckpt_"
+        #ckpt_dir="/home/pettyjohnjn/AttentionLens_Comparison/checkpoint/${model_name}/ckpt_"
+        ckpt_dir="/grand/SuperBERT/pettyjohnjn/AttentionLens/checkpoint/${model_name}/ckpt_"
         qsub -v "ckpt=${ckpt_dir}${layer}, l_num=${layer}, model_name=$model_name" -N ${job_name}${layer} simple_submit.pbs 
     done
 
