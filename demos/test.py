@@ -1,48 +1,44 @@
 import sys
+import os
+import argparse
+import glob
+import torch
+
+# Add path to custom modules
 sys.path.append("..")
 
 from attention_lens.model.get_model import get_model
 from attention_lens.lens import Lens
-import torch
-import glob
-import os
-import argparse
 
 # Print the current working directory
 current_directory = os.getcwd()
 print("Current working directory:", current_directory)
 
-# Set Up User Args
+# Set up user arguments
 parser = argparse.ArgumentParser()
-
 parser.add_argument(
     "--ckpt_dir",
     default="/grand/SuperBERT/pettyjohnjn/checkpoint/test",
     type=str,
-    help="path to dir containing all latest ckpts for a lens",
+    help="Path to dir containing all latest ckpts for a lens",
 )
-
 parser.add_argument(
     "--save_dir",
-    default="/grand/SuperBERT/pettyjohnjn/extracted_checkpoint/test",
+    default="/grand/SuperBERT/pettyjohnjn/extracted_checkpoint/gpt2/ckpt_8/",
     type=str,
-    help="path to dir where script should save all extracted lenses",
+    help="Path to dir where script should save all extracted lenses",
 )
-
 args = parser.parse_args()
 
-# Single Device
+# Single device
 device = "cpu"
 
-# Initialize lens
+# Initialize lens model
 model, _ = get_model(device=device)
 
-#bias = torch.load('../attention_lens/b_U.pt').to(device)
-bias = torch.zeros(50257).to(device)
-
-lens_cls = "lensa"
-lens_cls = Lens.get_lens(lens_cls)
-
+# Initialize attention lens with necessary parameters
+bias = torch.zeros(50257).to(device)  # Using a zeroed bias for initialization
+lens_cls = Lens.get_lens("lensa")
 attn_lens = lens_cls(
     unembed=model.lm_head.weight.T,
     bias=bias,
@@ -51,33 +47,30 @@ attn_lens = lens_cls(
     d_vocab=model.config.vocab_size,
 )
 
+# Function to rename keys if necessary
 def change_dict_key(d, old_key, new_key, default_value=None):
     d[new_key] = d.pop(old_key, default_value)
 
-def extract_and_save_lense_from_ckpt(ckpt_filepath, save_filepath):
+# Function to extract and save lens from checkpoint
+def extract_and_save_lens_from_ckpt(ckpt_filepath, save_filepath):
     print(f"Loading checkpoint from {ckpt_filepath}")
-    attn_lens_cls = torch.load(ckpt_filepath, map_location="cpu")
-    a = attn_lens_cls["state_dict"] if "state_dict" in attn_lens_cls else attn_lens_cls
-
-    for key in list(a.keys()):
-        # Remove `_forward_module.` prefix if present
-        clean_key = key.replace("_forward_module.", "")
-        
-        # Filter out non-attn_lens keys and adjust attn_lens keys
-        if not clean_key.startswith("attn_lens"):
-            del a[key]
-        else:
-            # Remove `attn_lens` prefix
-            new_key = clean_key[10:]
-            change_dict_key(a, key, new_key)
-        
-    print(f"Loading state dict into attention lens from {ckpt_filepath}")
-    attn_lens.load_state_dict(a)
     
+    # Load checkpoint (DeepSpeed format with weights only)
+    checkpoint = torch.load(ckpt_filepath, map_location="cpu")
+
+    # Filter for attention lens parameters only
+    attn_lens_params = {k[10:]: v for k, v in checkpoint.items() if k.startswith("attn_lens")}
+    
+    # Load state dict into attention lens
+    print(f"Loading state dict into attention lens from {ckpt_filepath}")
+    attn_lens.load_state_dict(attn_lens_params, strict=False)
+    
+    # Save the extracted attention lens
     print(f"Saving extracted lens to {save_filepath}")
     torch.save(attn_lens, save_filepath)
     print(f"Successfully saved extracted lens to {save_filepath}")
 
+# Function to iterate through checkpoints and extract lenses
 def iter_thru_ckpts_extract_lenses(ckpt_dir, save_dir):
     for filename in glob.glob(os.path.join(ckpt_dir, "**/*.ckpt"), recursive=True):
         print(f"Processing checkpoint: {filename}")
@@ -87,7 +80,7 @@ def iter_thru_ckpts_extract_lenses(ckpt_dir, save_dir):
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
 
-        extract_and_save_lense_from_ckpt(filename, save_filepath=save_filepath)
+        extract_and_save_lens_from_ckpt(filename, save_filepath=save_filepath)
 
 print("Starting extraction process...")
 iter_thru_ckpts_extract_lenses(args.ckpt_dir, args.save_dir)

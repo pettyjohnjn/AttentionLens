@@ -43,7 +43,14 @@ def main(args: argparse.Namespace):
     device_stats = DeviceStatsMonitor(cpu_stats = False)
 
     callbacks = []
-    lens = LightningLens(config.model_name, "lensa", config.layer_number, config.lr)
+    lens = LightningLens(
+        config.model_name, 
+        "oldlenslr", 
+        config.layer_number, 
+        config.lr,
+        rank = 8 # Rank of the attention lens to be trained. can vary from 1 to d_model.
+    ) 
+    
     data = DataModule()
     train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
 

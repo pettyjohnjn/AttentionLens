@@ -46,18 +46,18 @@ parser.add_argument(
     "--lense_loc",
     nargs='+',  # Accepts multiple file paths as a list
     default=[
-        "/home/pettyjohnjn/AttentionLens/extracted_lens3/layer_0/attnlens-layer-0-epoch=00-step=1635-train_loss=1.72.ckpt",
-        "/home/pettyjohnjn/AttentionLens/extracted_lens3/layer_1/attnlens-layer-1-epoch=00-step=915-train_loss=1.41.ckpt",
-        "/home/pettyjohnjn/AttentionLens/extracted_lens3/layer_2/attnlens-layer-2-epoch=00-step=335-train_loss=3.46.ckpt",
-        "/home/pettyjohnjn/AttentionLens/extracted_lens3/layer_3/attnlens-layer-3-epoch=00-step=605-train_loss=2.62.ckpt",
-        "/home/pettyjohnjn/AttentionLens/extracted_lens3/layer_4/attnlens-layer-4-epoch=00-step=730-train_loss=3.55.ckpt",
-        "/home/pettyjohnjn/AttentionLens/extracted_lens3/layer_5/attnlens-layer-5-epoch=00-step=2080-train_loss=1.01.ckpt",
-        "/home/pettyjohnjn/AttentionLens/extracted_lens3/layer_6/attnlens-layer-6-epoch=00-step=1625-train_loss=1.25.ckpt",
-        "/home/pettyjohnjn/AttentionLens/extracted_lens3/layer_7/attnlens-layer-7-epoch=00-step=640-train_loss=1.88.ckpt",
-        "/home/pettyjohnjn/AttentionLens/extracted_lens3/layer_8/attnlens-layer-8-epoch=00-step=1080-train_loss=1.85.ckpt",
-        "/home/pettyjohnjn/AttentionLens/extracted_lens3/layer_9/attnlens-layer-9-epoch=00-step=1005-train_loss=0.72.ckpt",
-        "/home/pettyjohnjn/AttentionLens/extracted_lens3/layer_10/attnlens-layer-10-epoch=00-step=565-train_loss=2.41.ckpt",
-        "/home/pettyjohnjn/AttentionLens/extracted_lens3/layer_11/attnlens-layer-11-epoch=00-step=490-train_loss=5.80.ckpt"
+        "/grand/SuperBERT/pettyjohnjn/Extracted_lens_old/gpt2/layer_0/attnlens-layer-0-epoch=00-step=1635-train_loss=1.72.ckpt",
+        "/grand/SuperBERT/pettyjohnjn/Extracted_lens_old/gpt2/layer_1/attnlens-layer-1-epoch=00-step=915-train_loss=1.41.ckpt",
+        "/grand/SuperBERT/pettyjohnjn/Extracted_lens_old/gpt2/layer_2/attnlens-layer-2-epoch=00-step=335-train_loss=3.46.ckpt",
+        "/grand/SuperBERT/pettyjohnjn/Extracted_lens_old/gpt2/layer_3/attnlens-layer-3-epoch=00-step=605-train_loss=2.62.ckpt",
+        "/grand/SuperBERT/pettyjohnjn/Extracted_lens_old/gpt2/layer_4/attnlens-layer-4-epoch=00-step=730-train_loss=3.55.ckpt",
+        "/grand/SuperBERT/pettyjohnjn/Extracted_lens_old/gpt2/layer_5/attnlens-layer-5-epoch=00-step=2080-train_loss=1.01.ckpt",
+        "/grand/SuperBERT/pettyjohnjn/Extracted_lens_old/gpt2/layer_6/attnlens-layer-6-epoch=00-step=1625-train_loss=1.25.ckpt",
+        "/grand/SuperBERT/pettyjohnjn/Extracted_lens_old/gpt2/layer_7/attnlens-layer-7-epoch=00-step=1460-train_loss=0.88.ckpt",
+        "/grand/SuperBERT/pettyjohnjn/Extracted_lens_old/gpt2/layer_8/attnlens-layer-8-epoch=00-step=1080-train_loss=1.85.ckpt",
+        "/grand/SuperBERT/pettyjohnjn/Extracted_lens_old/gpt2/layer_9/attnlens-layer-9-epoch=00-step=1005-train_loss=0.72.ckpt",
+        "/grand/SuperBERT/pettyjohnjn/Extracted_lens_old/gpt2/layer_10/attnlens-layer-10-epoch=00-step=565-train_loss=2.41.ckpt",
+        "/grand/SuperBERT/pettyjohnjn/Extracted_lens_old/gpt2/layer_11/attnlens-layer-11-epoch=00-step=490-train_loss=5.80.ckpt"
         ],
     type=str,
     help="paths to ckpts for the lens",
@@ -128,7 +128,7 @@ def interpret_layer(prompt, attn_lens, layer_num, k_tokens=args.k_tokens):
     input_tensor = torch.stack(inputs_list)
 
     toxic_counts = np.zeros(args.num_attn_heads)
-
+    
     for head in range(args.num_attn_heads):
         layer_head = attn_lens.linears[head]
         projected = layer_head(inputs_list[0][0][-1][head])

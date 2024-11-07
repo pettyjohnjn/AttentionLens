@@ -10,10 +10,10 @@ class DataModule(pl.LightningDataModule):
         self,
         name: str = "bookcorpus",
         split: str = "train",
-        batch_size: int = 32,
-        num_workers: int = 16,
+        batch_size: int = 24,
+        num_workers: int = 128,
         pin_memory: bool = True,
-        chunk_size: int = 384  # added chunk size parameter
+        chunk_size: int = 512  # added chunk size parameter
     ) -> None:
         super().__init__()
         self.name = name

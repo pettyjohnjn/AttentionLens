@@ -38,6 +38,7 @@ class LightningLens(pl.LightningModule):
         lens_cls: type[Lens] | str,
         layer_num: int,
         lr: float = 1e-3,
+        rank: int = 8,
         **kwargs,
     ):
         super().__init__(**kwargs)
@@ -64,6 +65,7 @@ class LightningLens(pl.LightningModule):
         
         self.layer_num = layer_num
         self.lr = lr
+        self.rank = rank
 
         self.attn_lens = lens_cls(
             unembed= self.weights,
@@ -71,6 +73,7 @@ class LightningLens(pl.LightningModule):
             n_head=self.model.config.num_attention_heads,
             d_model=self.model.config.hidden_size,
             d_vocab=self.model.config.vocab_size,
+            rank = self.rank
         )
 
 
@@ -197,7 +200,7 @@ class LightningLens(pl.LightningModule):
         print(f'Learning Rate: {self.lr}')
 
 
-        optimizer = torch.optim.Adam(self.trainer.model.parameters(), lr=self.lr)
+        optimizer = torch.optim.Adam(self.attn_lens.parameters(), lr=self.lr)
         return optimizer
 
     # TODO(MS): register an early stopping call back which quits training if the loss/some metric drops below a certain pont
