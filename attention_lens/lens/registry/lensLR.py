@@ -1,53 +1,61 @@
-import torch
 import torch.nn as nn
-import math
+import torch
+import loralib as lora
+
 from attention_lens.lens.base import Lens
 
+
 class LensLR(Lens):
-    """
-    Low-Rank Lens (LensLR) approximates the linear transformation A as UV,
-    where U is [d_model, rank] and V is [rank, d_vocab]. This reduces the
-    number of parameters by leveraging the low-rank structure of A - W_U.
+    def __init__(
+        self,
+        unembed: nn.Parameter,
+        bias: nn.Parameter,
+        n_head: int,
+        d_model: int,
+        d_vocab: int,
+        r: int = 4,                # LoRA rank
+        lora_alpha: int = 1,       # LoRA scaling factor
+        lora_dropout: float = 0.0, # LoRA dropout rate
+        merge_weights: bool = True, # Whether to merge weights during inference
+    ):
+        super().__init__(
+            unembed,
+            bias,
+            n_head,
+            d_model,
+            d_vocab,
+            r=r,
+            lora_alpha=lora_alpha,
+            lora_dropout=lora_dropout,
+            merge_weights=merge_weights,
+        )
 
-    Args:
-        unembed (torch.Tensor): The unembedding matrix of shape [d_vocab, d_model].
-        bias (torch.Tensor): The bias vector of shape [d_vocab].
-        n_head (int): Number of attention heads.
-        d_model (int): Dimension of the model.
-        d_vocab (int): Size of the vocabulary.
-        rank (int): The rank for the low-rank approximation.
-    """
-    
-    def __init__(self, unembed, bias, n_head, d_model, d_vocab, rank=10):
-        super().__init__(unembed, bias, n_head, d_model, d_vocab)
-        self.rank = rank
+        # Initialize LoRA-enhanced Linear layers using loralib correctly
+        self.linears = nn.ModuleList(
+            [
+                lora.Linear(  # Correct usage
+                    in_features=self.d_model,
+                    out_features=self.d_vocab,
+                    r=self.r,
+                    lora_alpha=self.lora_alpha,    # Correct keyword argument
+                    lora_dropout=self.lora_dropout, # Correct keyword argument
+                )
+                for _ in range(self.n_head)
+            ]
+        )
 
-        # Initialize U and V as separate ParameterLists for each head
-        self.U = nn.ParameterList([
-            nn.Parameter(torch.empty(d_model, rank)) for _ in range(n_head)
-        ])
-        self.V = nn.ParameterList([
-            nn.Parameter(torch.empty(rank, d_vocab)) for _ in range(n_head)
-        ])
+        # Initialize the Linear layers with W_U^T and bias, then freeze original weights
+        for linear in self.linears:
+            with torch.no_grad():
+                # Initialize the main weights with W_U^T
+                linear.weight_copy = self.unembed.data.clone().t()  # Shape [d_vocab, d_model]
+                linear.weight.requires_grad = False  # Freeze original weights
 
-        # Initialize U and V parameters with Xavier normal initialization
-        for u, v in zip(self.U, self.V):
-            nn.init.xavier_normal_(u)
-            nn.init.xavier_normal_(v)
+                # Initialize bias
+                linear.bias.data = self.bias.data.clone()
+                # Bias is trainable by default in loralib's Linear
 
-        # Initialize separate bias vectors for each head
-        self.head_bias = nn.ParameterList([
-            nn.Parameter(torch.zeros(d_vocab)) for _ in range(n_head)
-        ])
-
-        # Register W_U as a buffer since it's not trainable
-        # Ensure W_U is [d_model, d_vocab]
-        self.register_buffer('W_U', unembed.clone())  # [d_model, d_vocab]
-
-        # Print shapes for debugging
-        print(f"W_U shape: {self.W_U.shape}")  # Should be [d_model, d_vocab]
-
-    def forward(self, input_tensor):
+    def forward(self, input_tensor: torch.Tensor) -> torch.Tensor:
         """
         Performs a forward pass through the LensLR model.
 
@@ -55,53 +63,32 @@ class LensLR(Lens):
             input_tensor (torch.Tensor): Input tensor of shape (batch_size, pos, n_head, d_model).
 
         Returns:
-            torch.Tensor: Output tensor of shape (batch_size, pos, d_vocab) after processing
-                          through the low-rank linear transformations and summing across the
-                          attention heads.
+            torch.Tensor: Output tensor of shape (batch_size, pos, d_vocab) after processing through
+                          the linear layers and summing across the attention heads.
         """
         batch_size, pos, n_head, d_model = input_tensor.size()
-        device = input_tensor.device
+        assert n_head == self.n_head, "Number of heads in input does not match LensLR."
 
-        # Ensure n_head matches
-        assert n_head == self.n_head, f"Expected {self.n_head} heads, but got {n_head}."
+        # Initialize an output tensor
+        output_tensors = torch.zeros(
+            (batch_size, pos, self.d_vocab), device=input_tensor.device
+        )
 
-        # Reshape input to [B*P, H, D]
-        input_reshaped = input_tensor.view(batch_size * pos, n_head, d_model)  # [B*P, H, D]
-
-        # Compute W_U contribution
-        # W_U is [d_model, d_vocab], so input_reshaped @ W_U -> [B*P, H, d_vocab]
-        # To ensure correctness, verify the shape
-        # Uncomment the following line for debugging:
-        # print(f"input_reshaped shape: {input_reshaped.shape}, W_U shape: {self.W_U.shape}")
-        wu = torch.matmul(input_reshaped, self.W_U)  # [B*P, H, d_vocab]
-
-        # Initialize UV contribution
-        uv = torch.zeros_like(wu, device=device)  # [B*P, H, d_vocab]
-
-        # Compute UV for each head
+        # Iterate over each head and apply the corresponding LoRA Linear layer
         for i in range(n_head):
-            # input_head: [B*P, D]
-            input_head = input_reshaped[:, i, :]  # [B*P, D]
+            # Extract the input for the i-th head: shape [batch_size, pos, d_model]
+            input_head = input_tensor[:, :, i, :]  # Shape: [batch_size, pos, d_model]
 
-            # Compute U @ V: [B*P, D] @ [D, R] = [B*P, R]
-            # Then [B*P, R] @ [R, V] = [B*P, V]
-            uv_head = torch.matmul(input_head, self.U[i])  # [B*P, R]
-            uv_head = torch.matmul(uv_head, self.V[i])    # [B*P, V]
+            # Reshape to [batch_size * pos, d_model] for linear layer
+            input_flat = input_head.reshape(-1, d_model)  # Shape: [batch_size * pos, d_model]
 
-            # Assign to the UV tensor
-            uv[:, i, :] = uv_head  # [B*P, H, d_vocab]
+            # Apply the LoRA Linear layer: output_flat shape [batch_size * pos, d_vocab]
+            output_flat = self.linears[i](input_flat)  # LoRA handles merged weights
 
-        # Compute total contribution: UV + W_U + bias
-        # head_bias: [H, V] needs to be broadcasted to [B*P, H, V]
-        bias = torch.stack(self.head_bias, dim=0)  # [H, V]
-        bias = bias.unsqueeze(0).expand(batch_size * pos, -1, -1)  # [B*P, H, V]
+            # Reshape back to [batch_size, pos, d_vocab]
+            output_head = output_flat.view(batch_size, pos, self.d_vocab)
 
-        output = uv + wu + bias  # [B*P, H, V]
+            # Accumulate the outputs
+            output_tensors += output_head
 
-        # Sum across heads: [B*P, V]
-        output = output.sum(dim=1)  # [B*P, V]
-
-        # Reshape back to [batch_size, pos, d_vocab]
-        output = output.view(batch_size, pos, self.d_vocab)  # [B, P, V]
-
-        return output
+        return output_tensors

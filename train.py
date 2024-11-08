@@ -45,10 +45,10 @@ def main(args: argparse.Namespace):
     callbacks = []
     lens = LightningLens(
         config.model_name, 
-        "oldlenslr", 
+        "lenslr", 
         config.layer_number, 
         config.lr,
-        rank = 8 # Rank of the attention lens to be trained. can vary from 1 to d_model.
+        r = 8 # Rank of the attention lens to be trained. can vary from 1 to d_model.
     ) 
     
     data = DataModule()
