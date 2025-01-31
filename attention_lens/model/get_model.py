@@ -1,7 +1,8 @@
 import torch.types
 
 from typing import Union
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+import bitsandbytes as bnb
 
 
 def get_model(
@@ -19,8 +20,19 @@ def get_model(
     Returns:
         The light-weight hooked model and tokenizer.
     """
+
+    quantization_config = BitsAndBytesConfig(
+        load_in_4bit=True,        # Enable 4-bit quantization
+        bnb_4bit_use_double_quant=True,  # Use double quantization (optional, can improve accuracy)
+        bnb_4bit_quant_type='nf4',        # Quantization type: 'nf4' or 'fp4'
+        bnb_4bit_compute_dtype=torch.float16  # Compute dtype during inference
+    )
+
     model = AutoModelForCausalLM.from_pretrained(model_name)
-    model.to(device)
+    # model.to(device)
+
+    model.eval()
+    model.requires_grad_(False)
     
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     tokenizer.pad_token = tokenizer.eos_token
