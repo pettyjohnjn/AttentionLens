@@ -55,7 +55,7 @@ def train_lens(
         strategy="deepspeed_stage_2",
         accelerator="auto",
         precision=training_precision,
-        max_epochs=1,
+        max_epochs=20,
         num_nodes=config.num_nodes,
         default_root_dir=config.checkpoint_dir,
         accumulate_grad_batches=config.accumulate_grad_batches,

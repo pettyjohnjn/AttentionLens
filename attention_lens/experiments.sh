@@ -16,7 +16,7 @@ do
     do
         echo $layer
         #ckpt_dir="/home/pettyjohnjn/AttentionLens_Comparison/checkpoint/${model_name}/ckpt_"
-        ckpt_dir="/grand/SuperBERT/pettyjohnjn/AttentionLens/checkpoint/${model_name}/ckpt_"
+        ckpt_dir="/grand/SuperBERT/pettyjohnjn/AttentionLens/checkpoint_rank02/${model_name}/ckpt_"
         qsub -v "ckpt=${ckpt_dir}${layer}, l_num=${layer}, model_name=$model_name" -N ${job_name}${layer} simple_submit.pbs 
     done
 
