@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-for model_name in gpt2
+for model_name in llama3_8b
 do
     echo $model_name
 
@@ -8,15 +8,17 @@ do
 
     if [ $model_name == "gpt2" ];then 
         declare -i num_layers=12
+    elif [ $model_name == "llama3_8b" ];then
+        declare -u num_layers=32
     else
         declare -i num_layers=36
     fi
 
-    for (( layer=8; layer<9; layer++ ))
+    for (( layer=30; layer<31; layer++ ))
     do
         echo $layer
         #ckpt_dir="/home/pettyjohnjn/AttentionLens_Comparison/checkpoint/${model_name}/ckpt_"
-        ckpt_dir="/grand/SuperBERT/pettyjohnjn/AttentionLens/checkpoint_rank02/${model_name}/ckpt_"
+        ckpt_dir="/grand/SuperBERT/pettyjohnjn/AttentionLens/checkpoint_llama/${model_name}/ckpt_"
         qsub -v "ckpt=${ckpt_dir}${layer}, l_num=${layer}, model_name=$model_name" -N ${job_name}${layer} simple_submit.pbs 
     done
 

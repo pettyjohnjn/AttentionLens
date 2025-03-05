@@ -23,7 +23,7 @@ class TrainConfig:
     stopping_patience: int = field(default=2)
 
     # AttentionLens-specific arguments
-    model_name: str = field(default="gpt2")
+    model_name: str = field(default="/grand/SuperBERT/aswathy/models/models--meta-llama--Meta-Llama-3-8B-Instruct") #field(default="gpt2") 
     layer_number: int = field(default=0)
 
     def __post_init__(self):

@@ -28,7 +28,9 @@ def get_model(
         bnb_4bit_compute_dtype=torch.float16  # Compute dtype during inference
     )
 
-    model = AutoModelForCausalLM.from_pretrained(model_name)
+    model = AutoModelForCausalLM.from_pretrained(
+        model_name,
+        attn_implementation="eager") # Force manual implementation of attention
     # model.to(device)
 
     model.eval()

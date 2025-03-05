@@ -186,7 +186,8 @@ class LightningLens(pl.LightningModule):
             outputs = self.model(**inputs)
             # Assuming you have a hook that stores 'head_out' for the specified layer
             # Modify this part based on how you access the cached outputs
-            cache = self.model.transformer.h[self.layer_num].attn.head_out  # Shape: [batch_size, pos, d_model]
+            cache = self.model.model.layers[self.layer_num].self_attn.head_out
+            #cache = self.model.transformer.h[self.layer_num].attn.head_out  # Shape: [batch_size, pos, d_model] 
             logits = outputs.logits  # Shape: [batch_size, pos, d_vocab]
 
         lens_logits = self.forward(cache)  # Shape: [batch_size, d_vocab]

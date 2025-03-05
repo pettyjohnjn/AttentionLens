@@ -20,7 +20,7 @@ def get_args() -> argparse.Namespace:
         "--model_name",
         default="gpt2",
         type=str,
-        choices=["gpt2"],
+        choices=["gpt2","llama3_8b"],
     )
     parser.add_argument(
         "--mixed_precision",
@@ -72,4 +72,14 @@ def get_args() -> argparse.Namespace:
         help="number of checks with no improvement after which to stop training",
     )
     parser.add_argument("--layer_number", default=9, type=int)
-    return parser.parse_args()
+    args = parser.parse_args()
+    #return parser.parse_args()
+
+    # Mapping aliases to full model names
+    model_aliases = {
+        "gpt2": "gpt2",
+        "llama3_8b": "/grand/SuperBERT/aswathy/models/models--meta-llama--Meta-Llama-3-8B-Instruct",
+    }
+    args.model_name = model_aliases[args.model_name]
+
+    return args

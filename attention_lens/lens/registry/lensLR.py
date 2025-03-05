@@ -39,7 +39,7 @@ class LensLR(Lens):
                 lora.Linear(
                     in_features=self.d_model,
                     out_features=self.d_vocab,
-                    r=2,
+                    r=8,
                     lora_alpha=self.lora_alpha,
                     lora_dropout=self.lora_dropout,
                 )
