@@ -16,4 +16,5 @@ attention_lens/gpt2_attnlen_*
 extracted_lens*
 W_U.pt
 b_U.pt
+attention_lens/memory_usage.txt
 

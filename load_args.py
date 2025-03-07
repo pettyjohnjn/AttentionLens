@@ -7,10 +7,10 @@ def get_args() -> argparse.Namespace:
     #### SET UP USER ARGS
     parser = argparse.ArgumentParser()
     parser.add_argument("--lr", default=1e-4, type=float)
-    parser.add_argument("--epochs", default=3, type=int)
+    parser.add_argument("--epochs", default=5, type=int)
     parser.add_argument(
         "--max_checkpoint_num",
-        default=10,
+        default=1,
         type=int,
         help="maximum number of ckpts to save",
     )

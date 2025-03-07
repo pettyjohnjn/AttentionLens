@@ -1,6 +1,7 @@
 import sys
 sys.path.append("..")
 import os
+import re
 import torch
 import argparse
 import numpy as np
@@ -35,7 +36,8 @@ def create_and_save_heatmap(data, layer_nums, pdf_filename, title):
         pdf.savefig(fig)
     plt.close(fig)
 
-# Process each prompt through the model and extract toxic tokens and confidence from attention heads
+# Process each prompt through the model and extract toxic tokens and confidence from attention heads.
+# This version records toxic tokens as a tuple (token, token_id) if they are in the toxic words list.
 def interpret_prompt(prompt, attn_lenses, common_toxic_tokens, total_toxic_counts, total_confidence, tokenizer, toxic_words, device, num_attn_heads, k_tokens):
     inputs = tokenizer(prompt, truncation=True, padding=True, return_tensors="pt")
     inputs = {k: v.to(device) for k, v in inputs.items()}
@@ -58,20 +60,47 @@ def interpret_prompt(prompt, attn_lenses, common_toxic_tokens, total_toxic_count
                 confidence_sum = topk_probs.sum().item()
                 total_confidence[layer_num][head] += confidence_sum
 
-                # Decode the tokens
-                projected_tokens = tokenizer.batch_decode(topk_token_preds.cpu().numpy().tolist())
+                # Get token ids directly from topk results
+                topk_token_ids = topk_token_preds.cpu().numpy().tolist()
 
-                toxic_tokens_found = [token for token in projected_tokens if token.strip().lower() in toxic_words]
+                toxic_tokens_found = []
+                for token_id in topk_token_ids:
+                    token_str = tokenizer.decode(token_id).strip().lower()
+                    if token_str in toxic_words:
+                        # Record as a tuple: (token string, token id)
+                        toxic_tokens_found.append((token_str, token_id))
+                
                 toxic_count = len(toxic_tokens_found)
-
                 total_toxic_counts[layer_num][head] += toxic_count
                 common_toxic_tokens[layer_num][head].update(toxic_tokens_found)
 
+# Function to load the best checkpoint from each layer folder
+def load_best_lens_checkpoints(lens_folder):
+    best_checkpoints = []
+    # Iterate over each subfolder (e.g., L0, L1, ...)
+    for subfolder in sorted(os.listdir(lens_folder)):
+        subfolder_path = os.path.join(lens_folder, subfolder)
+        if os.path.isdir(subfolder_path):
+            ckpt_files = [f for f in os.listdir(subfolder_path) if f.endswith('.ckpt')]
+            best_loss = float('inf')
+            best_ckpt = None
+            for ckpt in ckpt_files:
+                # Extract train_loss value from the filename
+                match = re.search(r"train_loss=([\d\.]+)", ckpt)
+                if match:
+                    loss = float(match.group(1).rstrip('.'))
+                    if loss < best_loss:
+                        best_loss = loss
+                        best_ckpt = ckpt
+            if best_ckpt is not None:
+                best_checkpoints.append(os.path.join(subfolder_path, best_ckpt))
+    return best_checkpoints
+
 # Set up user arguments
 parser = argparse.ArgumentParser()
-
 parser.add_argument("--model", default="gpt2", type=str)
-parser.add_argument("--lense_loc", nargs='+', default=["/path/to/attnlens-layer-0.ckpt"], type=str)
+# Instead of individual checkpoint paths, now provide a folder containing subfolders of checkpoints.
+parser.add_argument("--lense_folder", default="/path/to/lens_folder", type=str, help="Folder containing subfolders with .ckpt files for each layer")
 parser.add_argument("--lens", default="gpt2", choices=["gpt2"], type=str)
 parser.add_argument("--layer_num", nargs='+', default=list(range(12)), type=int)
 parser.add_argument("--num_attn_heads", default=12, choices=[12, 20], type=int)
@@ -82,7 +111,8 @@ parser.add_argument("--output_folder", default="outputs", type=str, help="Folder
 parser.add_argument("--output_toxic_pdf", default="heatmaps_toxic.pdf", type=str, help="Output PDF file for toxic tokens heatmap")
 parser.add_argument("--output_confidence_pdf", default="heatmaps_confidence.pdf", type=str, help="Output PDF file for confidence heatmap")
 parser.add_argument("--output_txt", default="best_toxic_tokens.txt", type=str, help="Output TXT file for toxic token dictionary")
-parser.add_argument("--output_npy", default="best_average_toxic_counts.npy", type=str, help="Output Numpy file for average toxic counts")
+parser.add_argument("--output_toxic_npy", default="best_average_toxic_counts.npy", type=str, help="Output Numpy file for average toxic counts")
+parser.add_argument("--output_confidence_npy", default="lens_confidence.npy", type=str, help="Output Numpy file for lens confidence heatmap")
 args = parser.parse_args()
 
 # Ensure output folder exists
@@ -93,7 +123,8 @@ if not os.path.exists(args.output_folder):
 output_toxic_pdf_path = os.path.join(args.output_folder, args.output_toxic_pdf)
 output_confidence_pdf_path = os.path.join(args.output_folder, args.output_confidence_pdf)
 output_txt_path = os.path.join(args.output_folder, args.output_txt)
-output_npy_path = os.path.join(args.output_folder, args.output_npy)
+output_toxic_npy_path = os.path.join(args.output_folder, args.output_toxic_npy)
+output_confidence_npy_path = os.path.join(args.output_folder, args.output_confidence_npy)
 
 # Device setup
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
@@ -111,11 +142,14 @@ toxic_words = load_toxic_words(args.toxic_dict_path)
 dataset = load_dataset("OxAISH-AL-LLM/wiki_toxic", split="train")
 toxic_prompts = dataset.filter(lambda example: example['label'] == 1)['comment_text'][:16]
 
-# Load attention lenses once for all layers
-attn_lenses = [torch.load(lense_loc, map_location=torch.device(device)) for lense_loc in args.lense_loc]
+# Load the best attention lenses from the folder
+lense_file_paths = load_best_lens_checkpoints(args.lense_folder)
+# Ensure the list is sorted by layer order if necessary
+attn_lenses = [torch.load(lense_loc, map_location=torch.device(device)) for lense_loc in lense_file_paths]
 
 # Initialize structures to hold results
 total_toxic_counts = np.zeros((len(args.layer_num), args.num_attn_heads))
+# Each entry now is a Counter that holds tuples (token, token_id)
 common_toxic_tokens = [[Counter() for _ in range(args.num_attn_heads)] for _ in range(len(args.layer_num))]
 total_confidence = np.zeros((len(args.layer_num), args.num_attn_heads))
 
@@ -127,13 +161,15 @@ for prompt in tqdm(toxic_prompts, desc="Processing Toxic Prompts"):
 average_toxic_counts = total_toxic_counts / len(toxic_prompts)
 average_confidence = total_confidence / len(toxic_prompts)
 
-# Save most common toxic tokens to a text file
+# Save most common toxic tokens along with their token ids to a text file
 with open(output_txt_path, 'w') as f:
     for layer_num, layer_common_toxic in enumerate(common_toxic_tokens):
         f.write(f"\nLayer {layer_num}:\n")
         for head, token_counter in enumerate(layer_common_toxic):
             most_common_tokens = token_counter.most_common(10)
-            f.write(f"  Head {head}: {most_common_tokens}\n")
+            f.write(f"  Head {head}:\n")
+            for (token_str, token_id), count in most_common_tokens:
+                f.write(f"    Token: {token_str}, Count: {count}, ID: {token_id}\n")
 
 # Create and save heatmaps:
 # Heatmap for average toxic tokens per head
@@ -141,4 +177,5 @@ create_and_save_heatmap(average_toxic_counts, args.layer_num, output_toxic_pdf_p
 # Heatmap for average confidence per head
 create_and_save_heatmap(average_confidence, args.layer_num, output_confidence_pdf_path, 'Average Confidence per Head per Layer')
 
-np.save(output_npy_path, average_toxic_counts)
+np.save(output_toxic_npy_path, average_toxic_counts)
+np.save(output_confidence_npy_path, average_confidence)

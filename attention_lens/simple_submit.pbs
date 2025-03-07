@@ -7,7 +7,7 @@
 #PBS -l filesystems=home:grand:eagle
 #PBS -A SuperBERT
 
-cd "/grand/SuperBERT/pettyjohnjn/AttentionLens/attention_lens"
+cd "/grand/SuperBERT/pettyjohnjn/AttnLens_GPT/attention_lens"
 echo "working dir: "
 pwd
 

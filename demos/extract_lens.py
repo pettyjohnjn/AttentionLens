@@ -19,14 +19,14 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument(
     "--ckpt_dir",
-    default="/grand/SuperBERT/pettyjohnjn/AttentionLens/checkpoint",
+    default="/grand/SuperBERT/pettyjohnjn/AttnLens_GPT/checkpoint_rank02",
     type=str,
     help="Path to directory containing all latest ckpts for a lens",
 )
 
 parser.add_argument(
     "--save_dir",
-    default="/grand/SuperBERT/pettyjohnjn/LoraLens_Pile2/extracted_checkpoint/gpt2/ckpt_8",
+    default="/grand/SuperBERT/pettyjohnjn/LoraLens_Pile2/extracted_checkpoint/gpt2/R02/",
     type=str,
     help="Path to directory where script should save all extracted lenses",
 )
@@ -68,46 +68,30 @@ def merge_lora_weights(attn_lens):
     """
     new_linears = []
     for i, linear in enumerate(attn_lens.linears):
-        # Here we expect each linear to have lora_A and lora_B.
-        # Instead of relying on linear.r, compute the LoRA rank from lora_A.
         if not (hasattr(linear, 'lora_A') and hasattr(linear, 'lora_B')):
             raise AttributeError(f"Linear layer {i} is missing LoRA parameters.")
         
         lora_A = linear.lora_A  # expected shape: (r, d_model)
         lora_B = linear.lora_B  # expected shape: (d_vocab, r)
-        
-        # Compute r as the number of rows in lora_A.
         r_val = lora_A.shape[0]
-        
-        # Try to retrieve lora_alpha; if missing, default to 1.
         lora_alpha = getattr(linear, 'lora_alpha', 1)
         scaling = lora_alpha / r_val if r_val != 0 else 1.0
 
-        # Compute the low-rank update: (lora_B @ lora_A) * scaling.
         update = torch.matmul(lora_B, lora_A) * scaling
-
-        # The shared base weight is stored in attn_lens.shared_unembed.
         base = attn_lens.shared_unembed.detach()
         effective_weight = base + update.detach()
 
-        # Get the bias from the current linear layer.
         bias_linear = linear.bias.detach().clone()
-
-        # Create a new standard nn.Linear layer with merged weight and bias.
         new_linear = nn.Linear(attn_lens.d_model, attn_lens.d_vocab)
         new_linear.weight = nn.Parameter(effective_weight)
         new_linear.bias = nn.Parameter(bias_linear)
-
         new_linears.append(new_linear)
 
-    # Replace the LoRA linear layers with the new merged layers.
     attn_lens.linears = nn.ModuleList(new_linears)
-    # Optionally, remove the now-unneeded shared_unembed.
     attn_lens.shared_unembed = None
     return attn_lens
 
 def extract_and_save_lense_from_ckpt(ckpt_filepath, save_filepath):
-    # If the provided ckpt is a directory (DeepSpeed checkpoint), run the conversion script.
     if os.path.isdir(ckpt_filepath):
         print(f"{ckpt_filepath} is a directory. Running zero_to_fp32 conversion.")
         zero_to_fp32_script = os.path.join(ckpt_filepath, "zero_to_fp32.py")
@@ -115,7 +99,6 @@ def extract_and_save_lense_from_ckpt(ckpt_filepath, save_filepath):
             print(f"Error: {zero_to_fp32_script} not found in the checkpoint directory.")
             return
 
-        # Use a temporary filename for the consolidated fp32 checkpoint.
         fp32_ckpt = os.path.join(ckpt_filepath, "pytorch_model_fp32.bin")
         command = ["python", zero_to_fp32_script, ".", "pytorch_model_fp32.bin"]
         print("Running command:", " ".join(command))
@@ -126,28 +109,16 @@ def extract_and_save_lense_from_ckpt(ckpt_filepath, save_filepath):
 
     print(f"Loading checkpoint from {ckpt_to_load}")
     loaded_ckpt = torch.load(ckpt_to_load, map_location="cpu")
-    # If the checkpoint is wrapped in a dict under "state_dict", extract it.
     a = loaded_ckpt["state_dict"] if "state_dict" in loaded_ckpt else loaded_ckpt
 
-    # Filter out and re-map keys: remove any unwanted prefixes.
-    # For example, if keys are like "_forward_module.attn_lens.shared_unembed", remove the prefix.
     for key in list(a.keys()):
         clean_key = key.replace("_forward_module.", "")
         if not clean_key.startswith("attn_lens"):
             del a[key]
         else:
-            # Remove the "attn_lens" prefix (assumed to be 10 characters long).
             new_key = clean_key[10:]
             change_dict_key(a, key, new_key)
 
-    # --- Instead of using attn_lens.load_state_dict(a) (which raises unexpected key errors),
-    # we manually update the model parameters using the checkpoint values.
-    #
-    # The checkpoint (after filtering) is expected to contain keys:
-    #   "shared_unembed"
-    #   "linears.0.lora_A", "linears.0.lora_B", "linears.0.bias", etc.
-    #
-    # We update the corresponding attributes of attn_lens.
     if "shared_unembed" in a:
         attn_lens.shared_unembed = nn.Parameter(a["shared_unembed"])
     else:
@@ -168,7 +139,6 @@ def extract_and_save_lense_from_ckpt(ckpt_filepath, save_filepath):
             else:
                 print(f"Warning: '{key}' not found in checkpoint state_dict.")
 
-    # Merge the LoRA low-rank parameters with the shared base weight.
     merge_lora_weights(attn_lens)
 
     print(f"Saving extracted lens to {save_filepath}")
@@ -179,9 +149,22 @@ def iter_thru_ckpts_extract_lenses(ckpt_dir, save_dir):
     # Recursively iterate through all .ckpt files (or directories) in ckpt_dir.
     for filename in glob.glob(os.path.join(ckpt_dir, "**/*.ckpt"), recursive=True):
         print(f"Processing checkpoint: {filename}")
-        save_filepath = os.path.join(save_dir, os.path.basename(filename))
-        if not os.path.exists(save_dir):
-            os.makedirs(save_dir)
+
+        # Determine the layer number from the parent folder's name.
+        parent_dir = os.path.basename(os.path.dirname(filename))
+        # Expecting folder names like "ckpt_02". Adjust if your naming differs.
+        if parent_dir.startswith("ckpt_"):
+            layer_num = parent_dir.split("ckpt_")[-1]
+        else:
+            layer_num = "unknown"
+        
+        # Create a subfolder in save_dir for this layer.
+        layer_folder = os.path.join(save_dir, f"L{layer_num}")
+        if not os.path.exists(layer_folder):
+            os.makedirs(layer_folder)
+        
+        # Save file in the appropriate layer folder.
+        save_filepath = os.path.join(layer_folder, os.path.basename(filename))
         extract_and_save_lense_from_ckpt(filename, save_filepath=save_filepath)
 
 print("Starting extraction process...")
