@@ -7,7 +7,7 @@ SCRIPT_PATH="visualize_heads.py"
 MODEL_PATH="gpt2"
 
 # Path to the folder containing subfolders (each with .ckpt files for each layer)
-LENS_FOLDER="/grand/SuperBERT/pettyjohnjn/LoraLens_Pile2/extracted_checkpoint/gpt2/R02"
+LENS_FOLDER="/grand/SuperBERT/pettyjohnjn/LoraLens_Pile2/extracted_checkpoint/gpt2/R16"
 
 # Layer index to visualize (0-indexed)
 LAYER_INDEX=8

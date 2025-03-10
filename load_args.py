@@ -7,7 +7,7 @@ def get_args() -> argparse.Namespace:
     #### SET UP USER ARGS
     parser = argparse.ArgumentParser()
     parser.add_argument("--lr", default=1e-4, type=float)
-    parser.add_argument("--epochs", default=5, type=int)
+    parser.add_argument("--max_epochs", default=10, type=int)
     parser.add_argument(
         "--max_checkpoint_num",
         default=1,
@@ -71,5 +71,16 @@ def get_args() -> argparse.Namespace:
         type=int,
         help="number of checks with no improvement after which to stop training",
     )
-    parser.add_argument("--layer_number", default=9, type=int)
+    parser.add_argument(
+        "--lora_rank",
+        default=8,
+        type=int,
+        help="rank of the LoRA approximation."
+    )
+    parser.add_argument(
+        "--strategy",
+        default="deepspeed_stage_2",
+        type=str,
+        help="training strategy to use (deepspeed_stage_2, deepspeed_stage_3, fdsp)"
+    )
     return parser.parse_args()

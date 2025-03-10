@@ -28,7 +28,7 @@ def main(args: argparse.Namespace):
     )
 
     filename_template = (
-        f"attnlens-layer-{config.layer_number}" + "-{epoch:02d}-{step}-{train_loss:.2f}"
+        f"attnlens-layer-" + "-{epoch:02d}-{step}-{train_loss:.2f}"
     )
     checkpoint_callback = ModelCheckpoint(
         # TODO change the max num of checkpoints
@@ -44,14 +44,16 @@ def main(args: argparse.Namespace):
 
     callbacks = []
     lens = LightningLens(
-        config.model_name, 
-        "lenslr", 
-        config.layer_number, 
-        config.lr,
-        r = 8 # Rank of the attention lens to be trained. can vary from 1 to d_model.
+        model_name = config.model_name, 
+        lens_cls="lenslr", 
+        lr = config.lr,
+        r = config.lora_rank,
     ) 
     
-    data = DataModule()
+    data = DataModule(
+        name=config.data_dir,
+        batch_size=config.batch_size,
+    )
     train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
 
 

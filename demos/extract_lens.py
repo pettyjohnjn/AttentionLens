@@ -1,172 +1,209 @@
 import sys
-sys.path.append("..")
-
-from attention_lens.model.get_model import get_model
-from attention_lens.lens import Lens
-import torch
-import torch.nn as nn
-import glob
 import os
+import glob
 import argparse
 import subprocess
+import torch
+import torch.nn as nn
 
-# Print the current working directory
-current_directory = os.getcwd()
-print("Current working directory:", current_directory)
+sys.path.append("..")
+from attention_lens.lens import Lens
 
-# Set up user args
-parser = argparse.ArgumentParser()
-
-parser.add_argument(
-    "--ckpt_dir",
-    default="/grand/SuperBERT/pettyjohnjn/AttnLens_GPT/checkpoint_rank02",
-    type=str,
-    help="Path to directory containing all latest ckpts for a lens",
-)
-
-parser.add_argument(
-    "--save_dir",
-    default="/grand/SuperBERT/pettyjohnjn/LoraLens_Pile2/extracted_checkpoint/gpt2/R02/",
-    type=str,
-    help="Path to directory where script should save all extracted lenses",
-)
-
-args = parser.parse_args()
-
-# Single device
-device = "cpu"
-
-# Initialize the model (and get its unembed weight for the lens)
-model, _ = get_model(device=device)
-bias = torch.zeros(50257).to(device)
-
-# For the "lenslr" version, retrieve the appropriate class using its name.
-lens_cls_name = "lenslr"
-lens_cls = Lens.get_lens(lens_cls_name)
-
-# Instantiate the attention lens using the LensLR constructor.
-attn_lens = lens_cls(
-    unembed=model.lm_head.weight.T,
-    bias=bias,
-    n_head=model.config.num_attention_heads,
-    d_model=model.config.hidden_size,
-    d_vocab=model.config.vocab_size,
-    r=8,                 # LoRA rank
-    lora_alpha=1,        # LoRA alpha scaling
-    lora_dropout=0.0,    # LoRA dropout probability
-    merge_weights=True,  # (We will merge explicitly below.)
-)
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--ckpt_dir",
+        default="/grand/SuperBERT/pettyjohnjn/AttnLens_GPT/checkpoint",
+        type=str,
+        help="Directory containing checkpoints for a lens",
+    )
+    parser.add_argument(
+        "--save_dir",
+        default="/grand/SuperBERT/pettyjohnjn/LoraLens/Full/ckpt_",
+        type=str,
+        help="Directory where extracted lenses will be saved",
+    )
+    return parser.parse_args()
 
 def change_dict_key(d, old_key, new_key, default_value=None):
+    """Rename key in dictionary."""
     d[new_key] = d.pop(old_key, default_value)
 
-def merge_lora_weights(attn_lens):
+def merge_lora_weights(lens_instance):
     """
-    For each head, compute:
+    Merge each LoRA layer's low-rank update with the shared base weight.
+    For each layer, compute:
         effective_weight = shared_unembed + (lora_B @ lora_A) * (lora_alpha / r)
-    and then replace the LoRA layer with a standard nn.Linear holding the merged weight and bias.
+    and replace the LoRA layer with a standard nn.Linear.
     """
-    new_linears = []
-    for i, linear in enumerate(attn_lens.linears):
-        if not (hasattr(linear, 'lora_A') and hasattr(linear, 'lora_B')):
-            raise AttributeError(f"Linear layer {i} is missing LoRA parameters.")
-        
-        lora_A = linear.lora_A  # expected shape: (r, d_model)
-        lora_B = linear.lora_B  # expected shape: (d_vocab, r)
+    merged_linears = []
+    for idx, layer in enumerate(lens_instance.linears):
+        if not (hasattr(layer, 'lora_A') and hasattr(layer, 'lora_B')):
+            raise AttributeError(f"Layer {idx} is missing LoRA parameters.")
+
+        lora_A = layer.lora_A  # shape: (r, d_model)
+        lora_B = layer.lora_B  # shape: (d_vocab, r)
         r_val = lora_A.shape[0]
-        lora_alpha = getattr(linear, 'lora_alpha', 1)
+        lora_alpha = getattr(layer, 'lora_alpha', 1)
         scaling = lora_alpha / r_val if r_val != 0 else 1.0
 
         update = torch.matmul(lora_B, lora_A) * scaling
-        base = attn_lens.shared_unembed.detach()
+        base = lens_instance.shared_unembed.detach()
         effective_weight = base + update.detach()
 
-        bias_linear = linear.bias.detach().clone()
-        new_linear = nn.Linear(attn_lens.d_model, attn_lens.d_vocab)
-        new_linear.weight = nn.Parameter(effective_weight)
-        new_linear.bias = nn.Parameter(bias_linear)
-        new_linears.append(new_linear)
+        merged_layer = nn.Linear(lens_instance.d_model, lens_instance.d_vocab)
+        merged_layer.weight = nn.Parameter(effective_weight)
+        merged_layer.bias = nn.Parameter(layer.bias.detach().clone())
+        merged_linears.append(merged_layer)
 
-    attn_lens.linears = nn.ModuleList(new_linears)
-    attn_lens.shared_unembed = None
-    return attn_lens
+    lens_instance.linears = nn.ModuleList(merged_linears)
+    lens_instance.shared_unembed = None  # no longer needed
+    return lens_instance
 
-def extract_and_save_lense_from_ckpt(ckpt_filepath, save_filepath):
-    if os.path.isdir(ckpt_filepath):
-        print(f"{ckpt_filepath} is a directory. Running zero_to_fp32 conversion.")
-        zero_to_fp32_script = os.path.join(ckpt_filepath, "zero_to_fp32.py")
-        if not os.path.exists(zero_to_fp32_script):
-            print(f"Error: {zero_to_fp32_script} not found in the checkpoint directory.")
-            return
+def infer_config_from_state(state_dict):
+    """
+    Infer d_model, d_vocab, and n_layers from the checkpoint state.
+      - shared_unembed is expected to have shape (d_vocab, d_model)
+      - The number of layers is inferred by the highest index in keys like "linears.X.lora_A"
+    """
+    if "shared_unembed" not in state_dict:
+        raise KeyError("Checkpoint does not contain 'shared_unembed'.")
+    shared_unembed = state_dict["shared_unembed"]
+    d_vocab, d_model = shared_unembed.shape
 
-        fp32_ckpt = os.path.join(ckpt_filepath, "pytorch_model_fp32.bin")
-        command = ["python", zero_to_fp32_script, ".", "pytorch_model_fp32.bin"]
-        print("Running command:", " ".join(command))
-        subprocess.run(command, check=True, cwd=ckpt_filepath)
+    # Infer n_layers from keys such as "linears.0.lora_A"
+    layer_indices = set()
+    for key in state_dict.keys():
+        if key.startswith("linears."):
+            try:
+                # key format: "linears.{idx}.<param>"
+                parts = key.split(".")
+                layer_indices.add(int(parts[1]))
+            except (IndexError, ValueError):
+                continue
+    n_layers = max(layer_indices) + 1 if layer_indices else 0
+    return d_model, d_vocab, n_layers
+
+def load_checkpoint_state(ckpt_path):
+    """
+    Load and clean the checkpoint state.
+      - If ckpt_path is a directory, runs conversion to fp32.
+      - Removes unwanted prefixes and retains keys starting with "attn_lens".
+    """
+    if os.path.isdir(ckpt_path):
+        print(f"{ckpt_path} is a directory. Converting using zero_to_fp32...")
+        conversion_script = os.path.join(ckpt_path, "zero_to_fp32.py")
+        if not os.path.exists(conversion_script):
+            raise FileNotFoundError(f"{conversion_script} not found.")
+        fp32_ckpt = os.path.join(ckpt_path, "pytorch_model_fp32.bin")
+        subprocess.run(
+            ["python", conversion_script, ".", "pytorch_model_fp32.bin"],
+            check=True,
+            cwd=ckpt_path,
+        )
         ckpt_to_load = fp32_ckpt
     else:
-        ckpt_to_load = ckpt_filepath
+        ckpt_to_load = ckpt_path
 
     print(f"Loading checkpoint from {ckpt_to_load}")
-    loaded_ckpt = torch.load(ckpt_to_load, map_location="cpu")
-    a = loaded_ckpt["state_dict"] if "state_dict" in loaded_ckpt else loaded_ckpt
+    ckpt = torch.load(ckpt_to_load, map_location="cpu",weights_only=True)
+    state_dict = ckpt.get("state_dict", ckpt)
 
-    for key in list(a.keys()):
+    # Clean up keys: remove any prefix (e.g., "_forward_module.") and the "attn_lens" prefix.
+    for key in list(state_dict.keys()):
         clean_key = key.replace("_forward_module.", "")
         if not clean_key.startswith("attn_lens"):
-            del a[key]
+            del state_dict[key]
         else:
+            # Remove the "attn_lens" prefix (assumed to be 10 characters long).
             new_key = clean_key[10:]
-            change_dict_key(a, key, new_key)
+            change_dict_key(state_dict, key, new_key)
+    return state_dict
 
-    if "shared_unembed" in a:
-        attn_lens.shared_unembed = nn.Parameter(a["shared_unembed"])
+def build_lens_from_checkpoint(ckpt_path, r=8, lora_alpha=1, lora_dropout=0.0, merge_weights=True):
+    """
+    Build a new lens instance directly from the checkpoint.
+      - Infers model dimensions from the saved state.
+      - Uses the transposed shared_unembed as the dummy "unembed".
+      - Uses the bias from the first layer (if available) or zeros.
+    """
+    state_dict = load_checkpoint_state(ckpt_path)
+    d_model, d_vocab, n_layers = infer_config_from_state(state_dict)
+    print(f"Inferred config -- d_model: {d_model}, d_vocab: {d_vocab}, n_layers: {n_layers}")
+
+    # Use the transposed shared_unembed as unembed (since shared_unembed is unembed.T).
+    shared_unembed = state_dict["shared_unembed"]
+    unembed = shared_unembed.t().clone()  # shape: (d_model, d_vocab)
+
+    # Use bias from the first layer if available; otherwise create zeros.
+    first_bias_key = "linears.0.bias"
+    if first_bias_key in state_dict:
+        bias = state_dict[first_bias_key].clone()
     else:
-        print("Warning: 'shared_unembed' not found in checkpoint state_dict.")
+        bias = torch.zeros(d_vocab)
 
-    for i in range(attn_lens.n_head):
-        prefix = f"linears.{i}."
-        for sub in ["lora_A", "lora_B", "bias"]:
-            key = prefix + sub
-            if key in a:
-                param = a[key]
-                if sub == "bias":
-                    attn_lens.linears[i].bias = nn.Parameter(param)
-                elif sub == "lora_A":
-                    attn_lens.linears[i].lora_A = nn.Parameter(param)
-                elif sub == "lora_B":
-                    attn_lens.linears[i].lora_B = nn.Parameter(param)
+    # Instantiate the new lens. The lens class (LensLR) is obtained by name.
+    lens_cls_name = "lenslr"
+    lens_cls = Lens.get_lens(lens_cls_name)
+    lens_instance = lens_cls(
+        unembed=nn.Parameter(unembed),
+        bias=nn.Parameter(bias),
+        n_layers=n_layers,
+        d_model=d_model,
+        d_vocab=d_vocab,
+        r=r,
+        lora_alpha=lora_alpha,
+        lora_dropout=lora_dropout,
+        merge_weights=merge_weights,
+    )
+
+    # Update each layer's parameters (lora_A, lora_B, bias) from the checkpoint.
+    for layer_idx in range(n_layers):
+        prefix = f"linears.{layer_idx}."
+        for param_name in ["lora_A", "lora_B", "bias"]:
+            key = prefix + param_name
+            if key in state_dict:
+                param = state_dict[key]
+                if param_name == "bias":
+                    lens_instance.linears[layer_idx].bias = nn.Parameter(param)
+                elif param_name == "lora_A":
+                    lens_instance.linears[layer_idx].lora_A = nn.Parameter(param)
+                elif param_name == "lora_B":
+                    lens_instance.linears[layer_idx].lora_B = nn.Parameter(param)
             else:
-                print(f"Warning: '{key}' not found in checkpoint state_dict.")
+                print(f"Warning: '{key}' not found in checkpoint.")
+    return lens_instance
 
-    merge_lora_weights(attn_lens)
+def extract_and_save_lens(ckpt_path, save_path, r=8, lora_alpha=1, lora_dropout=0.0, merge_weights=True):
+    """
+    Build the lens from the checkpoint, merge its LoRA weights, and save it.
+    """
+    lens_instance = build_lens_from_checkpoint(
+        ckpt_path, r=r, lora_alpha=lora_alpha, lora_dropout=lora_dropout, merge_weights=merge_weights
+    )
+    merge_lora_weights(lens_instance)
+    torch.save(lens_instance, save_path)
+    print(f"Extracted lens saved to {save_path}")
 
-    print(f"Saving extracted lens to {save_filepath}")
-    torch.save(attn_lens, save_filepath)
-    print(f"Successfully saved extracted lens to {save_filepath}")
+def process_checkpoints(ckpt_dir, save_dir, r=8, lora_alpha=1, lora_dropout=0.0, merge_weights=True):
+    """
+    Recursively process checkpoint files in ckpt_dir,
+    extract lens for each, and save them in save_dir.
+    """
+    os.makedirs(save_dir, exist_ok=True)
+    ckpt_files = glob.glob(os.path.join(ckpt_dir, "**/*.ckpt"), recursive=True)
+    for ckpt_file in ckpt_files:
+        print(f"Processing checkpoint: {ckpt_file}")
+        save_path = os.path.join(save_dir, os.path.basename(ckpt_file))
+        extract_and_save_lens(
+            ckpt_file, save_path, r=r, lora_alpha=lora_alpha, lora_dropout=lora_dropout, merge_weights=merge_weights
+        )
 
-def iter_thru_ckpts_extract_lenses(ckpt_dir, save_dir):
-    # Recursively iterate through all .ckpt files (or directories) in ckpt_dir.
-    for filename in glob.glob(os.path.join(ckpt_dir, "**/*.ckpt"), recursive=True):
-        print(f"Processing checkpoint: {filename}")
+def main():
+    args = parse_args()
+    print("Current working directory:", os.getcwd())
+    process_checkpoints(args.ckpt_dir, args.save_dir)
+    print("Extraction process complete.")
 
-        # Determine the layer number from the parent folder's name.
-        parent_dir = os.path.basename(os.path.dirname(filename))
-        # Expecting folder names like "ckpt_02". Adjust if your naming differs.
-        if parent_dir.startswith("ckpt_"):
-            layer_num = parent_dir.split("ckpt_")[-1]
-        else:
-            layer_num = "unknown"
-        
-        # Create a subfolder in save_dir for this layer.
-        layer_folder = os.path.join(save_dir, f"L{layer_num}")
-        if not os.path.exists(layer_folder):
-            os.makedirs(layer_folder)
-        
-        # Save file in the appropriate layer folder.
-        save_filepath = os.path.join(layer_folder, os.path.basename(filename))
-        extract_and_save_lense_from_ckpt(filename, save_filepath=save_filepath)
-
-print("Starting extraction process...")
-iter_thru_ckpts_extract_lenses(args.ckpt_dir, args.save_dir)
-print("Done")
+if __name__ == "__main__":
+    main()

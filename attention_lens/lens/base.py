@@ -13,7 +13,7 @@ class Lens(nn.Module):
         self,
         unembed: nn.Parameter,
         bias: nn.Parameter,
-        n_head: int,
+        n_layers: int,
         d_model: int,
         d_vocab: int,
         r: int = 0,               # LoRA rank
@@ -25,7 +25,7 @@ class Lens(nn.Module):
         Args:
             unembed (nn.Parameter): Unembedding matrix \( W_U \).
             bias (nn.Parameter): Bias vector.
-            n_head (int): Number of attention heads.
+            n_layers (int): Number of attention layers.
             d_model (int): Dimension of the model.
             d_vocab (int): Vocabulary size.
             r (int, optional): LoRA rank. Defaults to 0 (no LoRA).
@@ -36,7 +36,7 @@ class Lens(nn.Module):
         super().__init__()
         self.unembed = unembed
         self.bias = bias
-        self.n_head = n_head
+        self.n_layers = n_layers
         self.d_model = d_model
         self.d_vocab = d_vocab
         self.r = r

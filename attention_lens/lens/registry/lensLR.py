@@ -10,7 +10,7 @@ class LensLR(Lens):
         self,
         unembed: nn.Parameter,
         bias: nn.Parameter,
-        n_head: int,
+        n_layers: int,
         d_model: int,
         d_vocab: int,
         r: int = 8,
@@ -21,17 +21,18 @@ class LensLR(Lens):
         super().__init__(
             unembed,
             bias,
-            n_head,
+            n_layers,
             d_model,
             d_vocab,
-            r=r,
+            r=8,
             lora_alpha=lora_alpha,
             lora_dropout=lora_dropout,
             merge_weights=merge_weights,
         )
 
         # Create a single shared parameter that holds the transpose of unembed (frozen).
-        self.shared_unembed = nn.Parameter(self.unembed.clone().t(), requires_grad=False)
+        #self.shared_unembed = nn.Parameter(self.unembed.clone().t(), requires_grad=False)
+        #self.shared_unembed = self.unembed.t() # Create a reference to original unembedding matrix, avoiding duplication. 
 
         # Create LoRA-enhanced Linear layers for each head
         self.linears = nn.ModuleList(
@@ -39,39 +40,41 @@ class LensLR(Lens):
                 lora.Linear(
                     in_features=self.d_model,
                     out_features=self.d_vocab,
-                    r=4,
+                    r=self.r,
                     lora_alpha=self.lora_alpha,
                     lora_dropout=self.lora_dropout,
                 )
-                for _ in range(self.n_head)
+                for _ in range(self.n_layers)
             ]
         )
+
+        print("LoRA Approximation Rank set to: {self.r}")
 
         # Replace each linear's original weight with the single shared_unembed
         # and initialize its bias from the original bias
         for linear in self.linears:
             del linear.weight
-            linear.register_parameter("weight", self.shared_unembed)
+            linear.register_parameter("weight", nn.Parameter(self.unembed.t()))
             linear.bias.data = self.bias.data.clone()
 
     def forward(self, input_tensor: torch.Tensor) -> torch.Tensor:
         """
         Args:
-            input_tensor (torch.Tensor): shape (batch_size, pos, n_head, d_model)
+            input_tensor (torch.Tensor): shape (batch_size, pos, n_layers, d_model)
 
         Returns:
             torch.Tensor: shape (batch_size, pos, d_vocab), sum of outputs
                           from all attention heads.
         """
-        batch_size, pos, n_head, d_model = input_tensor.size()
-        assert n_head == self.n_head, "Number of heads in input does not match LensLR."
+        batch_size, pos, n_layers, d_model = input_tensor.size()
+        assert n_layers == self.n_layers, "Number of layers in input does not match LensLR."
 
         # Accumulate outputs over all heads
         output_tensors = torch.zeros(
             (batch_size, pos, self.d_vocab), device=input_tensor.device
         )
 
-        for i in range(n_head):
+        for i in range(n_layers):
             input_head = input_tensor[:, :, i, :]        # [batch_size, pos, d_model]
             input_flat = input_head.reshape(-1, d_model) # [batch_size * pos, d_model]
             output_flat = self.linears[i](input_flat)    # [batch_size * pos, d_vocab]

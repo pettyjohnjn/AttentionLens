@@ -8,7 +8,7 @@ from attention_lens.data.get_data_pl import DataModule
 from attention_lens.train.config import TrainConfig
 from attention_lens.train.lightning_lens import LightningLens
 
-from lightning.pytorch.strategies import FSDPStrategy
+from lightning.pytorch.strategies import FSDPStrategy, DeepSpeedStrategy
 
 def train_lens(
     lens: LightningLens,
@@ -49,13 +49,32 @@ def train_lens(
     # otherwise 32-bit precision is used.
     training_precision = "16-mixed" if config.mixed_precision else 32
 
+    if config.strategy == "deepspeed_stage_2":
+        deepspeed_stage_2_config = {
+            "zero_optimization": {
+                "stage": 2,  # Using ZeRO Stage 2
+                "model_persistence_threshold": 0,  # Custom threshold
+            },
+        }
+        strategy = DeepSpeedStrategy(config=deepspeed_stage_2_config)
+    elif config.strategy == "deepspeed_stage_3":
+        deepspeed_stage_3_config = {
+            "zero_optimization": {
+                "stage": 3,
+                "model_persistence_threshold": 0,
+            }
+        }
+        strategy = DeepSpeedStrategy(config=deepspeed_stage_3_config)
+    elif config.strategy == "fsdp":
+        strategy = FSDPStrategy(use_orig_params=True)
+
     trainer = pl.Trainer(
         #   The training uses a distributed data parallel strategy with unused parameter detection
         #enabled. (Necessary for GPU training, incompatible for CPU training.)
-        strategy="deepspeed_stage_2",
-        accelerator="auto",
+        strategy=strategy,
         precision=training_precision,
-        max_epochs=20,
+        accelerator="auto",
+        max_epochs=config.max_epochs,
         num_nodes=config.num_nodes,
         default_root_dir=config.checkpoint_dir,
         accumulate_grad_batches=config.accumulate_grad_batches,
@@ -76,9 +95,7 @@ def train_lens(
         )
 
         if config.checkpoint_dir.exists():
-            layer_identifier = f"layer-{config.layer_number}"
-            files = config.checkpoint_dir.glob("*.ckpt")
-            files = [file for file in files if layer_identifier in file.name]
+            files = list(config.checkpoint_dir.glob("*.ckpt"))
             if files:
                 most_recent_file = max(files, key=lambda p: p.stat().st_ctime)
                 config.reload_checkpoint = most_recent_file

@@ -69,7 +69,7 @@ def visualize_token_clusters(args):
         bias = torch.zeros(weight.size(0), device=weight.device)
     
     # Compute the pseudo-inverse of the weight matrix.
-    pinv_weight = torch.linalg.pinv(weight)
+    inv_weight = weight.T
     
     # Get the full vocabulary (sorted by token id).
     vocab = tokenizer.get_vocab()  # dict mapping token -> id
@@ -104,7 +104,7 @@ def visualize_token_clusters(args):
     for idx in token_ids:
         one_hot = torch.zeros(vocab_size, device=weight.device)
         one_hot[idx] = 1.0
-        residual = pinv_weight.matmul(one_hot - bias)
+        residual = inv_weight.matmul(one_hot - bias)
         residual_reps.append(residual.cpu().numpy())
     residual_reps = np.array(residual_reps)
     

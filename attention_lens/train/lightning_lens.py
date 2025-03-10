@@ -39,9 +39,8 @@ class LightningLens(pl.LightningModule):
         self,
         model_name: str,      # Name of the transformer model
         lens_cls: type[Lens] | str,  # Lens class or its string identifier
-        layer_num: int,       # Layer number to hook
         lr: float = 1e-4,     # Learning rate
-        rank: int = 8,        # LoRA rank (equivalent to 'r')
+        r: int = 8,        # LoRA rank
         **kwargs,             # Additional arguments (ensure they are not LoRA-specific)
     ):
         """
@@ -50,7 +49,6 @@ class LightningLens(pl.LightningModule):
         Args:
             model_name (str): Name of the transformer model.
             lens_cls (type[Lens] | str): Lens class or its string identifier.
-            layer_num (int): Layer number to hook.
             lr (float, optional): Learning rate. Defaults to 1e-3.
             rank (int, optional): LoRA rank. Defaults to 8.
             **kwargs: Additional keyword arguments for LightningModule (ensure no LoRA-specific keys).
@@ -60,9 +58,8 @@ class LightningLens(pl.LightningModule):
         super().__init__()
         
         self.model_name = model_name
-        self.layer_num = layer_num
         self.lr = lr
-        self.rank = rank
+        self.r = r
 
         # Initialize the model and tokenizer
         self.model, self.tokenizer = get_model(
@@ -94,10 +91,10 @@ class LightningLens(pl.LightningModule):
         self.attn_lens = lens_cls(
             unembed=self.weights,
             bias=self.bias,
-            n_head=self.model.config.num_attention_heads,
+            n_layers=self.model.config.n_layer,
             d_model=self.model.config.hidden_size,
             d_vocab=self.model.config.vocab_size,
-            r=self.rank  # Pass LoRA rank here
+            r=self.r  # Pass LoRA rank here
         )
 
     def kl_loss(self, logits, lens_logits) -> torch.Tensor:
@@ -183,10 +180,10 @@ class LightningLens(pl.LightningModule):
         ).to(self.device)
 
         with torch.no_grad():
-            outputs = self.model(**inputs)
+            outputs = self.model(**inputs, output_attentions=True)
             # Assuming you have a hook that stores 'head_out' for the specified layer
             # Modify this part based on how you access the cached outputs
-            cache = self.model.transformer.h[self.layer_num].attn.head_out  # Shape: [batch_size, pos, d_model]
+            cache = torch.stack(outputs.attentions, dim = 2)  # Shape: [batch_size, pos, d_model]
             logits = outputs.logits  # Shape: [batch_size, pos, d_vocab]
 
         lens_logits = self.forward(cache)  # Shape: [batch_size, d_vocab]

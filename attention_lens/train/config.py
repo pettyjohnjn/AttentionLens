@@ -6,25 +6,32 @@ from typing import Optional
 
 @dataclass
 class TrainConfig:
-    # Lightning arguments
+    # Training-specific arguments
     lr: float = field(default=1e-2)
-    epochs: int = field(default=3)
+    max_epochs: int = field(default=10)
     max_checkpoint_num: int = field(default=10)
-    batch_size: int = field(default=1)
     num_nodes: int = field(default=1)
     mixed_precision: bool = field(default=True)
-    # TODO: add argument that sets/fixes precision to 32- or 64-bit.
     checkpoint_mode: str = field(default="step")
     num_steps_per_checkpoint: int = field(default=5)
-    checkpoint_dir: Path | str = field(default="checkpoint")
     accumulate_grad_batches: int = field(default=10)
-    reload_checkpoint: Optional[Path | str] = field(default=None)
     stopping_delta: float = field(default=1e-7)
     stopping_patience: int = field(default=2)
-
-    # AttentionLens-specific arguments
+    reload_checkpoint: Optional[Path | str] = field(default=None)
+    strategy: str = field(default="deepspeed_stage_2")
+    checkpoint_dir: Path = field(default=Path("checkpoint"))
+    # Lens-specific arguments
     model_name: str = field(default="gpt2")
-    layer_number: int = field(default=0)
+    lora_rank: int = field(default=8)
+    # Data module-specific arguments
+    data_dir: Path | str = field(default="/grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile")
+    split: str = field(default="train")
+    batch_size: int = field(default=1)
+    data_num_workers: int = field(default=1)
+    data_pin_memory: bool = field(default=True)
+    chunk_size: int = field(default=256)
+    chunk: bool = field(default=False)
+
 
     def __post_init__(self):
         if isinstance(self.checkpoint_dir, str):

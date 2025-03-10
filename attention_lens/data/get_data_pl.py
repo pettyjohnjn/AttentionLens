@@ -1,5 +1,5 @@
 import lightning.pytorch as pl
-from datasets import load_dataset
+from datasets import load_dataset, load_from_disk
 from torch.utils.data import DataLoader
 
 
@@ -8,13 +8,13 @@ class DataModule(pl.LightningDataModule):
 
     def __init__(
         self,
-        name: str = "monology/pile-uncopyrighted",
+        name: str = "/grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile",
         split: str = "train",
-        batch_size: int = 64,
-        num_workers: int = 32,
+        batch_size: int = 16,
+        num_workers: int = 16,
         pin_memory: bool = True,
         chunk_size: int = 128,  # added chunk size parameter
-        shuffle: bool = True,
+        chunk: bool = False,
     ) -> None:
         super().__init__()
         self.name = name
@@ -23,7 +23,7 @@ class DataModule(pl.LightningDataModule):
         self.num_workers = num_workers
         self.pin_memory = pin_memory
         self.chunk_size = chunk_size
-        self.shuffle = shuffle
+        self.chunk = chunk
 
     def chunk_examples(self, examples):
         # Ensure the correct field name based on your dataset
@@ -36,19 +36,21 @@ class DataModule(pl.LightningDataModule):
     def setup(self, stage) -> None:
         """Initializes a huggingface dataset and applies chunking."""
         # Load the dataset
-        self.data = load_dataset(self.name, split=self.split)
+        #self.data = load_dataset(self.name, split=self.split)
+        self.data = load_from_disk(self.name)
 
-        # Randomly sample 0.1% of the data before processing
-        sample_size = max(1, int(len(self.data) * 0.001))
-        self.data = self.data.shuffle(seed=43).select(range(sample_size))
+        # Randomly sample xx% of the data before processing
+        sample_size = max(1, int(len(self.data) * 0.1)) # 
+        self.data = self.data.shuffle(seed=42).select(range(sample_size))
 
         # Apply the chunking function using `map`
-        self.data = self.data.map(
-            self.chunk_examples,
-            batched=True,
-            remove_columns=self.data.column_names,
-            num_proc=32
-            )
+        if self.chunk:
+            self.data = self.data.map(
+                self.chunk_examples,
+                batched=True,
+                remove_columns=self.data.column_names,
+                num_proc=32
+                )
 
     def train_dataloader(self) -> DataLoader:
         """Creates an instance of `DataLoader` with the processed (chunked) data."""
@@ -56,7 +58,6 @@ class DataModule(pl.LightningDataModule):
         return DataLoader(
             self.data,
             batch_size=self.batch_size,
-            shuffle = self.shuffle,
             pin_memory=self.pin_memory,
             num_workers=self.num_workers,
         )
