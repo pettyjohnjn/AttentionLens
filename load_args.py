@@ -20,7 +20,7 @@ def get_args() -> argparse.Namespace:
         "--model_name",
         default="gpt2",
         type=str,
-        choices=["gpt2"],
+        choices=["gpt2", "llama3_8b"],
     )
     parser.add_argument(
         "--mixed_precision",
@@ -84,3 +84,14 @@ def get_args() -> argparse.Namespace:
         help="training strategy to use (deepspeed_stage_2, deepspeed_stage_3, fdsp)"
     )
     return parser.parse_args()
+
+
+
+    # Mapping aliases to full model names
+    model_aliases = {
+        "gpt2": "gpt2",
+        "llama3_8b": "/grand/SuperBERT/aswathy/models/models--meta-llama--Meta-Llama-3-8B-Instruct",
+    }
+    args.model_name = model_aliases[args.model_name]
+
+    return args

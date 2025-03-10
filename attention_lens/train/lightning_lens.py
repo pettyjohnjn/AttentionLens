@@ -190,7 +190,7 @@ class LightningLens(pl.LightningModule):
         loss = self.kl_loss(logits, lens_logits)
         self.log("train_loss", loss, prog_bar=True)
 
-        save_memory_usage()
+        # save_memory_usage()
         return loss
 
     def configure_optimizers(self) -> torch.optim.Optimizer:
