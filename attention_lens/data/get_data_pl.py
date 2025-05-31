@@ -8,7 +8,7 @@ class DataModule(pl.LightningDataModule):
 
     def __init__(
         self,
-        name: str = "/grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile",
+        name: str = "/grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile_512",
         split: str = "train",
         batch_size: int = 16,
         num_workers: int = 16,

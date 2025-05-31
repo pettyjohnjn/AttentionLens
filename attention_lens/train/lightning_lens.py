@@ -3,6 +3,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
+from functools import reduce
+
 import lightning.pytorch as pl
 import torch
 import torch.nn.functional as F
@@ -41,6 +43,7 @@ class LightningLens(pl.LightningModule):
         lens_cls: type[Lens] | str,  # Lens class or its string identifier
         lr: float = 1e-4,     # Learning rate
         r: int = 8,        # LoRA rank
+        train_attn: bool = True,
         **kwargs,             # Additional arguments (ensure they are not LoRA-specific)
     ):
         """
@@ -55,47 +58,58 @@ class LightningLens(pl.LightningModule):
         """
         # Remove LoRA-specific parameters from kwargs before passing to super().__init__()
         # This prevents passing unexpected parameters to pl.LightningModule
-        super().__init__()
-        
+        super().__init__(**kwargs)
+
+        # flags
+        self.train_attn = train_attn
+
+        # core model
         self.model_name = model_name
         self.lr = lr
         self.r = r
+        self.model, self.tokenizer = get_model(model_name=self.model_name, device=self.device)
 
-        # Initialize the model and tokenizer
-        self.model, self.tokenizer = get_model(
-            model_name=self.model_name, device=self.device
-        )
+        # shared unembed + bias
+        unembed = self.model.lm_head.weight.T.clone().detach()
+        self.register_buffer("shared_unembed", unembed)
+        if self.model.lm_head.bias is not None:
+            raw_bias = self.model.lm_head.bias.detach().clone()
+        else:
+            raw_bias = torch.zeros(self.model.config.vocab_size, device = self.device)
 
-        # Handle lens_cls being a string or a class
+        # Resolve lens class
         if isinstance(lens_cls, str):
             lens_cls = Lens.get_lens(lens_cls)
         elif not issubclass(lens_cls, Lens):
             raise ValueError(
                 "Argument `lens_cls` must be a subclass of `Lens` or its string identifier."
             )
+        
+        if self.train_attn:
+            self.attn_cache = []
+            self._register_attention_hooks()
+            self.attn_lens = lens_cls(
+                unembed=unembed,
+                bias=raw_bias,
+                n_layers=self.model.config.num_hidden_layers,
+                d_model=self.model.config.hidden_size,
+                d_vocab=self.model.config.vocab_size,
+                r=self.r
+            )
 
-        # Handle bias initialization
-        if self.model.lm_head.bias is None:
-            self.bias = torch.zeros(self.model.config.vocab_size).to(self.device)
-            # Alternatively, load from a file if needed
-            # self.bias = torch.load('b_U.pt').to(self.device)
-        else:
-            self.bias = self.model.lm_head.bias
+    def on_train_start(self) -> None:
+        # at this point Lightning/DeepSpeed has wrapped your model,
+        # so hooks will stick to the real modules that actually run.
+        if self.train_attn:
+            # clear any spurious old handles
+            for h in getattr(self, "_hook_handles", []):
+                h.remove()
+            self._hook_handles = []
+            self._register_attention_hooks()
+            # sanity check
+            if not self._hook_handles:
+                raise RuntimeError("No attention hooks registered at train start!")
 
-        # Handle weights initialization
-        # If weights are loaded from a file, uncomment the following line
-        # self.weights = torch.load('W_U.pt').to(self.device)
-        self.weights = self.model.lm_head.weight.T  # Shape: [d_vocab, d_model]
-
-        # Initialize the attention lens with LoRA
-        self.attn_lens = lens_cls(
-            unembed=self.weights,
-            bias=self.bias,
-            n_layers=self.model.config.n_layer,
-            d_model=self.model.config.hidden_size,
-            d_vocab=self.model.config.vocab_size,
-            r=self.r  # Pass LoRA rank here
-        )
 
     def kl_loss(self, logits, lens_logits) -> torch.Tensor:
         r"""
@@ -178,15 +192,19 @@ class LightningLens(pl.LightningModule):
             padding=True,
             return_tensors="pt",
         ).to(self.device)
+        padding_mask = inputs["attention_mask"]
+
+        # Clear Caches
+        if self.train_attn: self.attn_cache.clear()
 
         with torch.no_grad():
             outputs = self.model(**inputs, output_attentions=True)
             # Assuming you have a hook that stores 'head_out' for the specified layer
             # Modify this part based on how you access the cached outputs
-            cache = torch.stack(outputs.attentions, dim = 2)  # Shape: [batch_size, pos, d_model]
+            if self.train_attn: attn_cache = torch.stack(self.attn_cache, dim = 2)
             logits = outputs.logits  # Shape: [batch_size, pos, d_vocab]
 
-        lens_logits = self.forward(cache)  # Shape: [batch_size, d_vocab]
+        lens_logits = self.forward(attn_cache)  # Shape: [batch_size, d_vocab]
         loss = self.kl_loss(logits, lens_logits)
         self.log("train_loss", loss, prog_bar=True)
 
@@ -209,3 +227,78 @@ class LightningLens(pl.LightningModule):
     # TODO(MS): register an early stopping call back which quits training if the loss/some metric drops below a certain point
     # TODO(MS): when training quits, save a copy of the appropriately named lens
     # TODO(MS): test and make sure distributed training works across nodes
+
+    # Helper Functions
+
+    def _get_attr_path(self, root, path: str):
+        """
+        Resolve a dotted attribute path (e.g. "transformer.h")
+        on `root', or raise AttributeError if any step fails.
+        """
+        obj = root
+        for name in path.split("."):
+            obj = getattr(obj, name)
+        return obj
+
+    def _save_attn_output(self, module, input, output):
+        """
+        Hook callback to save the attention outputs.
+
+        Args:
+            module: The module for which the hook is registered.
+            input: The input to the module.
+            output: The output from the module.
+        """
+        # If output is a tuple, take its first element; otherwise, use the output directly.
+        attn_out = output[0] if isinstance(output, tuple) else output
+        # print(attn_out.shape)
+        self.attn_cache.append(attn_out)
+
+    def _register_attention_hooks(self):
+        mtype = getattr(self.model.config, "model_type", None)
+
+        # map model_type to (module_path, attn_attr)
+        mapping = {
+            "gpt2": ("transformer.h", "attn"),
+            "llama": ("model.layers", "self_attn"),
+        }
+
+        handles: list[torch.utils.hooks.RemovableHandle] = []
+
+        if mtype in mapping:
+            module_path, attn_attr = mapping[mtype]
+
+            try:
+                layers = self._get_attr_path(self.model, module_path)
+            except AttributeError:
+                raise RuntimeError(
+                    f"Found model_type={mtype!r} in mapping, but module path {module_path!r} "
+                    "does not exist on this model."
+                )
+
+            for layer in layers:
+                try:
+                    attn_mod = reduce(getattr, attn_attr.split("."), layer)
+                except AttributeError:
+                    continue
+                handles.append(attn_mod.register_forward_hook(self._save_attn_output))
+
+            if not handles:
+                raise RuntimeError(
+                    f"model_type={mtype!r} is in mapping but no submodules at path "
+                    f"{attn_attr!r} were found."
+                )
+
+        else:
+            # generic fallback
+            for module in self.model.modules():
+                cname = module.__class__.__name__.lower()
+                if "attention" in cname or isinstance(module, torch.nn.MultiheadAttention):
+                    handles.append(module.register_forward_hook(self._save_attn_output))
+
+            if not handles:
+                raise RuntimeError(
+                    f"modle_type={mtype!r} not in mapping and generic scan found no attention layers."
+                )
+
+        self._hook_handles = handles
