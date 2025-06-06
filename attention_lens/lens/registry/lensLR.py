@@ -66,6 +66,7 @@ class LensLR(Lens):
             torch.Tensor: shape (batch_size, pos, d_vocab), sum of outputs
                           from all attention heads.
         """
+
         batch_size, pos, n_layers, d_model = input_tensor.size()
         assert n_layers == self.n_layers, "Number of layers in input does not match LensLR."
 

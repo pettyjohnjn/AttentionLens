@@ -1,13 +1,13 @@
 #!/bin/bash 
 
 #PBS -l select=1
-#PBS -l walltime=00:10:00
+#PBS -l walltime=00:60:00
 #PBS -q debug
 
 #PBS -l filesystems=home:grand:eagle
 #PBS -A SuperBERT
 
-cd "/grand/SuperBERT/pettyjohnjn/AttnLens_GPT/attention_lens"
+cd "/grand/SuperBERT/pettyjohnjn/baseline/attention_lens"
 echo "working dir: "
 pwd
 
@@ -24,7 +24,7 @@ else
 fi
 
 # Commands to run prior to the Python script for setting up the environment
-PRELOAD+="module use /soft/modulefiles; module load conda; conda activate AttnLens_Test;  "
+PRELOAD+="module use /soft/modulefiles; module load conda; conda activate LoRA_Lens;  "
 PRELOAD+="export OMP_NUM_THREADS=8 ; "
 PRELOAD+="source ~/.bashrc ; "
 

@@ -2,7 +2,6 @@ import torch.types
 
 from typing import Union
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
-import bitsandbytes as bnb
 
 
 def get_model(
