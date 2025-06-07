@@ -72,6 +72,7 @@ class LightningLens(pl.LightningModule):
         # shared unembed + bias
         unembed = self.model.lm_head.weight.T.clone().detach()
         self.register_buffer("shared_unembed", unembed)
+
         if self.model.lm_head.bias is not None:
             raw_bias = self.model.lm_head.bias.detach().clone()
         else:
@@ -89,7 +90,7 @@ class LightningLens(pl.LightningModule):
             self.attn_cache = []
             self._register_attention_hooks()
             self.attn_lens = lens_cls(
-                unembed=unembed,
+                unembed=self.shared_unembed,
                 bias=raw_bias,
                 n_layers=self.model.config.num_hidden_layers,
                 d_model=self.model.config.hidden_size,
@@ -106,12 +107,19 @@ class LightningLens(pl.LightningModule):
                 h.remove()
             self._hook_handles = []
             self._register_attention_hooks()
+
+            self.attn_lens.shared_unembed = self.shared_unembed
             # sanity check
             if not self._hook_handles:
                 raise RuntimeError("No attention hooks registered at train start!")
 
 
-    def kl_loss(self, logits, lens_logits) -> torch.Tensor:
+    def kl_loss(
+        self,
+        logits: torch.Tensor,
+        lens_logits: torch.Tensor,
+        attention_mask: torch.Tensor,
+    ) -> torch.Tensor:
         r"""
         Compute the Kullback-Leibler divergence between tensors.
 
@@ -131,12 +139,35 @@ class LightningLens(pl.LightningModule):
             loss: (torch.Tensor[bsz]): Returns difference between logits and lens_logits
         """
 
-        kldiv = torch.nn.KLDivLoss(reduction="batchmean", log_target=True)
-        k_logits = F.log_softmax(logits[:, -1, :], dim=-1)  # Shape: [batch_size, d_vocab]
-        k_lens_out = F.log_softmax(lens_logits[:, -1, :], dim=-1)  # Shape: [batch_size, d_vocab]
+        lengths = attention_mask.sum(dim=1).long()
 
-        loss = kldiv(k_lens_out, k_logits)
+        batch_size, seq_len, vocab_size = logits.shape
+        device = logits.device
+
+        idx = (lengths - 1).clamp(min=0)
+
+        batch_indices = torch.arange(batch_size, device=device)
+        model_last_logits = logits[batch_indices, idx, :]
+        lens_last_logits = lens_logits[batch_indices, idx, :]
+
+        log_p_model = F.log_softmax(model_last_logits, dim = -1)
+        log_p_lens = F.log_softmax(lens_last_logits, dim=-1)
+
+        # print(f" Log_p_model: {log_p_model.shape}")
+        # print(f" Log_p_lens: {log_p_lens.shape}")
+
+        kldiv = torch.nn.KLDivLoss(reduction="batchmean", log_target=True)
+        loss = kldiv(log_p_lens, log_p_model)
         return loss
+
+
+
+        # kldiv = torch.nn.KLDivLoss(reduction="batchmean", log_target=True)
+        # k_logits = F.log_softmax(logits[:, -1, :], dim=-1)  # Shape: [batch_size, d_vocab]
+        # k_lens_out = F.log_softmax(lens_logits[:, -1, :], dim=-1)  # Shape: [batch_size, d_vocab]
+
+        # loss = kldiv(k_lens_out, k_logits)
+        # return loss
 
     def setup(self, stage) -> None:
         """
@@ -189,10 +220,11 @@ class LightningLens(pl.LightningModule):
         inputs = self.tokenizer(
             prompt,
             truncation=True,
-            padding=True,
+            padding="max_length",
+            max_length=256,
             return_tensors="pt",
         ).to(self.device)
-        padding_mask = inputs["attention_mask"]
+        attention_mask = inputs["attention_mask"]
 
         # Clear Caches
         if self.train_attn: self.attn_cache.clear()
@@ -205,7 +237,7 @@ class LightningLens(pl.LightningModule):
             logits = outputs.logits  # Shape: [batch_size, pos, d_vocab]
 
         lens_logits = self.forward(attn_cache)  # Shape: [batch_size, d_vocab]
-        loss = self.kl_loss(logits, lens_logits)
+        loss = self.kl_loss(logits, lens_logits, attention_mask)
         self.log("train_loss", loss, prog_bar=True)
 
         # save_memory_usage()
@@ -221,7 +253,18 @@ class LightningLens(pl.LightningModule):
 
         print(f'Learning Rate: {self.lr}')
 
-        optimizer = torch.optim.Adam(self.attn_lens.parameters(), lr=self.lr)
+        no_decay, decay = set(), set()
+        for n,p in self.attn_lens.named_parameters():
+            (decay if "W_B" in n else no_decay).add(n)
+        
+        optimizer = torch.optim.AdamW([
+            {"params":[p for n,p in self.attn_lens.named_parameters() if n in decay],
+            "weight_decay":1e-2},
+            {"params":[p for n,p in self.attn_lens.named_parameters() if n in no_decay],
+            "weight_decay":0.0},
+        ], lr=1e-4)
+
+        # optimizer = torch.optim.Adam(self.attn_lens.parameters(), lr=self.lr)
         return optimizer
 
     # TODO(MS): register an early stopping call back which quits training if the loss/some metric drops below a certain point

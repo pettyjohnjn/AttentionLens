@@ -45,7 +45,7 @@ def main(args: argparse.Namespace):
     callbacks = []
     lens = LightningLens(
         model_name = config.model_name, 
-        lens_cls="lenslr", 
+        lens_cls="lora_lens", 
         lr = config.lr,
         r = config.lora_rank,
     ) 

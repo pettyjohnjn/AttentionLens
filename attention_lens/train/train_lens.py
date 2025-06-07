@@ -79,6 +79,7 @@ def train_lens(
         default_root_dir=config.checkpoint_dir,
         accumulate_grad_batches=config.accumulate_grad_batches,
         callbacks=callbacks,
+        gradient_clip_val=1.0,
         # callbacks=[early_stop_callback, logging_checkpoint, latest_checkpoint],
         # flush_logs_every_n_steps=100,
         #log_every_n_steps=50,

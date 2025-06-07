@@ -80,6 +80,6 @@ class LoRA_Lens(Lens):
             input_flat = input_head.reshape(-1, d_model) # [batch_size * pos, d_model]
             output_flat = self.linears[i](input_flat)    # [batch_size * pos, d_vocab]
             output_head = output_flat.view(batch_size, pos, self.d_vocab)
-            output_tensors += output_head
+            output_tensors += output_head / self.n_layers
 
         return output_tensors
