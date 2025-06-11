@@ -16,10 +16,10 @@ class Lens(nn.Module):
         n_layers: int,
         d_model: int,
         d_vocab: int,
-        r: int = 0,               # LoRA rank
+        r: int = 11,               # LoRA rank
         lora_alpha: int = 1,      # LoRA scaling factor
         lora_dropout: float = 0.0, # LoRA dropout rate
-        merge_weights: bool = True, # Whether to merge weights during inference
+        merge_weights: bool = False, # Whether to merge weights during inference
     ) -> None:
         """
         Args:

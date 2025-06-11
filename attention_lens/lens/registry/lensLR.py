@@ -13,10 +13,10 @@ class LensLR(Lens):
         n_layers: int,
         d_model: int,
         d_vocab: int,
-        r: int = 8,
+        r: int = 11,
         lora_alpha: int = 1,
         lora_dropout: float = 0.0,
-        merge_weights: bool = True,
+        merge_weights: bool = False,
     ):
         super().__init__(
             unembed,
@@ -40,7 +40,7 @@ class LensLR(Lens):
                 lora.Linear(
                     in_features=self.d_model,
                     out_features=self.d_vocab,
-                    r=self.r,
+                    r=11,
                     lora_alpha=self.lora_alpha,
                     lora_dropout=self.lora_dropout,
                 )
@@ -54,7 +54,9 @@ class LensLR(Lens):
         # and initialize its bias from the original bias
         for linear in self.linears:
             del linear.weight
-            linear.register_parameter("weight", nn.Parameter(self.unembed.t()))
+            # detach so no grad, transpose and make contiguous
+            w = self.unembed.detach().t().contiguous()
+            linear.register_buffer("weight", w)
             linear.bias.data = self.bias.data.clone()
 
     def forward(self, input_tensor: torch.Tensor) -> torch.Tensor:
