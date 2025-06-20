@@ -1,0 +1,166 @@
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+initializing deepspeed distributed: GLOBAL_RANK: 3, MEMBER: 4/4
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+initializing deepspeed distributed: GLOBAL_RANK: 0, MEMBER: 1/4
+initializing deepspeed distributed: GLOBAL_RANK: 2, MEMBER: 3/4
+initializing deepspeed distributed: GLOBAL_RANK: 1, MEMBER: 2/4
+Enabling DeepSpeed FP16.
+You are using a CUDA device ('NVIDIA A100-SXM4-40GB') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R12/gpt2/ckpt_/lightning_logs
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R12/gpt2/ckpt_/lightning_logs
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R12/gpt2/ckpt_/lightning_logs
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R12/gpt2/ckpt_/lightning_logs
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 64, in <module>
+[rank3]:     main(get_args())
+[rank3]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 57, in main
+[rank3]:     train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+[rank3]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 104, in train_lens
+[rank3]:     trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+[rank3]:     call._call_and_handle_interrupt(
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+[rank3]:     return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+[rank3]:     return function(*args, **kwargs)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+[rank3]:     self._run(model, ckpt_path=ckpt_path)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 934, in _run
+[rank3]:     call._call_setup_hook(self)  # allow user to setup lightning_module in accelerator environment
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 83, in _call_setup_hook
+[rank3]:     _call_lightning_datamodule_hook(trainer, "setup", stage=fn)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 164, in _call_lightning_datamodule_hook
+[rank3]:     return fn(*args, **kwargs)
+[rank3]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/data/get_data_pl.py", line 40, in setup
+[rank3]:     self.data = load_from_disk(self.name)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/datasets/load.py", line 2207, in load_from_disk
+[rank3]:     raise FileNotFoundError(f"Directory {dataset_path} not found")
+[rank3]: FileNotFoundError: Directory /grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile not found
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 64, in <module>
+[rank2]:     main(get_args())
+[rank2]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 57, in main
+[rank2]:     train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+[rank2]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 104, in train_lens
+[rank2]:     trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+[rank2]:     call._call_and_handle_interrupt(
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+[rank2]:     return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+[rank2]:     return function(*args, **kwargs)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+[rank2]:     self._run(model, ckpt_path=ckpt_path)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 934, in _run
+[rank2]:     call._call_setup_hook(self)  # allow user to setup lightning_module in accelerator environment
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 83, in _call_setup_hook
+[rank2]:     _call_lightning_datamodule_hook(trainer, "setup", stage=fn)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 164, in _call_lightning_datamodule_hook
+[rank2]:     return fn(*args, **kwargs)
+[rank2]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/data/get_data_pl.py", line 40, in setup
+[rank2]:     self.data = load_from_disk(self.name)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/datasets/load.py", line 2207, in load_from_disk
+[rank2]:     raise FileNotFoundError(f"Directory {dataset_path} not found")
+[rank2]: FileNotFoundError: Directory /grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile not found
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 64, in <module>
+[rank0]:     main(get_args())
+[rank0]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 57, in main
+[rank0]:     train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+[rank0]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 104, in train_lens
+[rank0]:     trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+[rank0]:     call._call_and_handle_interrupt(
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+[rank0]:     return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+[rank0]:     return function(*args, **kwargs)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+[rank0]:     self._run(model, ckpt_path=ckpt_path)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 934, in _run
+[rank0]:     call._call_setup_hook(self)  # allow user to setup lightning_module in accelerator environment
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 83, in _call_setup_hook
+[rank0]:     _call_lightning_datamodule_hook(trainer, "setup", stage=fn)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 164, in _call_lightning_datamodule_hook
+[rank0]:     return fn(*args, **kwargs)
+[rank0]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/data/get_data_pl.py", line 40, in setup
+[rank0]:     self.data = load_from_disk(self.name)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/datasets/load.py", line 2207, in load_from_disk
+[rank0]:     raise FileNotFoundError(f"Directory {dataset_path} not found")
+[rank0]: FileNotFoundError: Directory /grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile not found
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 64, in <module>
+[rank1]:     main(get_args())
+[rank1]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 57, in main
+[rank1]:     train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+[rank1]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 104, in train_lens
+[rank1]:     trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+[rank1]:     call._call_and_handle_interrupt(
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+[rank1]:     return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+[rank1]:     return function(*args, **kwargs)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+[rank1]:     self._run(model, ckpt_path=ckpt_path)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 934, in _run
+[rank1]:     call._call_setup_hook(self)  # allow user to setup lightning_module in accelerator environment
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 83, in _call_setup_hook
+[rank1]:     _call_lightning_datamodule_hook(trainer, "setup", stage=fn)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 164, in _call_lightning_datamodule_hook
+[rank1]:     return fn(*args, **kwargs)
+[rank1]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/data/get_data_pl.py", line 40, in setup
+[rank1]:     self.data = load_from_disk(self.name)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/datasets/load.py", line 2207, in load_from_disk
+[rank1]:     raise FileNotFoundError(f"Directory {dataset_path} not found")
+[rank1]: FileNotFoundError: Directory /grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile not found
+[rank0]:[W601 20:17:23.574192698 ProcessGroupNCCL.cpp:1496] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+W0601 20:17:25.252000 1320837 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1320862 closing signal SIGTERM
+W0601 20:17:25.253000 1320837 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1320863 closing signal SIGTERM
+W0601 20:17:25.253000 1320837 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1320864 closing signal SIGTERM
+E0601 20:17:25.467000 1320837 site-packages/torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 0 (pid: 1320861) of binary: /home/pettyjohnjn/.conda/envs/AttnLens_Test/bin/python
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/distributed/run.py", line 922, in <module>
+    main()
+  File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/distributed/run.py", line 918, in main
+    run(args)
+  File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+  File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+../train.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-06-01_20:17:25
+  host      : x3102c0s31b1n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 1320861)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

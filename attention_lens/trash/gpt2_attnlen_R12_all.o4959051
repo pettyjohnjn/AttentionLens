@@ -1,0 +1,49 @@
+working dir: 
+/grand/SuperBERT/pettyjohnjn/baseline/attention_lens
+Master Rank: x3102c0s31b1n0.hsn.cm.polaris.alcf.anl.gov
+ckpt dir: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R12/gpt2/ckpt_
+model name: gpt2
+lora rank: 12
+Training Command:  module use /soft/modulefiles; module load conda; conda activate AttnLens_Test;  export OMP_NUM_THREADS=8 ; source ~/.bashrc ;  python -m torch.distributed.run --nnodes=1 --nproc_per_node=auto --max_restarts 0 --standalone   --node_rank=0  ../train.py --num_nodes 1 --model_name gpt2 --checkpoint_dir /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R12/gpt2/ckpt_ --lora_rank 12 --batch_size 4  
+Launching rank 0 on remote node x3102c0s31b1n0.hsn.cm.polaris.alcf.anl.gov
+[2025-06-01 20:22:00,443] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-06-01 20:22:00,445] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-06-01 20:22:00,457] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-06-01 20:22:00,466] [INFO] [real_accelerator.py:239:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+Language model initialized on device:  cpu
+Language model initialized on device:  cpu
+Language model initialized on device:  cpu
+Language model initialized on device:  cpu
+LoRA Approximation Rank set to: {self.r}
+LoRA Approximation Rank set to: {self.r}
+LoRA Approximation Rank set to: {self.r}
+Checkpoint directory to reload from is not specified, searching for existing checkpoint directory.
+latest checkpoint file:  None
+Batch size: 4
+[2025-06-01 20:22:36,887] [WARNING] [deepspeed.py:640:_auto_select_batch_size] Tried to infer the batch size for internal deepspeed logging from the `train_dataloader()`. To ensure DeepSpeed logging remains correct, please manually pass the plugin with the batch size, `Trainer(strategy=DeepSpeedStrategy(logging_batch_size_per_gpu=batch_size))`.
+Checkpoint directory to reload from is not specified, searching for existing checkpoint directory.
+latest checkpoint file:  None
+Checkpoint directory to reload from is not specified, searching for existing checkpoint directory.
+latest checkpoint file:  None
+Batch size: 4
+Batch size: 4
+LoRA Approximation Rank set to: {self.r}
+Checkpoint directory to reload from is not specified, searching for existing checkpoint directory.
+latest checkpoint file:  None
+Batch size: 4
+Language model initialized on device:  cpu
+Language model initialized on device:  cpu
+Language model initialized on device:  cpu
+Language model initialized on device:  cpu
+Learning Rate: 0.0001
+Learning Rate: 0.0001
+Learning Rate: 0.0001
+Learning Rate: 0.0001
+Batch size: 4
+Batch size: 4
+Batch size: 4Batch size: 4
+
+Training: 0it [00:00, ?it/s]Training:   0%|          | 0/125522 [00:00<?, ?it/s]Epoch 0:   0%|          | 0/125522 [00:00<?, ?it/s] input_tensor.shape: torch.Size([4, 12, 12, 261, 261])
+input_tensor.shape: torch.Size([4, 12, 12, 179, 179])
+input_tensor.shape: torch.Size([4, 12, 12, 133, 133])
+input_tensor.shape: torch.Size([4, 12, 12, 198, 198])

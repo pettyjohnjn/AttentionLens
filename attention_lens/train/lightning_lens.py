@@ -39,8 +39,8 @@ class LightningLens(pl.LightningModule):
         r: int = 8,
         train_attn: bool = True,
         use_attention_lens: bool = True,
-        use_mlp_lens: bool = False,
-        use_residual_lens: bool = False,
+        use_mlp_lens: bool = True,
+        use_residual_lens: bool = True,
     ):
         super().__init__()
         self.model_name = model_name
@@ -182,37 +182,37 @@ class LightningLens(pl.LightningModule):
         else:
             raise ValueError("Unsupported architecture for residual hooks")
         
-    def kl_loss(self, logits: torch.Tensor, lens_logits: torch.Tensor) -> torch.Tensor:
-        kldiv = nn.KLDivLoss(reduction="batchmean", log_target=True)
-        k_logits = F.log_softmax(logits[:, -1, :], dim=-1)
-        k_lens = F.log_softmax(lens_logits[:, -1, :], dim=-1)
-        return kldiv(k_lens, k_logits)
-    
-    # def kl_loss(self, logits: torch.Tensor, lens_logits: torch.Tensor) -> torch.Tensor:
-    #     """
-    #     logits:       (B, T, V)
-    #     lens_logits:  (B, T, L, V)
-    #     returns:      scalar KL averaged over layers and batch
-    #     """
-    #     B, T, V = logits.shape
-    #     _, _, L, _ = lens_logits.shape
+    # def kl_loss(self, logits: torch.Tensor, lens_logits: torch.Tensor, mask=None) -> torch.Tensor:
     #     kldiv = nn.KLDivLoss(reduction="batchmean", log_target=True)
+    #     k_logits = F.log_softmax(logits[:, -1, :], dim=-1)
+    #     k_lens = F.log_softmax(lens_logits[:, -1, :], dim=-1)
+    #     return kldiv(k_lens, k_logits)
 
-    #     # 1) log-probs for the “true” model at last position
-    #     p = F.log_softmax(logits[:, -1, :], dim=-1)         # (B, V)
+    def kl_loss(self,
+                logits:      torch.Tensor,  # [bsz, seq_len, vocab]
+                lens_logits: torch.Tensor,  # [bsz, seq_len, vocab]
+                mask:        torch.Tensor,  # [bsz, seq_len]
+            ) -> torch.Tensor:
+        # use sum-then-mean so we can mask explicitly
+        kldiv = nn.KLDivLoss(reduction="sum", log_target=True)
 
-    #     # 2) log-probs for each layer’s lens at last position
-    #     q = F.log_softmax(lens_logits[:, -1, :, :], dim=-1) # (B, L, V)
+        # log-probs
+        log_p = F.log_softmax(logits,     dim=-1)  # [b,s,v]
+        log_q = F.log_softmax(lens_logits, dim=-1)  # [b,s,v]
 
-    #     # 3) expand true log-probs to match shape
-    #     p_exp = p.unsqueeze(1).expand(-1, L, -1)            # (B, L, V)
+        b, s, v = log_p.shape
+        # flatten to [b*s, v]
+        log_p = log_p.view(-1, v)
+        log_q = log_q.view(-1, v)
+        mask  = mask.view(-1).bool()               # [b*s]
 
-    #     # 4) flatten the layer‐batch dims so we get one big batch of size B*L
-    #     p_flat = p_exp.reshape(-1, V)                       # (B*L, V)
-    #     q_flat = q.reshape(-1, V)                           # (B*L, V)
+        # only keep real tokens
+        log_p = log_p[mask]
+        log_q = log_q[mask]
 
-    #     # 5) compute one KL over that big batch
-    #     return kldiv(q_flat, p_flat)
+        # sum KL over all token positions, then average
+        total_kl = kldiv(log_q, log_p)             # scalar
+        return total_kl / mask.sum()
 
     def forward(self, cache: torch.Tensor) -> torch.Tensor:
         raise RuntimeError("Use specific lens objects: attn_lens, mlp_lens, or residual_lens")
@@ -228,46 +228,62 @@ class LightningLens(pl.LightningModule):
 
         # Tokenize & run base model
         inputs = self.tokenizer(
-            train_batch["text"], truncation=True, padding=True, return_tensors="pt"
+            train_batch["text"], 
+            truncation=True, 
+            padding=True, 
+            return_tensors="pt",
+            max_length=1024,
         ).to(self.device)
+
+        mask = inputs["attention_mask"]
+
         with torch.no_grad():
             outputs = self.model(**inputs)
         logits = outputs.logits
 
-        losses = []
+        # losses = []
+
+        # collect each len's predicted logits
+        lens_logits = []
         # Attention lens
         if self.use_attention_lens:
             assert len(self.attn_cache) == self.attn_lens.n_layers, \
                 f"Expected {self.attn_lens.n_layers} attn caches, got {len(self.attn_cache)}"
-            attn_tensor = torch.stack(self.attn_cache, dim=0).permute(1, 2, 0, 3)
-            attn_logits = self.attn_lens(attn_tensor)
-            loss_attn = self.kl_loss(logits, attn_logits)
-            self.log("loss_attn", loss_attn, prog_bar=True)
-            losses.append(loss_attn)
+            attn_cache = torch.stack(self.attn_cache, dim=0).permute(1, 2, 0, 3)
+            attn_logits = self.attn_lens(attn_cache, mask)
+            # loss_attn = self.kl_loss(logits, attn_logits)
+            # self.log("loss_attn", loss_attn, prog_bar=True)
+            # losses.append(loss_attn)
+            lens_logits.append(attn_logits)
 
         # MLP lens
         if self.use_mlp_lens:
             assert len(self.mlp_cache) == self.mlp_lens.n_layers, \
                 f"Expected {self.mlp_lens.n_layers} mlp caches, got {len(self.mlp_cache)}"
-            mlp_tensor = torch.stack(self.mlp_cache, dim=0).permute(1, 2, 0, 3)
-            mlp_logits = self.mlp_lens(mlp_tensor)
-            loss_mlp = self.kl_loss(logits, mlp_logits)
-            self.log("loss_mlp", loss_mlp, prog_bar=True)
-            losses.append(loss_mlp)
+            mlp_cache = torch.stack(self.mlp_cache, dim=0).permute(1, 2, 0, 3)
+            mlp_logits = self.mlp_lens(mlp_cache, mask)
+            # loss_mlp = self.kl_loss(logits, mlp_logits)
+            # self.log("loss_mlp", loss_mlp, prog_bar=True)
+            # losses.append(loss_mlp)
+            lens_logits.append(mlp_logits)
 
-        # Residual lens
+        # Residual lens (Tuned Lens)
         if self.use_residual_lens:
             assert len(self.residual_cache) == self.residual_lens.n_layers, \
                 f"Expected {self.residual_lens.n_layers} residual caches, got {len(self.residual_cache)}"
-            res_tensor = torch.stack(self.residual_cache, dim=0).permute(1, 2, 0, 3)
-            res_logits = self.residual_lens(res_tensor)
-            loss_res = self.kl_loss(logits, res_logits)
-            self.log("loss_res", loss_res, prog_bar=True)
-            losses.append(loss_res)
+            res_cache = torch.stack(self.residual_cache, dim=0).permute(1, 2, 0, 3)
+            res_logits = self.residual_lens(res_cache, mask)
+            # loss_res = self.kl_loss(logits, res_logits)
+            # self.log("loss_res", loss_res, prog_bar=True)
+            # losses.append(loss_res)
+            lens_logits.append(res_logits)
 
-        save_memory_usage()
+        # save_memory_usage()
         # Combine and log
-        total_loss = torch.stack(losses).mean()
+        # Sum all lens logits, compute one KL against the model's logits
+        lens_logits = torch.stack(lens_logits, dim=0).sum(dim=0)
+        # total_loss = torch.stack(losses).mean()
+        total_loss = self.kl_loss(lens_logits, logits, mask)
         self.log("train_loss", total_loss, prog_bar=True)
         return total_loss
 

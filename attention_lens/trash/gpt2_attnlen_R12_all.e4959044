@@ -1,0 +1,329 @@
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+master_addr is only used for static rdzv_backend and when rdzv_endpoint is not specified.
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/connectionpool.py", line 711, in urlopen
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/connectionpool.py", line 711, in urlopen
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/connectionpool.py", line 711, in urlopen
+    self._prepare_proxy(conn)    
+self._prepare_proxy(conn)
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/connectionpool.py", line 1007, in _prepare_proxy
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/connectionpool.py", line 1007, in _prepare_proxy
+    self._prepare_proxy(conn)
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/connectionpool.py", line 1007, in _prepare_proxy
+    conn.connect()
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/connection.py", line 374, in connect
+    conn.connect()
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/connection.py", line 374, in connect
+    conn.connect()
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/connection.py", line 374, in connect
+        self._tunnel()self._tunnel()
+
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/http/client.py", line 926, in _tunnel
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/http/client.py", line 926, in _tunnel
+    self._tunnel()
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/http/client.py", line 926, in _tunnel
+    (version, code, message) = response._read_status()
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/http/client.py", line 281, in _read_status
+    (version, code, message) = response._read_status()
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/http/client.py", line 281, in _read_status
+    (version, code, message) = response._read_status()
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/http/client.py", line 281, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/socket.py", line 716, in readinto
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+      File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/socket.py", line 716, in readinto
+line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/socket.py", line 716, in readinto
+    return self._sock.recv_into(b)    
+return self._sock.recv_into(b)
+socket.timeoutsocket: timed out.
+timeout
+During handling of the above exception, another exception occurred:
+
+: timed outTraceback (most recent call last):
+
+
+During handling of the above exception, another exception occurred:
+
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/requests/adapters.py", line 486, in send
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/requests/adapters.py", line 486, in send
+    return self._sock.recv_into(b)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/requests/adapters.py", line 486, in send
+    resp = conn.urlopen(
+    resp = conn.urlopen(  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/connectionpool.py", line 798, in urlopen
+
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/connectionpool.py", line 798, in urlopen
+    retries = retries.increment(
+      File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/util/retry.py", line 592, in increment
+retries = retries.increment(
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/util/retry.py", line 592, in increment
+    resp = conn.urlopen(
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/connectionpool.py", line 798, in urlopen
+    retries = retries.increment(
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/util/retry.py", line 592, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+    urllib3.exceptionsraise MaxRetryError(_pool, url, error or ResponseError(cause)).
+MaxRetryError: HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /gpt2/resolve/main/config.json (Caused by ProxyError('Cannot connect to proxy.', timeout('timed out')))urllib3.exceptions
+.
+During handling of the above exception, another exception occurred:
+
+MaxRetryError: Traceback (most recent call last):
+HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /gpt2/resolve/main/config.json (Caused by ProxyError('Cannot connect to proxy.', timeout('timed out')))
+
+During handling of the above exception, another exception occurred:
+
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 64, in <module>
+Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 64, in <module>
+    main(get_args())
+      File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 46, in main
+main(get_args())
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 46, in main
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /gpt2/resolve/main/config.json (Caused by ProxyError('Cannot connect to proxy.', timeout('timed out')))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 64, in <module>
+    lens = LightningLens(
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/lightning_lens.py", line 65, in __init__
+    lens = LightningLens(
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/lightning_lens.py", line 65, in __init__
+    self.model, self.tokenizer = get_model(
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/model/get_model.py", line 23, in get_model
+    self.model, self.tokenizer = get_model(
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/model/get_model.py", line 23, in get_model
+    main(get_args())
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 46, in main
+    model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16)
+      File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/models/auto/auto_factory.py", line 485, in from_pretrained
+model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16)
+      File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/models/auto/auto_factory.py", line 485, in from_pretrained
+lens = LightningLens(
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/lightning_lens.py", line 65, in __init__
+    self.model, self.tokenizer = get_model(
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/model/get_model.py", line 23, in get_model
+    model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16)
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/models/auto/auto_factory.py", line 485, in from_pretrained
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/connectionpool.py", line 711, in urlopen
+    self._prepare_proxy(conn)
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/connectionpool.py", line 1007, in _prepare_proxy
+    conn.connect()
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/connection.py", line 374, in connect
+    self._tunnel()
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/http/client.py", line 926, in _tunnel
+    (version, code, message) = response._read_status()
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/http/client.py", line 281, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/socket.py", line 716, in readinto
+    return self._sock.recv_into(b)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/requests/adapters.py", line 486, in send
+    resp = conn.urlopen(
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/connectionpool.py", line 798, in urlopen
+    retries = retries.increment(
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/urllib3/util/retry.py", line 592, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /gpt2/resolve/main/config.json (Caused by ProxyError('Cannot connect to proxy.', timeout('timed out')))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 64, in <module>
+    main(get_args())
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 46, in main
+    lens = LightningLens(
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/lightning_lens.py", line 65, in __init__
+    self.model, self.tokenizer = get_model(
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/model/get_model.py", line 23, in get_model
+    model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16)
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/models/auto/auto_factory.py", line 485, in from_pretrained
+            resolved_config_file = cached_file(resolved_config_file = cached_file(resolved_config_file = cached_file(
+
+
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/utils/hub.py", line 402, in cached_file
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/utils/hub.py", line 402, in cached_file
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/utils/hub.py", line 402, in cached_file
+    resolved_config_file = cached_file(
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/utils/hub.py", line 402, in cached_file
+        resolved_file = hf_hub_download(resolved_file = hf_hub_download(
+
+    resolved_file = hf_hub_download(  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    resolved_file = hf_hub_download(
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+            return fn(*args, **kwargs)return fn(*args, **kwargs)return fn(*args, **kwargs)
+
+
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 961, in hf_hub_download
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 961, in hf_hub_download
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 961, in hf_hub_download
+    return fn(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 961, in hf_hub_download
+            return _hf_hub_download_to_cache_dir(return _hf_hub_download_to_cache_dir(return _hf_hub_download_to_cache_dir(
+
+
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 1024, in _hf_hub_download_to_cache_dir
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 1024, in _hf_hub_download_to_cache_dir
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 1024, in _hf_hub_download_to_cache_dir
+    return _hf_hub_download_to_cache_dir(
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 1024, in _hf_hub_download_to_cache_dir
+    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 1484, in _get_metadata_or_catch_error
+    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 1484, in _get_metadata_or_catch_error
+    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 1484, in _get_metadata_or_catch_error
+    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 1484, in _get_metadata_or_catch_error
+        metadata = get_hf_file_metadata(metadata = get_hf_file_metadata(
+
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    metadata = get_hf_file_metadata(
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    metadata = get_hf_file_metadata(
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 1401, in get_hf_file_metadata
+    return fn(*args, **kwargs)
+    return fn(*args, **kwargs)  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 1401, in get_hf_file_metadata
+
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 1401, in get_hf_file_metadata
+    return fn(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 1401, in get_hf_file_metadata
+    r = _request_wrapper(
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 285, in _request_wrapper
+    response = _request_wrapper(
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 308, in _request_wrapper
+        r = _request_wrapper(r = _request_wrapper(
+
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 285, in _request_wrapper
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 285, in _request_wrapper
+    response = get_session().request(method=method, url=url, **params)
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/requests/sessions.py", line 589, in request
+    r = _request_wrapper(
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 285, in _request_wrapper
+    response = _request_wrapper(    
+response = _request_wrapper(
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 308, in _request_wrapper
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 308, in _request_wrapper
+    response = _request_wrapper(
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/file_download.py", line 308, in _request_wrapper
+    response = get_session().request(method=method, url=url, **params)
+      File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/requests/sessions.py", line 589, in request
+response = get_session().request(method=method, url=url, **params)
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/requests/sessions.py", line 589, in request
+    response = get_session().request(method=method, url=url, **params)
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/requests/sessions.py", line 589, in request
+        resp = self.send(prep, **send_kwargs)resp = self.send(prep, **send_kwargs)
+    
+resp = self.send(prep, **send_kwargs)  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/requests/sessions.py", line 703, in send
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/requests/sessions.py", line 703, in send
+
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/requests/sessions.py", line 703, in send
+    resp = self.send(prep, **send_kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/requests/sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/utils/_http.py", line 96, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/utils/_http.py", line 96, in send
+    r = adapter.send(request, **kwargs)    
+r = adapter.send(request, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/utils/_http.py", line 96, in send
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/huggingface_hub/utils/_http.py", line 96, in send
+    return super().send(request, *args, **kwargs)
+      File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/requests/adapters.py", line 513, in send
+return super().send(request, *args, **kwargs)
+    return super().send(request, *args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/requests/adapters.py", line 513, in send
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/requests/adapters.py", line 513, in send
+    raise ProxyError(e, request=request)
+requests.exceptions    .raise ProxyError(e, request=request)ProxyError
+requests.exceptions.    ProxyError: raise ProxyError(e, request=request)(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /gpt2/resolve/main/config.json (Caused by ProxyError('Cannot connect to proxy.', timeout('timed out')))"), '(Request ID: 0ede7573-30f5-4aa7-a6de-6ff1e072a093)')
+: requests.exceptions(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /gpt2/resolve/main/config.json (Caused by ProxyError('Cannot connect to proxy.', timeout('timed out')))"), '(Request ID: 0fa95b8a-3f7c-4c3a-b963-198d55f7be96)').
+ProxyError
+: (MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /gpt2/resolve/main/config.json (Caused by ProxyError('Cannot connect to proxy.', timeout('timed out')))"), '(Request ID: fde90454-7809-46a4-95f4-7b66f5637c99)')
+    return super().send(request, *args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/requests/adapters.py", line 513, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: (MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /gpt2/resolve/main/config.json (Caused by ProxyError('Cannot connect to proxy.', timeout('timed out')))"), '(Request ID: 2234bf7d-22f5-46a0-a4f5-663df0c6491c)')
+ERROR:torch.distributed.elastic.multiprocessing.api:failed (exitcode: 1) local_rank: 0 (pid: 1317347) of binary: /home/pettyjohnjn/.conda/envs/LensAnalysis/bin/python
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/torch/distributed/run.py", line 798, in <module>
+    main()
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/torch/distributed/run.py", line 794, in main
+    run(args)
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/pettyjohnjn/.conda/envs/LensAnalysis/lib/python3.9/site-packages/torch/distributed/launcher/api.py", line 250, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+../train.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2025-06-01_20:11:43
+  host      : x3102c0s31b1n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 1317348)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2025-06-01_20:11:43
+  host      : x3102c0s31b1n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 2 (local_rank: 2)
+  exitcode  : 1 (pid: 1317349)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[3]:
+  time      : 2025-06-01_20:11:43
+  host      : x3102c0s31b1n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 3 (local_rank: 3)
+  exitcode  : 1 (pid: 1317350)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-06-01_20:11:43
+  host      : x3102c0s31b1n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 1317347)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

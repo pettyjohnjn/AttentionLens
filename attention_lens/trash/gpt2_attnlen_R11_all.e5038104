@@ -1,0 +1,44 @@
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+master_addr is only used for static rdzv_backend and when rdzv_endpoint is not specified.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+initializing deepspeed distributed: GLOBAL_RANK: 1, MEMBER: 2/4
+initializing deepspeed distributed: GLOBAL_RANK: 0, MEMBER: 1/4
+initializing deepspeed distributed: GLOBAL_RANK: 2, MEMBER: 3/4
+initializing deepspeed distributed: GLOBAL_RANK: 3, MEMBER: 4/4
+Enabling DeepSpeed FP16.
+You are using a CUDA device ('NVIDIA A100-SXM4-40GB') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+WARNING:Loading cached shuffled indices for dataset at /grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile_512/cache-5cef366838826a8f.arrow
+WARNING:Loading cached shuffled indices for dataset at /grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile_512/cache-5cef366838826a8f.arrow
+WARNING:Loading cached shuffled indices for dataset at /grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile_512/cache-5cef366838826a8f.arrow
+WARNING:Loading cached shuffled indices for dataset at /grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile_512/cache-5cef366838826a8f.arrow
+LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+
+  | Name      | Type            | Params
+----------------------------------------------
+0 | model     | GPT2LMHeadModel | 124 M 
+1 | attn_lens | LensLR          | 468 M 
+----------------------------------------------
+468 M     Trainable params
+124 M     Non-trainable params
+593 M     Total params
+2,372.439 Total estimated model params size (MB)
+=>> PBS: job killed: walltime 3625 exceeded limit 3600

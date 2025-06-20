@@ -1,0 +1,396 @@
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+initializing deepspeed distributed: GLOBAL_RANK: 0, MEMBER: 1/4
+Enabling DeepSpeed FP16.
+You are using a CUDA device ('NVIDIA A100-SXM4-40GB') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+initializing deepspeed distributed: GLOBAL_RANK: 3, MEMBER: 4/4
+initializing deepspeed distributed: GLOBAL_RANK: 2, MEMBER: 3/4
+initializing deepspeed distributed: GLOBAL_RANK: 1, MEMBER: 2/4
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+
+  | Name      | Type            | Params
+----------------------------------------------
+0 | model     | GPT2LMHeadModel | 124 M 
+1 | attn_lens | LensLR          | 468 M 
+----------------------------------------------
+468 M     Trainable params
+124 M     Non-trainable params
+593 M     Total params
+2,372.439 Total estimated model params size (MB)
+`torch.nn.functional.scaled_dot_product_attention` does not support `output_attentions=True`. Falling back to eager attention. This warning can be removed using the argument `attn_implementation="eager"` when loading the model.
+`torch.nn.functional.scaled_dot_product_attention` does not support `output_attentions=True`. Falling back to eager attention. This warning can be removed using the argument `attn_implementation="eager"` when loading the model.
+`torch.nn.functional.scaled_dot_product_attention` does not support `output_attentions=True`. Falling back to eager attention. This warning can be removed using the argument `attn_implementation="eager"` when loading the model.
+`torch.nn.functional.scaled_dot_product_attention` does not support `output_attentions=True`. Falling back to eager attention. This warning can be removed using the argument `attn_implementation="eager"` when loading the model.
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 64, in <module>
+[rank1]:     main(get_args())
+[rank1]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 57, in main
+[rank1]:     train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+[rank1]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 104, in train_lens
+[rank1]:     trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+[rank1]:     call._call_and_handle_interrupt(
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+[rank1]:     return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+[rank1]:     return function(*args, **kwargs)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+[rank1]:     self._run(model, ckpt_path=ckpt_path)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 973, in _run
+[rank1]:     results = self._run_stage()
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 1016, in _run_stage
+[rank1]:     self.fit_loop.run()
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/fit_loop.py", line 201, in run
+[rank1]:     self.advance()
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/fit_loop.py", line 354, in advance
+[rank1]:     self.epoch_loop.run(self._data_fetcher)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/training_epoch_loop.py", line 133, in run
+[rank1]:     self.advance(data_fetcher)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/training_epoch_loop.py", line 218, in advance
+[rank1]:     batch_output = self.automatic_optimization.run(trainer.optimizers[0], kwargs)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 185, in run
+[rank1]:     self._optimizer_step(kwargs.get("batch_idx", 0), closure)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 260, in _optimizer_step
+[rank1]:     call._call_lightning_module_hook(
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 144, in _call_lightning_module_hook
+[rank1]:     output = fn(*args, **kwargs)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/core/module.py", line 1256, in optimizer_step
+[rank1]:     optimizer.step(closure=optimizer_closure)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/core/optimizer.py", line 155, in step
+[rank1]:     step_output = self._strategy.optimizer_step(self._optimizer, closure, **kwargs)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/ddp.py", line 256, in optimizer_step
+[rank1]:     optimizer_output = super().optimizer_step(optimizer, closure, model, **kwargs)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/strategy.py", line 225, in optimizer_step
+[rank1]:     return self.precision_plugin.optimizer_step(optimizer, model=model, closure=closure, **kwargs)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/plugins/precision/deepspeed.py", line 92, in optimizer_step
+[rank1]:     closure_result = closure()
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 140, in __call__
+[rank1]:     self._result = self.closure(*args, **kwargs)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 126, in closure
+[rank1]:     step_output = self._step_fn()
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 307, in _training_step
+[rank1]:     training_step_output = call._call_strategy_hook(trainer, "training_step", *kwargs.values())
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 291, in _call_strategy_hook
+[rank1]:     output = fn(*args, **kwargs)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/ddp.py", line 328, in training_step
+[rank1]:     return self.model(*args, **kwargs)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank1]:     return forward_call(*args, **kwargs)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/deepspeed/utils/nvtx.py", line 20, in wrapped_fn
+[rank1]:     ret_val = func(*args, **kwargs)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/deepspeed/runtime/engine.py", line 2030, in forward
+[rank1]:     loss = self.module(*inputs, **kwargs)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1845, in _call_impl
+[rank1]:     return inner()
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1793, in inner
+[rank1]:     result = forward_call(*args, **kwargs)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/overrides/base.py", line 90, in forward
+[rank1]:     output = self._forward_module.training_step(*inputs, **kwargs)
+[rank1]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/lightning_lens.py", line 189, in training_step
+[rank1]:     lens_logits = self.forward(cache)  # Shape: [batch_size, d_vocab]
+[rank1]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/lightning_lens.py", line 158, in forward
+[rank1]:     return self.attn_lens(cache)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank1]:     return forward_call(*args, **kwargs)
+[rank1]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/lens/registry/lensLR.py", line 71, in forward
+[rank1]:     batch_size, pos, n_layers, d_model = input_tensor.size()
+[rank1]: ValueError: too many values to unpack (expected 4)
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 64, in <module>
+[rank0]:     main(get_args())
+[rank0]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 57, in main
+[rank0]:     train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+[rank0]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 104, in train_lens
+[rank0]:     trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+[rank0]:     call._call_and_handle_interrupt(
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+[rank0]:     return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+[rank0]:     return function(*args, **kwargs)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+[rank0]:     self._run(model, ckpt_path=ckpt_path)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 973, in _run
+[rank0]:     results = self._run_stage()
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 1016, in _run_stage
+[rank0]:     self.fit_loop.run()
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/fit_loop.py", line 201, in run
+[rank0]:     self.advance()
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/fit_loop.py", line 354, in advance
+[rank0]:     self.epoch_loop.run(self._data_fetcher)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/training_epoch_loop.py", line 133, in run
+[rank0]:     self.advance(data_fetcher)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/training_epoch_loop.py", line 218, in advance
+[rank0]:     batch_output = self.automatic_optimization.run(trainer.optimizers[0], kwargs)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 185, in run
+[rank0]:     self._optimizer_step(kwargs.get("batch_idx", 0), closure)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 260, in _optimizer_step
+[rank0]:     call._call_lightning_module_hook(
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 144, in _call_lightning_module_hook
+[rank0]:     output = fn(*args, **kwargs)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/core/module.py", line 1256, in optimizer_step
+[rank0]:     optimizer.step(closure=optimizer_closure)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/core/optimizer.py", line 155, in step
+[rank0]:     step_output = self._strategy.optimizer_step(self._optimizer, closure, **kwargs)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/ddp.py", line 256, in optimizer_step
+[rank0]:     optimizer_output = super().optimizer_step(optimizer, closure, model, **kwargs)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/strategy.py", line 225, in optimizer_step
+[rank0]:     return self.precision_plugin.optimizer_step(optimizer, model=model, closure=closure, **kwargs)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/plugins/precision/deepspeed.py", line 92, in optimizer_step
+[rank0]:     closure_result = closure()
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 140, in __call__
+[rank0]:     self._result = self.closure(*args, **kwargs)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 126, in closure
+[rank0]:     step_output = self._step_fn()
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 307, in _training_step
+[rank0]:     training_step_output = call._call_strategy_hook(trainer, "training_step", *kwargs.values())
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 291, in _call_strategy_hook
+[rank0]:     output = fn(*args, **kwargs)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/ddp.py", line 328, in training_step
+[rank0]:     return self.model(*args, **kwargs)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/deepspeed/utils/nvtx.py", line 20, in wrapped_fn
+[rank0]:     ret_val = func(*args, **kwargs)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/deepspeed/runtime/engine.py", line 2030, in forward
+[rank0]:     loss = self.module(*inputs, **kwargs)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1845, in _call_impl
+[rank0]:     return inner()
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1793, in inner
+[rank0]:     result = forward_call(*args, **kwargs)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/overrides/base.py", line 90, in forward
+[rank0]:     output = self._forward_module.training_step(*inputs, **kwargs)
+[rank0]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/lightning_lens.py", line 189, in training_step
+[rank0]:     lens_logits = self.forward(cache)  # Shape: [batch_size, d_vocab]
+[rank0]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/lightning_lens.py", line 158, in forward
+[rank0]:     return self.attn_lens(cache)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/lens/registry/lensLR.py", line 71, in forward
+[rank0]:     batch_size, pos, n_layers, d_model = input_tensor.size()
+[rank0]: ValueError: too many values to unpack (expected 4)
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 64, in <module>
+[rank2]:     main(get_args())
+[rank2]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 57, in main
+[rank2]:     train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+[rank2]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 104, in train_lens
+[rank2]:     trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+[rank2]:     call._call_and_handle_interrupt(
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+[rank2]:     return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+[rank2]:     return function(*args, **kwargs)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+[rank2]:     self._run(model, ckpt_path=ckpt_path)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 973, in _run
+[rank2]:     results = self._run_stage()
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 1016, in _run_stage
+[rank2]:     self.fit_loop.run()
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/fit_loop.py", line 201, in run
+[rank2]:     self.advance()
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/fit_loop.py", line 354, in advance
+[rank2]:     self.epoch_loop.run(self._data_fetcher)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/training_epoch_loop.py", line 133, in run
+[rank2]:     self.advance(data_fetcher)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/training_epoch_loop.py", line 218, in advance
+[rank2]:     batch_output = self.automatic_optimization.run(trainer.optimizers[0], kwargs)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 185, in run
+[rank2]:     self._optimizer_step(kwargs.get("batch_idx", 0), closure)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 260, in _optimizer_step
+[rank2]:     call._call_lightning_module_hook(
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 144, in _call_lightning_module_hook
+[rank2]:     output = fn(*args, **kwargs)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/core/module.py", line 1256, in optimizer_step
+[rank2]:     optimizer.step(closure=optimizer_closure)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/core/optimizer.py", line 155, in step
+[rank2]:     step_output = self._strategy.optimizer_step(self._optimizer, closure, **kwargs)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/ddp.py", line 256, in optimizer_step
+[rank2]:     optimizer_output = super().optimizer_step(optimizer, closure, model, **kwargs)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/strategy.py", line 225, in optimizer_step
+[rank2]:     return self.precision_plugin.optimizer_step(optimizer, model=model, closure=closure, **kwargs)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/plugins/precision/deepspeed.py", line 92, in optimizer_step
+[rank2]:     closure_result = closure()
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 140, in __call__
+[rank2]:     self._result = self.closure(*args, **kwargs)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 126, in closure
+[rank2]:     step_output = self._step_fn()
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 307, in _training_step
+[rank2]:     training_step_output = call._call_strategy_hook(trainer, "training_step", *kwargs.values())
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 291, in _call_strategy_hook
+[rank2]:     output = fn(*args, **kwargs)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/ddp.py", line 328, in training_step
+[rank2]:     return self.model(*args, **kwargs)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank2]:     return self._call_impl(*args, **kwargs)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank2]:     return forward_call(*args, **kwargs)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/deepspeed/utils/nvtx.py", line 20, in wrapped_fn
+[rank2]:     ret_val = func(*args, **kwargs)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/deepspeed/runtime/engine.py", line 2030, in forward
+[rank2]:     loss = self.module(*inputs, **kwargs)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank2]:     return self._call_impl(*args, **kwargs)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1845, in _call_impl
+[rank2]:     return inner()
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1793, in inner
+[rank2]:     result = forward_call(*args, **kwargs)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/overrides/base.py", line 90, in forward
+[rank2]:     output = self._forward_module.training_step(*inputs, **kwargs)
+[rank2]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/lightning_lens.py", line 189, in training_step
+[rank2]:     lens_logits = self.forward(cache)  # Shape: [batch_size, d_vocab]
+[rank2]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/lightning_lens.py", line 158, in forward
+[rank2]:     return self.attn_lens(cache)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank2]:     return self._call_impl(*args, **kwargs)
+[rank2]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank2]:     return forward_call(*args, **kwargs)
+[rank2]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/lens/registry/lensLR.py", line 71, in forward
+[rank2]:     batch_size, pos, n_layers, d_model = input_tensor.size()
+[rank2]: ValueError: too many values to unpack (expected 4)
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 64, in <module>
+[rank3]:     main(get_args())
+[rank3]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 57, in main
+[rank3]:     train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+[rank3]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 104, in train_lens
+[rank3]:     trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+[rank3]:     call._call_and_handle_interrupt(
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+[rank3]:     return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+[rank3]:     return function(*args, **kwargs)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+[rank3]:     self._run(model, ckpt_path=ckpt_path)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 973, in _run
+[rank3]:     results = self._run_stage()
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 1016, in _run_stage
+[rank3]:     self.fit_loop.run()
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/fit_loop.py", line 201, in run
+[rank3]:     self.advance()
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/fit_loop.py", line 354, in advance
+[rank3]:     self.epoch_loop.run(self._data_fetcher)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/training_epoch_loop.py", line 133, in run
+[rank3]:     self.advance(data_fetcher)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/training_epoch_loop.py", line 218, in advance
+[rank3]:     batch_output = self.automatic_optimization.run(trainer.optimizers[0], kwargs)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 185, in run
+[rank3]:     self._optimizer_step(kwargs.get("batch_idx", 0), closure)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 260, in _optimizer_step
+[rank3]:     call._call_lightning_module_hook(
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 144, in _call_lightning_module_hook
+[rank3]:     output = fn(*args, **kwargs)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/core/module.py", line 1256, in optimizer_step
+[rank3]:     optimizer.step(closure=optimizer_closure)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/core/optimizer.py", line 155, in step
+[rank3]:     step_output = self._strategy.optimizer_step(self._optimizer, closure, **kwargs)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/ddp.py", line 256, in optimizer_step
+[rank3]:     optimizer_output = super().optimizer_step(optimizer, closure, model, **kwargs)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/strategy.py", line 225, in optimizer_step
+[rank3]:     return self.precision_plugin.optimizer_step(optimizer, model=model, closure=closure, **kwargs)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/plugins/precision/deepspeed.py", line 92, in optimizer_step
+[rank3]:     closure_result = closure()
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 140, in __call__
+[rank3]:     self._result = self.closure(*args, **kwargs)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 126, in closure
+[rank3]:     step_output = self._step_fn()
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/loops/optimization/automatic.py", line 307, in _training_step
+[rank3]:     training_step_output = call._call_strategy_hook(trainer, "training_step", *kwargs.values())
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 291, in _call_strategy_hook
+[rank3]:     output = fn(*args, **kwargs)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/strategies/ddp.py", line 328, in training_step
+[rank3]:     return self.model(*args, **kwargs)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank3]:     return self._call_impl(*args, **kwargs)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank3]:     return forward_call(*args, **kwargs)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/deepspeed/utils/nvtx.py", line 20, in wrapped_fn
+[rank3]:     ret_val = func(*args, **kwargs)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/deepspeed/runtime/engine.py", line 2030, in forward
+[rank3]:     loss = self.module(*inputs, **kwargs)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank3]:     return self._call_impl(*args, **kwargs)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1845, in _call_impl
+[rank3]:     return inner()
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1793, in inner
+[rank3]:     result = forward_call(*args, **kwargs)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/lightning/pytorch/overrides/base.py", line 90, in forward
+[rank3]:     output = self._forward_module.training_step(*inputs, **kwargs)
+[rank3]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/lightning_lens.py", line 189, in training_step
+[rank3]:     lens_logits = self.forward(cache)  # Shape: [batch_size, d_vocab]
+[rank3]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/lightning_lens.py", line 158, in forward
+[rank3]:     return self.attn_lens(cache)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank3]:     return self._call_impl(*args, **kwargs)
+[rank3]:   File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank3]:     return forward_call(*args, **kwargs)
+[rank3]:   File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/lens/registry/lensLR.py", line 71, in forward
+[rank3]:     batch_size, pos, n_layers, d_model = input_tensor.size()
+[rank3]: ValueError: too many values to unpack (expected 4)
+[rank0]:[W601 20:23:14.201504584 ProcessGroupNCCL.cpp:1496] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+W0601 20:23:16.346000 1325378 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1325402 closing signal SIGTERM
+W0601 20:23:16.346000 1325378 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1325404 closing signal SIGTERM
+W0601 20:23:16.346000 1325378 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1325405 closing signal SIGTERM
+E0601 20:23:16.687000 1325378 site-packages/torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 1 (pid: 1325403) of binary: /home/pettyjohnjn/.conda/envs/AttnLens_Test/bin/python
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/distributed/run.py", line 922, in <module>
+    main()
+  File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/distributed/run.py", line 918, in main
+    run(args)
+  File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+  File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/pettyjohnjn/.conda/envs/AttnLens_Test/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+../train.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-06-01_20:23:16
+  host      : x3102c0s31b1n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 1325403)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

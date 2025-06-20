@@ -60,4 +60,5 @@ class DataModule(pl.LightningDataModule):
             batch_size=self.batch_size,
             pin_memory=self.pin_memory,
             num_workers=self.num_workers,
+            shuffle=True,
         )

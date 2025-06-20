@@ -1,0 +1,8 @@
+working dir: 
+/grand/SuperBERT/pettyjohnjn/baseline/attention_lens
+Master Rank: x3202c0s31b0n0.hsn.cm.polaris.alcf.anl.gov
+ckpt dir: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R12/gpt2/ckpt_
+model name: gpt2
+lora rank: 12
+Training Command:  module use /soft/modulefiles; module load conda; conda activate LoRA_Lens;  export OMP_NUM_THREADS=8 ; source ~/.bashrc ;  python -m torch.distributed.run --nnodes=1 --nproc_per_node=auto --max_restarts 0 --standalone   --node_rank=0  ../train.py --num_nodes 1 --model_name gpt2 --checkpoint_dir /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R12/gpt2/ckpt_ --lora_rank 12 --batch_size 4  
+Launching rank 0 on remote node x3202c0s31b0n0.hsn.cm.polaris.alcf.anl.gov
