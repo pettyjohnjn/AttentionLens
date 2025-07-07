@@ -1,0 +1,25 @@
+working dir: 
+/grand/SuperBERT/pettyjohnjn/baseline/attention_lens
+Master Rank: x3005c0s7b1n0.hsn.cm.polaris.alcf.anl.gov
+ckpt dir: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_
+model name: gpt2
+lora rank: 11
+Training Command:  module use /soft/modulefiles; module load conda; conda activate LoRA_Lens;  export OMP_NUM_THREADS=8 ; source ~/.bashrc ;  python -m torch.distributed.run --nnodes=1 --nproc_per_node=auto --max_restarts 0 --standalone   --node_rank=0  ../train.py --num_nodes 1 --model_name gpt2 --checkpoint_dir /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_ --lora_rank 11 --batch_size 12  
+Launching rank 0 on remote node x3005c0s7b1n0.hsn.cm.polaris.alcf.anl.gov
+Language model initialized on device:  cuda
+Language model initialized on device:  cuda
+Language model initialized on device:  cuda
+Language model initialized on device:  cuda
+[2025-06-24 02:41:42,098] [INFO] [real_accelerator.py:254:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-06-24 02:41:42,098] [INFO] [real_accelerator.py:254:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-06-24 02:41:42,099] [INFO] [real_accelerator.py:254:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-06-24 02:41:42,109] [INFO] [real_accelerator.py:254:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+Checkpoint directory to reload from is not specified, searching for existing checkpoint directory.
+latest checkpoint file:  None
+Checkpoint directory to reload from is not specified, searching for existing checkpoint directory.
+latest checkpoint file:  None
+Checkpoint directory to reload from is not specified, searching for existing checkpoint directory.
+latest checkpoint file:  None
+Checkpoint directory to reload from is not specified, searching for existing checkpoint directory.
+latest checkpoint file:  None
+[2025-06-24 02:41:47,962] [WARNING] [deepspeed.py:640:_auto_select_batch_size] Tried to infer the batch size for internal deepspeed logging from the `train_dataloader()`. To ensure DeepSpeed logging remains correct, please manually pass the plugin with the batch size, `Trainer(strategy=DeepSpeedStrategy(logging_batch_size_per_gpu=batch_size))`.

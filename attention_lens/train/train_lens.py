@@ -52,21 +52,23 @@ def train_lens(
     if config.strategy == "deepspeed_stage_2":
         deepspeed_stage_2_config = {
             "zero_optimization": {
-                "stage": 2,  # Using ZeRO Stage 2
-                "model_persistence_threshold": 0,  # Custom threshold
+                "stage": 2,                     # ➊ ZeRO stage
+                "model_persistence_threshold": 0    # ➋ (optional) keep if you really need it
             },
+            # ---------- top level ----------
+            "zero_allow_untested_optimizer": True   # ➌ allow SGD+Nesterov
         }
         strategy = DeepSpeedStrategy(config=deepspeed_stage_2_config)
+
     elif config.strategy == "deepspeed_stage_3":
         deepspeed_stage_3_config = {
             "zero_optimization": {
                 "stage": 3,
-                "model_persistence_threshold": 0,
-            }
+                "model_persistence_threshold": 0
+            },
+            "zero_allow_untested_optimizer": True
         }
         strategy = DeepSpeedStrategy(config=deepspeed_stage_3_config)
-    elif config.strategy == "fsdp":
-        strategy = FSDPStrategy(use_orig_params=True)
 
     trainer = pl.Trainer(
         #   The training uses a distributed data parallel strategy with unused parameter detection
@@ -75,10 +77,13 @@ def train_lens(
         precision=training_precision,
         accelerator="auto",
         max_epochs=config.max_epochs,
+        # max_steps=500,
         num_nodes=config.num_nodes,
         default_root_dir=config.checkpoint_dir,
         accumulate_grad_batches=config.accumulate_grad_batches,
         callbacks=callbacks,
+        gradient_clip_val=1.0,
+        gradient_clip_algorithm="norm",
         # callbacks=[early_stop_callback, logging_checkpoint, latest_checkpoint],
         # flush_logs_every_n_steps=100,
         #log_every_n_steps=50,

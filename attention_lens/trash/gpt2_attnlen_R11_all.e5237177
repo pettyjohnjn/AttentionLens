@@ -1,0 +1,49 @@
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+master_addr is only used for static rdzv_backend and when rdzv_endpoint is not specified.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+initializing deepspeed distributed: GLOBAL_RANK: 2, MEMBER: 3/4
+initializing deepspeed distributed: GLOBAL_RANK: 3, MEMBER: 4/4
+initializing deepspeed distributed: GLOBAL_RANK: 1, MEMBER: 2/4
+initializing deepspeed distributed: GLOBAL_RANK: 0, MEMBER: 1/4
+Enabling DeepSpeed FP16.
+You are using a CUDA device ('NVIDIA A100-SXM4-40GB') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+Resolving data files:   0%|          | 0/1962 [00:00<?, ?it/s]Resolving data files:   0%|          | 0/1962 [00:00<?, ?it/s]Resolving data files:  37%|███▋      | 718/1962 [00:00<00:00, 6977.21it/s]Resolving data files:   0%|          | 0/1962 [00:00<?, ?it/s]Resolving data files:   0%|          | 0/1962 [00:00<?, ?it/s]Resolving data files:  34%|███▍      | 665/1962 [00:00<00:00, 6486.00it/s]Resolving data files:  79%|███████▉  | 1546/1962 [00:00<00:00, 15320.16it/s]Resolving data files:  72%|███████▏  | 1416/1962 [00:00<00:00, 5064.61it/s]Resolving data files:  80%|███████▉  | 1563/1962 [00:00<00:00, 14945.00it/s]Resolving data files: 100%|██████████| 1962/1962 [00:00<00:00, 11947.29it/s]
+Resolving data files: 100%|██████████| 1962/1962 [00:00<00:00, 10929.50it/s]
+Resolving data files:  67%|██████▋   | 1314/1962 [00:00<00:00, 4990.49it/s]Resolving data files: 100%|██████████| 1962/1962 [00:00<00:00, 5381.71it/s]
+Resolving data files:  93%|█████████▎| 1833/1962 [00:00<00:00, 4768.86it/s]Resolving data files: 100%|██████████| 1962/1962 [00:00<00:00, 5077.61it/s]
+WARNING:Found cached dataset arrow (/grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137)
+WARNING:Found cached dataset arrow (/grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137)
+WARNING:Found cached dataset arrow (/grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137)
+WARNING:Found cached dataset arrow (/grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137)
+Map (num_proc=8):   0%|          | 0/5000 [00:00<?, ? examples/s]Map (num_proc=8):   0%|          | 0/5000 [00:00<?, ? examples/s]Map (num_proc=8):   0%|          | 0/5000 [00:00<?, ? examples/s]Map (num_proc=8):   0%|          | 0/5000 [00:00<?, ? examples/s]Map (num_proc=8):  12%|█▎        | 625/5000 [00:03<00:26, 165.43 examples/s]Map (num_proc=8):  12%|█▎        | 625/5000 [00:03<00:27, 158.31 examples/s]Map (num_proc=8):  25%|██▌       | 1250/5000 [00:03<00:09, 380.29 examples/s]Map (num_proc=8):  12%|█▎        | 625/5000 [00:03<00:27, 158.15 examples/s]Map (num_proc=8):  12%|█▎        | 625/5000 [00:04<00:28, 156.24 examples/s]Map (num_proc=8):  25%|██▌       | 1250/5000 [00:04<00:10, 366.37 examples/s]Map (num_proc=8):  25%|██▌       | 1250/5000 [00:04<00:10, 364.27 examples/s]Map (num_proc=8):  25%|██▌       | 1250/5000 [00:04<00:10, 362.85 examples/s]Map (num_proc=8):  50%|█████     | 2500/5000 [00:04<00:02, 869.05 examples/s]Map (num_proc=8):  38%|███▊      | 1875/5000 [00:04<00:05, 615.71 examples/s]Map (num_proc=8):  50%|█████     | 2500/5000 [00:04<00:02, 881.09 examples/s]Map (num_proc=8):  50%|█████     | 2500/5000 [00:04<00:02, 874.94 examples/s]Map (num_proc=8):  62%|██████▎   | 3125/5000 [00:04<00:01, 1067.65 examples/s]Map (num_proc=8):  50%|█████     | 2500/5000 [00:04<00:02, 861.36 examples/s]Map (num_proc=8):  62%|██████▎   | 3125/5000 [00:04<00:01, 1075.02 examples/s]Map (num_proc=8):  62%|██████▎   | 3125/5000 [00:04<00:01, 1075.27 examples/s]Map (num_proc=8):  75%|███████▌  | 3750/5000 [00:04<00:00, 1393.98 examples/s]Map (num_proc=8):  75%|███████▌  | 3750/5000 [00:04<00:00, 1548.11 examples/s]Map (num_proc=8):  88%|████████▊ | 4375/5000 [00:04<00:00, 1659.82 examples/s]Map (num_proc=8):  75%|███████▌  | 3750/5000 [00:05<00:01, 1141.60 examples/s]Map (num_proc=8):  75%|███████▌  | 3750/5000 [00:05<00:01, 1113.12 examples/s]Map (num_proc=8):  88%|████████▊ | 4375/5000 [00:05<00:00, 1485.35 examples/s]Map (num_proc=8): 100%|██████████| 5000/5000 [00:05<00:00, 1867.88 examples/s]Map (num_proc=8): 100%|██████████| 5000/5000 [00:05<00:00, 1932.19 examples/s]Map (num_proc=8):  88%|████████▊ | 4375/5000 [00:05<00:00, 1465.56 examples/s]                                                                              Map (num_proc=8): 100%|██████████| 5000/5000 [00:05<00:00, 1745.38 examples/s]                                                                                                                                                                                                                                          LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+
+  | Name      | Type            | Params
+----------------------------------------------
+0 | model     | GPT2LMHeadModel | 124 M 
+1 | attn_lens | LensLR          | 7.3 M 
+2 | mlp_lens  | LensLR          | 7.3 M 
+----------------------------------------------
+14.7 M    Trainable params
+124 M     Non-trainable params
+139 M     Total params
+556.466   Total estimated model params size (MB)
+=>> PBS: job killed: walltime 687 exceeded limit 600

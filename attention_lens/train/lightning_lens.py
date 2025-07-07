@@ -7,6 +7,7 @@ import lightning.pytorch as pl
 from torch import nn
 from typing import Optional
 from itertools import chain
+from transformers import get_linear_schedule_with_warmup
 
 import math
 
@@ -33,14 +34,18 @@ def save_memory_usage():
 class LightningLens(pl.LightningModule):
     def __init__(
         self,
-        model_name: str,
         lens_cls: type[Lens] | str,
         lr: float = 1e-4,
         r: int = 8,
         train_attn: bool = True,
-        use_attention_lens: bool = True,
-        use_mlp_lens: bool = True,
+        use_attention_lens: bool = False,
+        use_mlp_lens: bool = False,
         use_residual_lens: bool = True,
+        sum_logits: bool = False,
+        model_name: Optional[str] = None,
+        model: Optional[transformers.PreTrainedModel] = None,
+        tokenizer: Optional[transformers.PreTrainedTokenizer] = None,
+
     ):
         super().__init__()
         self.model_name = model_name
@@ -51,14 +56,16 @@ class LightningLens(pl.LightningModule):
         self.use_attention_lens = use_attention_lens
         self.use_mlp_lens = use_mlp_lens
         self.use_residual_lens = use_residual_lens
+        self.sum_logits = sum_logits
 
         # Caches for different components
+        self.input_cache: Optional[torch.tensor] = None
         self.attn_cache: list[torch.Tensor] = []
         self.mlp_cache: list[torch.Tensor] = []
         self.residual_cache: list[torch.Tensor] = []
 
-        self.model: Optional[transformers.PreTrainedModel] = None
-        self.tokenizer: Optional[transformers.PreTrainedTokenizer] = None
+        self.model: Optional[transformers.PreTrainedModel] = model
+        self.tokenizer: Optional[transformers.PreTrainedTokenizer] = tokenizer
 
         self.attn_lens: Optional[Lens] = None
         self.mlp_lens: Optional[Lens] = None
@@ -67,10 +74,13 @@ class LightningLens(pl.LightningModule):
     def setup(self, stage: Optional[str] = None) -> None:
         if stage == "fit" and self.train_attn:
             # Load model & tokenizer onto this rank's device
-            self.model, self.tokenizer = get_model(
-                model_name=self.model_name,
-                device=self.device,
-            )
+            if self.model is None or self.tokenizer is None:
+                if self.model_name is None:
+                    raise ValueError("Either pass `model_name` or a `(model, tokenizer)` pair into LightningLens")
+                self.model, self.tokenizer = get_model(
+                    model_name=self.model_name,
+                    device=self.device,
+                )
             base_model = getattr(self.model, 'module', self.model)
 
             # Clone + transpose unembed once per GPU
@@ -120,6 +130,7 @@ class LightningLens(pl.LightningModule):
                     r=self.r,
                 )
 
+            self._register_input_hook(base_model)
             # Register hooks selectively
             if self.use_attention_lens:
                 self._register_attention_hooks(base_model)
@@ -127,6 +138,11 @@ class LightningLens(pl.LightningModule):
                 self._register_mlp_hooks(base_model)
             if self.use_residual_lens:
                 self._register_residual_hooks(base_model)
+    
+    def _make_input_hook(self):
+        def _hook(module, inputs, output):
+            self.input_cache = output.detach()
+        return _hook
 
     def _make_attention_hook(self, layer_id: int):
         def _hook(module, inputs, output):
@@ -145,6 +161,9 @@ class LightningLens(pl.LightningModule):
             res_out = output[0] if isinstance(output, tuple) else output
             self.residual_cache.append(res_out.detach())
         return _hook
+    
+    def _register_input_hook(self, base_model):
+        base_model.transformer.drop.register_forward_hook(self._make_input_hook())
 
     def _register_attention_hooks(self, base_model) -> None:
         if hasattr(base_model, 'transformer') and hasattr(base_model.transformer, 'h'):
@@ -211,7 +230,7 @@ class LightningLens(pl.LightningModule):
         log_q = log_q[mask]
 
         # sum KL over all token positions, then average
-        total_kl = kldiv(log_q, log_p)             # scalar
+        total_kl = kldiv(log_p, log_q)             # scalar
         return total_kl / mask.sum()
 
     def forward(self, cache: torch.Tensor) -> torch.Tensor:
@@ -219,6 +238,7 @@ class LightningLens(pl.LightningModule):
 
     def training_step(self, train_batch: dict, batch_idx: int) -> torch.Tensor:
         # Clear caches
+        self.input_cache = None
         if self.use_attention_lens:
             self.attn_cache.clear()
         if self.use_mlp_lens:
@@ -227,30 +247,41 @@ class LightningLens(pl.LightningModule):
             self.residual_cache.clear()
 
         # Tokenize & run base model
-        inputs = self.tokenizer(
-            train_batch["text"], 
-            truncation=True, 
-            padding=True, 
-            return_tensors="pt",
-            max_length=1024,
-        ).to(self.device)
+        # inputs = self.tokenizer(
+        #     train_batch["text"], 
+        #     truncation=True, 
+        #     padding=True, 
+        #     return_tensors="pt",
+        #     max_length=1024,
+        # ).to(self.device)
 
-        mask = inputs["attention_mask"]
+        # mask = inputs["attention_mask"]
+
+        input_ids = train_batch["input_ids"].to(self.device)
+        attention_mask = train_batch.get("attention_mask")
+        if attention_mask is not None:
+            attention_mask = attention_mask.to(self.device)
 
         with torch.no_grad():
-            outputs = self.model(**inputs)
+            outputs = self.model(input_ids=input_ids, attention_mask=attention_mask)
         logits = outputs.logits
+
+        mask = attention_mask if attention_mask is not None else torch.ones_like(input_ids)
+        
+        assert self.input_cache is not None, "input_cache was not set by the hook!"
+
+        r0_logits = torch.einsum("bsd,dk->bsk", self.input_cache, self.unembed) + self.bias
 
         # losses = []
 
         # collect each len's predicted logits
-        lens_logits = []
+        lens_logits = [r0_logits]
         # Attention lens
         if self.use_attention_lens:
             assert len(self.attn_cache) == self.attn_lens.n_layers, \
                 f"Expected {self.attn_lens.n_layers} attn caches, got {len(self.attn_cache)}"
             attn_cache = torch.stack(self.attn_cache, dim=0).permute(1, 2, 0, 3)
-            attn_logits = self.attn_lens(attn_cache, mask)
+            attn_logits = self.attn_lens(attn_cache, mask, sum_logits = self.sum_logits)
             # loss_attn = self.kl_loss(logits, attn_logits)
             # self.log("loss_attn", loss_attn, prog_bar=True)
             # losses.append(loss_attn)
@@ -261,7 +292,7 @@ class LightningLens(pl.LightningModule):
             assert len(self.mlp_cache) == self.mlp_lens.n_layers, \
                 f"Expected {self.mlp_lens.n_layers} mlp caches, got {len(self.mlp_cache)}"
             mlp_cache = torch.stack(self.mlp_cache, dim=0).permute(1, 2, 0, 3)
-            mlp_logits = self.mlp_lens(mlp_cache, mask)
+            mlp_logits = self.mlp_lens(mlp_cache, mask, sum_logits = self.sum_logits)
             # loss_mlp = self.kl_loss(logits, mlp_logits)
             # self.log("loss_mlp", loss_mlp, prog_bar=True)
             # losses.append(loss_mlp)
@@ -272,20 +303,38 @@ class LightningLens(pl.LightningModule):
             assert len(self.residual_cache) == self.residual_lens.n_layers, \
                 f"Expected {self.residual_lens.n_layers} residual caches, got {len(self.residual_cache)}"
             res_cache = torch.stack(self.residual_cache, dim=0).permute(1, 2, 0, 3)
-            res_logits = self.residual_lens(res_cache, mask)
+            res_logits = self.residual_lens(res_cache, mask, sum_logits = self.sum_logits)
             # loss_res = self.kl_loss(logits, res_logits)
             # self.log("loss_res", loss_res, prog_bar=True)
             # losses.append(loss_res)
             lens_logits.append(res_logits)
 
+        if self.sum_logits:
+            combined = torch.stack(lens_logits, dim=0).sum(dim=0)
+            loss = self.kl_loss(combined, logits, mask) / math.log(2)
+        else:
+            losses: list[torch.Tensor] = []
+            for ll in lens_logits:
+                if ll.ndim == 4: # [B, S, n_layers, V]
+                    for i in range(ll.size(2)):
+                        losses.append(self.kl_loss(ll[:, :, i, :], logits, mask))
+                else:
+                    losses.append(self.kl_loss(ll, logits, mask))
+            loss = torch.stack(losses).mean() / math.log(2)
+
         # save_memory_usage()
         # Combine and log
         # Sum all lens logits, compute one KL against the model's logits
-        lens_logits = torch.stack(lens_logits, dim=0).sum(dim=0)
+        # lens_logits = torch.stack(lens_logits, dim=0).sum(dim=0)
         # total_loss = torch.stack(losses).mean()
-        total_loss = self.kl_loss(lens_logits, logits, mask)
-        self.log("train_loss", total_loss, prog_bar=True)
-        return total_loss
+        # loss = self.kl_loss(lens_logits, logits, mask) / math.log(2) # Convert nats to bits
+        self.log("train_loss", 
+                 loss, 
+                 prog_bar=True,
+                 on_step=True,
+                 on_epoch=False,
+                 )
+        return loss
 
     def configure_optimizers(self) -> torch.optim.Optimizer:
         # Collect parameters from active lenses
@@ -298,3 +347,144 @@ class LightningLens(pl.LightningModule):
             lens_modules.append(self.residual_lens)
         params = chain(*(lens.parameters() for lens in lens_modules if lens is not None))
         return torch.optim.Adam(params, lr=self.lr)
+        # return torch.optim.AdamW(params, 
+        #                          lr=self.lr,
+        #                          betas=(0.9, 0.98),
+        #                          eps=1e-6,
+        #                          weight_decay=1e-2)
+
+    # def configure_optimizers(self):
+
+    #     # Collect parameters
+    #     lens_modules = []
+    #     if self.use_attention_lens:
+    #         lens_modules.append(self.attn_lens)
+    #     if self.use_mlp_lens:
+    #         lens_modules.append(self.mlp_lens)
+    #     if self.use_residual_lens:
+    #         lens_modules.append(self.residual_lens)
+
+    #     params = chain(*(lens.parameters() for lens in lens_modules if lens is not None))
+
+    #     # Initialize AdamW with weight decay
+    #     optimizer = torch.optim.AdamW(
+    #         params,
+    #         lr=self.lr,
+    #         betas=(0.9, 0.98),
+    #         eps=1e-6,
+    #         weight_decay=1e-2,
+    #     )
+
+    #     # Linear warmup + decay over entire training run
+    #     num_steps = self.trainer.estimated_stepping_batches
+    #     num_warmup = max(1, num_steps // 20)
+    #     print(f"{num_steps} estimated steps with {num_warmup} warmup")
+    #     scheduler = get_linear_schedule_with_warmup(
+    #         optimizer,
+    #         num_warmup_steps=num_warmup,
+    #         num_training_steps=num_steps,
+    #     )
+
+    #     return {
+    #         "optimizer": optimizer,
+    #         "lr_scheduler": {
+    #             "scheduler": scheduler,
+    #             "interval": "step",
+    #             "frequency": 1,
+    #         },
+    #     }
+
+    # def configure_optimizers(self):
+    #     lens_modules = []
+    #     if self.use_attention_lens:
+    #         lens_modules.append(self.attn_lens)
+    #     if self.use_mlp_lens:
+    #         lens_modules.append(self.mlp_lens)
+    #     if self.use_residual_lens:
+    #         lens_modules.append(self.residual_lens)
+
+    #     params = chain(*(m.parameters() for m in lens_modules if m is not None))
+
+    #     # Initialize momentum SGD + Nesterov
+    #     optimizer = torch.optim.SGD(
+    #         params,
+    #         lr=self.lr,                # 1.0 or 0.25
+    #         momentum=0.9,
+    #         nesterov=True,
+    #         weight_decay=1e-3,         # 1 × 10⁻³
+    #     )
+
+    #     # Linear decay to 0 over 250 steps 
+    #     scheduler = torch.optim.lr_scheduler.LinearLR(
+    #         optimizer,
+    #         start_factor=0.25,
+    #         end_factor=0.0,
+    #         total_iters=500,
+    #     )
+
+    #     return {
+    #         "optimizer": optimizer,
+    #         "lr_scheduler": {
+    #             "scheduler": scheduler,
+    #             "interval": "step",
+    #             "frequency": 1,
+    #         },
+    #     }
+
+    # def configure_optimizers(self):
+        # # 1) Collect all lens parameters
+        # lens_modules = []
+        # if self.use_attention_lens:
+        #     lens_modules.append(self.attn_lens)
+        # if self.use_mlp_lens:
+        #     lens_modules.append(self.mlp_lens)
+        # if self.use_residual_lens:
+        #     lens_modules.append(self.residual_lens)
+        # params = chain(*(m.parameters() for m in lens_modules if m is not None))
+
+        # # 2) Optimizer
+        # optimizer = torch.optim.SGD(
+        #     params,
+        #     lr=self.lr,           # peak LR, e.g. 5e-3
+        #     momentum=0.9,
+        #     nesterov=True,
+        #     weight_decay=1e-3,
+        # )
+
+        # # 3) Warmup via LambdaLR: factor = step/warmup_steps (clamped ≤1)
+        # warmup_steps = getattr(self, 'warmup_steps', 100)
+        # def warmup_fn(step):
+        #     return min((step + 1) / warmup_steps, 1.0)
+        # warmup_sched = torch.optim.lr_scheduler.LambdaLR(
+        #     optimizer,
+        #     lr_lambda=warmup_fn
+        # )
+
+        # # 4) Indefinite damped cyclic schedule
+        # cycle_up   = getattr(self, 'cycle_up_steps',   1000)
+        # cycle_down = getattr(self, 'cycle_down_steps', 1000)
+        # cyclic_sched = torch.optim.lr_scheduler.CyclicLR(
+        #     optimizer,
+        #     base_lr=self.lr * 0.1,  # floor at 10%
+        #     max_lr=self.lr,         # peak
+        #     step_size_up=cycle_up,
+        #     step_size_down=cycle_down,
+        #     mode='triangular2',     # halves amplitude each cycle
+        #     cycle_momentum=False,
+        # )
+
+        # # 5) Chain: warmup first, then cyclic forever
+        # scheduler = torch.optim.lr_scheduler.SequentialLR(
+        #     optimizer,
+        #     schedulers=[warmup_sched, cyclic_sched],
+        #     milestones=[warmup_steps],
+        # )
+
+        # return {
+        #     "optimizer": optimizer,
+        #     "lr_scheduler": {
+        #         "scheduler": scheduler,
+        #         "interval": "step",
+        #         "frequency": 1,
+        #     },
+        # }

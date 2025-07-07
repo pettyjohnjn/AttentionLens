@@ -1,0 +1,247 @@
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+master_addr is only used for static rdzv_backend and when rdzv_endpoint is not specified.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+initializing deepspeed distributed: GLOBAL_RANK: 2, MEMBER: 3/4
+initializing deepspeed distributed: GLOBAL_RANK: 1, MEMBER: 2/4
+initializing deepspeed distributed: GLOBAL_RANK: 3, MEMBER: 4/4
+initializing deepspeed distributed: GLOBAL_RANK: 0, MEMBER: 1/4
+Enabling DeepSpeed FP16.
+You are using a CUDA device ('NVIDIA A100-SXM4-40GB') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+WARNING:Loading cached shuffled indices for dataset at /grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile_512/cache-5cef366838826a8f.arrow
+WARNING:Loading cached shuffled indices for dataset at /grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile_512/cache-5cef366838826a8f.arrow
+WARNING:Loading cached shuffled indices for dataset at /grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile_512/cache-5cef366838826a8f.arrow
+WARNING:Loading cached shuffled indices for dataset at /grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile_512/cache-5cef366838826a8f.arrow
+LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 64, in <module>
+Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 64, in <module>
+Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 64, in <module>
+Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 64, in <module>
+    main(get_args())
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 57, in main
+    main(get_args())
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 57, in main
+    train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 109, in train_lens
+    main(get_args())
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 57, in main
+    train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 109, in train_lens
+    main(get_args())
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 57, in main
+    train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 109, in train_lens
+    train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 109, in train_lens
+    trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+      File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+      File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+    trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+            call._call_and_handle_interrupt(call._call_and_handle_interrupt(call._call_and_handle_interrupt(
+
+
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+    call._call_and_handle_interrupt(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+    
+return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+    return function(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+    return function(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+    return function(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+    return function(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+    self._run(model, ckpt_path=ckpt_path)    
+self._run(model, ckpt_path=ckpt_path)
+      File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 949, in _run
+self._run(model, ckpt_path=ckpt_path)  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 949, in _run
+
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 949, in _run
+    self._run(model, ckpt_path=ckpt_path)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 949, in _run
+        self.strategy.setup(self)self.strategy.setup(self)
+
+      File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/deepspeed.py", line 347, in setup
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/deepspeed.py", line 347, in setup
+self.strategy.setup(self)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/deepspeed.py", line 347, in setup
+    self.strategy.setup(self)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/deepspeed.py", line 347, in setup
+    self.init_deepspeed()
+    self.init_deepspeed()  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/deepspeed.py", line 451, in init_deepspeed
+
+    self.init_deepspeed()  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/deepspeed.py", line 451, in init_deepspeed
+
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/deepspeed.py", line 451, in init_deepspeed
+    self.init_deepspeed()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/deepspeed.py", line 451, in init_deepspeed
+    self._initialize_deepspeed_train(model)
+      File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/deepspeed.py", line 487, in _initialize_deepspeed_train
+self._initialize_deepspeed_train(model)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/deepspeed.py", line 487, in _initialize_deepspeed_train
+    self._initialize_deepspeed_train(model)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/deepspeed.py", line 487, in _initialize_deepspeed_train
+    self._initialize_deepspeed_train(model)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/deepspeed.py", line 487, in _initialize_deepspeed_train
+    model, deepspeed_optimizer = self._setup_model_and_optimizer(model, optimizer, scheduler)
+      File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/deepspeed.py", line 416, in _setup_model_and_optimizer
+model, deepspeed_optimizer = self._setup_model_and_optimizer(model, optimizer, scheduler)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/deepspeed.py", line 416, in _setup_model_and_optimizer
+    model, deepspeed_optimizer = self._setup_model_and_optimizer(model, optimizer, scheduler)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/deepspeed.py", line 416, in _setup_model_and_optimizer
+    model, deepspeed_optimizer = self._setup_model_and_optimizer(model, optimizer, scheduler)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/deepspeed.py", line 416, in _setup_model_and_optimizer
+    deepspeed_engine, deepspeed_optimizer, _, _ = deepspeed.initialize(
+      File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/__init__.py", line 179, in initialize
+deepspeed_engine, deepspeed_optimizer, _, _ = deepspeed.initialize(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/__init__.py", line 179, in initialize
+    deepspeed_engine, deepspeed_optimizer, _, _ = deepspeed.initialize(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/__init__.py", line 179, in initialize
+    deepspeed_engine, deepspeed_optimizer, _, _ = deepspeed.initialize(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/__init__.py", line 179, in initialize
+    config_class = DeepSpeedConfig(config, mpu, mesh_device=mesh_device)
+    config_class = DeepSpeedConfig(config, mpu, mesh_device=mesh_device)  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/runtime/config.py", line 808, in __init__
+
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/runtime/config.py", line 808, in __init__
+    config_class = DeepSpeedConfig(config, mpu, mesh_device=mesh_device)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/runtime/config.py", line 808, in __init__
+    self._initialize_params(copy.copy(self._param_dict))
+    self._initialize_params(copy.copy(self._param_dict))  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/runtime/config.py", line 827, in _initialize_params
+
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/runtime/config.py", line 827, in _initialize_params
+        config_class = DeepSpeedConfig(config, mpu, mesh_device=mesh_device)self._initialize_params(copy.copy(self._param_dict))
+
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/runtime/config.py", line 808, in __init__
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/runtime/config.py", line 827, in _initialize_params
+    self.zero_config = get_zero_config(param_dict)
+      File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/runtime/zero/config.py", line 74, in get_zero_config
+self.zero_config = get_zero_config(param_dict)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/runtime/zero/config.py", line 74, in get_zero_config
+    self.zero_config = get_zero_config(param_dict)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/runtime/zero/config.py", line 74, in get_zero_config
+    self._initialize_params(copy.copy(self._param_dict))
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/runtime/config.py", line 827, in _initialize_params
+    self.zero_config = get_zero_config(param_dict)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/runtime/zero/config.py", line 74, in get_zero_config
+    return DeepSpeedZeroConfig(**zero_config_dict)
+    return DeepSpeedZeroConfig(**zero_config_dict)  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/runtime/config_utils.py", line 57, in __init__
+
+    return DeepSpeedZeroConfig(**zero_config_dict)  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/runtime/config_utils.py", line 57, in __init__
+
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/runtime/config_utils.py", line 57, in __init__
+    return DeepSpeedZeroConfig(**zero_config_dict)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/deepspeed/runtime/config_utils.py", line 57, in __init__
+        super().__init__(**data)super().__init__(**data)
+
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/pydantic/main.py", line 150, in __init__
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/pydantic/main.py", line 150, in __init__
+    super().__init__(**data)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/pydantic/main.py", line 150, in __init__
+    super().__init__(**data)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/pydantic/main.py", line 150, in __init__
+            __pydantic_self__.__pydantic_validator__.validate_python(data, self_instance=__pydantic_self__)__pydantic_self__.__pydantic_validator__.validate_python(data, self_instance=__pydantic_self__)__pydantic_self__.__pydantic_validator__.validate_python(data, self_instance=__pydantic_self__)
+
+
+pydantic_core._pydantic_corepydantic_core._pydantic_core.pydantic_core._pydantic_core.ValidationError.ValidationErrorValidationError    __pydantic_self__.__pydantic_validator__.validate_python(data, self_instance=__pydantic_self__)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for DeepSpeedZeroConfig
+zero_allow_untested_optimizer
+  Extra inputs are not permitted [type=extra_forbidden, input_value=True, input_type=bool]
+    For further information visit https://errors.pydantic.dev/2.0.3/v/extra_forbidden
+: 1 validation error for DeepSpeedZeroConfig
+zero_allow_untested_optimizer
+  Extra inputs are not permitted [type=extra_forbidden, input_value=True, input_type=bool]
+    For further information visit https://errors.pydantic.dev/2.0.3/v/extra_forbidden: 
+: 1 validation error for DeepSpeedZeroConfig
+zero_allow_untested_optimizer
+  Extra inputs are not permitted [type=extra_forbidden, input_value=True, input_type=bool]
+    For further information visit https://errors.pydantic.dev/2.0.3/v/extra_forbidden1 validation error for DeepSpeedZeroConfig
+zero_allow_untested_optimizer
+  Extra inputs are not permitted [type=extra_forbidden, input_value=True, input_type=bool]
+    For further information visit https://errors.pydantic.dev/2.0.3/v/extra_forbidden
+
+ERROR:torch.distributed.elastic.multiprocessing.api:failed (exitcode: 1) local_rank: 0 (pid: 1917388) of binary: /home/pettyjohnjn/.conda/envs/LoRA_Lens/bin/python
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 798, in <module>
+    main()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 794, in main
+    run(args)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 250, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+../train.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2025-06-23_00:56:29
+  host      : x3002c0s1b0n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 1917389)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2025-06-23_00:56:29
+  host      : x3002c0s1b0n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 2 (local_rank: 2)
+  exitcode  : 1 (pid: 1917390)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[3]:
+  time      : 2025-06-23_00:56:29
+  host      : x3002c0s1b0n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 3 (local_rank: 3)
+  exitcode  : 1 (pid: 1917391)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-06-23_00:56:29
+  host      : x3002c0s1b0n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 1917388)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

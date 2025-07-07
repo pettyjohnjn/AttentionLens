@@ -1,11 +1,12 @@
 import torch.types
 
-from typing import Union
+from typing import Union, Optional
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 
 def get_model(
-    model_name: str = "gpt2", device: Union[str, torch.types.Device] = "cuda"
+    model_name: str = "gpt2", 
+    device: Optional[Union[str, torch.types.Device]] = "cuda"
 ) -> AutoModelForCausalLM:
     """Loads and returns a model and tokenizer from the modified Hugging Face Transformers library.
 
@@ -20,13 +21,21 @@ def get_model(
         The light-weight hooked model and tokenizer.
     """
 
-    model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16)
+    model = AutoModelForCausalLM.from_pretrained(
+        model_name, 
+        torch_dtype=torch.float16,
+        local_files_only=True,
+        resume_download=True,
+    )
     # model.to(device)
 
     model.eval()
     model.requires_grad_(False)
     
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    tokenizer = AutoTokenizer.from_pretrained(
+        model_name,
+        local_files_only=True,
+    )
     tokenizer.pad_token = tokenizer.eos_token
 
 

@@ -24,7 +24,7 @@ class TrainConfig:
     model_name: str = field(default="gpt2")
     lora_rank: int = field(default=8)
     # Data module-specific arguments
-    data_dir: Path | str = field(default="/grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile_512")
+    data_dir: Path | str = field(default="/grand/SuperBERT/pettyjohnjn/cache/datasets/monology___pile-uncopyrighted/default/0.0.0")
     split: str = field(default="train")
     batch_size: int = field(default=1)
     data_num_workers: int = field(default=1)

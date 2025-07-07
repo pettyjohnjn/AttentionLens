@@ -1,0 +1,55 @@
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+master_addr is only used for static rdzv_backend and when rdzv_endpoint is not specified.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+initializing deepspeed distributed: GLOBAL_RANK: 0, MEMBER: 1/4
+initializing deepspeed distributed: GLOBAL_RANK: 2, MEMBER: 3/4
+initializing deepspeed distributed: GLOBAL_RANK: 1, MEMBER: 2/4
+initializing deepspeed distributed: GLOBAL_RANK: 3, MEMBER: 4/4
+Enabling DeepSpeed FP16.
+You are using a CUDA device ('NVIDIA A100-SXM4-40GB') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+Resolving data files:   0%|          | 0/1962 [00:00<?, ?it/s]Resolving data files:   0%|          | 0/1962 [00:00<?, ?it/s]Resolving data files:  39%|███▊      | 758/1962 [00:00<00:00, 6711.95it/s]Resolving data files:  36%|███▌      | 697/1962 [00:00<00:00, 6623.75it/s]Resolving data files:   0%|          | 0/1962 [00:00<?, ?it/s]Resolving data files:  73%|███████▎  | 1430/1962 [00:00<00:00, 5550.27it/s]Resolving data files:  72%|███████▏  | 1417/1962 [00:00<00:00, 13864.32it/s]Resolving data files:  69%|██████▉   | 1360/1962 [00:00<00:00, 5050.51it/s]Resolving data files: 100%|██████████| 1962/1962 [00:00<00:00, 5615.59it/s]
+Resolving data files: 100%|██████████| 1962/1962 [00:00<00:00, 9331.29it/s] 
+Resolving data files:  96%|█████████▌| 1886/1962 [00:00<00:00, 4868.62it/s]Resolving data files: 100%|██████████| 1962/1962 [00:00<00:00, 5186.86it/s]
+Resolving data files:   0%|          | 0/1962 [00:00<?, ?it/s]Resolving data files:  33%|███▎      | 655/1962 [00:00<00:00, 6432.44it/s]WARNING:Found cached dataset arrow (/grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137)
+WARNING:Found cached dataset arrow (/grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137)
+WARNING:Found cached dataset arrow (/grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137)
+Resolving data files:  66%|██████▌   | 1299/1962 [00:00<00:00, 4910.55it/s]Resolving data files:  92%|█████████▏| 1812/1962 [00:00<00:00, 4505.28it/s]Resolving data files: 100%|██████████| 1962/1962 [00:00<00:00, 4887.32it/s]
+WARNING:Found cached dataset arrow (/grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137)
+WARNING:Loading cached shuffled indices for dataset at /grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137/cache-33b6bf7b3242f742.arrow
+WARNING:Loading cached shuffled indices for dataset at /grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137/cache-33b6bf7b3242f742.arrow
+WARNING:Loading cached shuffled indices for dataset at /grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137/cache-33b6bf7b3242f742.arrow
+WARNING:Loading cached shuffled indices for dataset at /grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137/cache-33b6bf7b3242f742.arrow
+WARNING:Loading cached processed dataset at /grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137/cache-30432ba7fc648729_*_of_00008.arrow
+WARNING:Loading cached processed dataset at /grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137/cache-30432ba7fc648729_*_of_00008.arrow
+WARNING:Loading cached processed dataset at /grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137/cache-30432ba7fc648729_*_of_00008.arrow
+WARNING:Loading cached processed dataset at /grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137/cache-30432ba7fc648729_*_of_00008.arrow
+LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+
+  | Name      | Type            | Params
+----------------------------------------------
+0 | model     | GPT2LMHeadModel | 124 M 
+1 | attn_lens | LensLR          | 7.3 M 
+2 | mlp_lens  | LensLR          | 7.3 M 
+----------------------------------------------
+14.7 M    Trainable params
+124 M     Non-trainable params
+139 M     Total params
+556.466   Total estimated model params size (MB)
+Restoring states from the checkpoint path at /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/attnlens-layer--epoch=01-step=240-train_loss=2.63.ckpt
+Restored all states from the checkpoint at /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/attnlens-layer--epoch=01-step=240-train_loss=2.63.ckpt
+`Trainer.fit` stopped: `max_epochs=3` reached.

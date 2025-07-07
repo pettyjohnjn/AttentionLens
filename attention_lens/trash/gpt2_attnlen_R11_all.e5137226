@@ -1,0 +1,442 @@
+Warning: Permanently added 'x3015c0s13b1n0.hsn.cm.polaris.alcf.anl.gov,10.201.3.134' (ECDSA) to the list of known hosts.
+Warning: Permanently added 'x3008c0s1b1n0.hsn.cm.polaris.alcf.anl.gov,10.201.2.85' (ECDSA) to the list of known hosts.
+Warning: Permanently added 'x3008c0s19b1n0.hsn.cm.polaris.alcf.anl.gov,10.201.2.99' (ECDSA) to the list of known hosts.
+Warning: Permanently added the ECDSA host key for IP address '10.201.3.28' to the list of known hosts.
+Warning: Permanently added 'x3011c0s1b0n0.hsn.cm.polaris.alcf.anl.gov,10.201.2.211' (ECDSA) to the list of known hosts.
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+Warning: Permanently added 'x3008c0s25b1n0.hsn.cm.polaris.alcf.anl.gov,10.201.2.119' (ECDSA) to the list of known hosts.
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 798, in <module>
+    main()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 794, in main
+    run(args)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 241, in launch_agent
+    result = agent.run()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 723, in run
+    result = self._invoke_run(role)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 858, in _invoke_run
+    self._initialize_workers(self._worker_group)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 692, in _initialize_workers
+    self._rendezvous(worker_group)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 549, in _rendezvous
+    workers = self._assign_worker_ranks(store, group_rank, group_world_size, spec)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 624, in _assign_worker_ranks
+    role_infos = self._share_and_gather(store, group_rank, group_world_size, spec)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 661, in _share_and_gather
+    role_infos_bytes = store_util.synchronize(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/utils/store.py", line 64, in synchronize
+    agent_data = get_all(store, rank, key_prefix, world_size)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/utils/store.py", line 34, in get_all
+    data = store.get(f"{prefix}{idx}")
+RuntimeError: Socket Timeout
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 798, in <module>
+    main()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 794, in main
+    run(args)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 241, in launch_agent
+    result = agent.run()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 723, in run
+    result = self._invoke_run(role)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 858, in _invoke_run
+    self._initialize_workers(self._worker_group)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 692, in _initialize_workers
+    self._rendezvous(worker_group)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 549, in _rendezvous
+    workers = self._assign_worker_ranks(store, group_rank, group_world_size, spec)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 624, in _assign_worker_ranks
+    role_infos = self._share_and_gather(store, group_rank, group_world_size, spec)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 661, in _share_and_gather
+    role_infos_bytes = store_util.synchronize(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/utils/store.py", line 64, in synchronize
+    agent_data = get_all(store, rank, key_prefix, world_size)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/utils/store.py", line 34, in get_all
+    data = store.get(f"{prefix}{idx}")
+RuntimeError: Socket Timeout
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 798, in <module>
+    main()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 794, in main
+    run(args)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 241, in launch_agent
+    result = agent.run()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 723, in run
+    result = self._invoke_run(role)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 858, in _invoke_run
+    self._initialize_workers(self._worker_group)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 692, in _initialize_workers
+    self._rendezvous(worker_group)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 549, in _rendezvous
+    workers = self._assign_worker_ranks(store, group_rank, group_world_size, spec)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 624, in _assign_worker_ranks
+    role_infos = self._share_and_gather(store, group_rank, group_world_size, spec)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 661, in _share_and_gather
+    role_infos_bytes = store_util.synchronize(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/utils/store.py", line 64, in synchronize
+    agent_data = get_all(store, rank, key_prefix, world_size)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/utils/store.py", line 34, in get_all
+    data = store.get(f"{prefix}{idx}")
+RuntimeError: Socket Timeout
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 798, in <module>
+    main()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 794, in main
+    run(args)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 241, in launch_agent
+    result = agent.run()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 723, in run
+    result = self._invoke_run(role)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 858, in _invoke_run
+    self._initialize_workers(self._worker_group)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 692, in _initialize_workers
+    self._rendezvous(worker_group)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 549, in _rendezvous
+    workers = self._assign_worker_ranks(store, group_rank, group_world_size, spec)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 624, in _assign_worker_ranks
+    role_infos = self._share_and_gather(store, group_rank, group_world_size, spec)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 661, in _share_and_gather
+    role_infos_bytes = store_util.synchronize(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/utils/store.py", line 64, in synchronize
+    agent_data = get_all(store, rank, key_prefix, world_size)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/utils/store.py", line 34, in get_all
+    data = store.get(f"{prefix}{idx}")
+RuntimeError: Socket Timeout
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 798, in <module>
+    main()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 794, in main
+    run(args)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 241, in launch_agent
+    result = agent.run()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 723, in run
+    result = self._invoke_run(role)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 858, in _invoke_run
+    self._initialize_workers(self._worker_group)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 692, in _initialize_workers
+    self._rendezvous(worker_group)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 549, in _rendezvous
+    workers = self._assign_worker_ranks(store, group_rank, group_world_size, spec)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 624, in _assign_worker_ranks
+    role_infos = self._share_and_gather(store, group_rank, group_world_size, spec)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 661, in _share_and_gather
+    role_infos_bytes = store_util.synchronize(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/utils/store.py", line 64, in synchronize
+    agent_data = get_all(store, rank, key_prefix, world_size)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/utils/store.py", line 34, in get_all
+    data = store.get(f"{prefix}{idx}")
+RuntimeError: Socket Timeout
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 798, in <module>
+    main()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 794, in main
+    run(args)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 241, in launch_agent
+    result = agent.run()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 723, in run
+    result = self._invoke_run(role)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 858, in _invoke_run
+    self._initialize_workers(self._worker_group)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 692, in _initialize_workers
+    self._rendezvous(worker_group)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 549, in _rendezvous
+    workers = self._assign_worker_ranks(store, group_rank, group_world_size, spec)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 624, in _assign_worker_ranks
+    role_infos = self._share_and_gather(store, group_rank, group_world_size, spec)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 661, in _share_and_gather
+    role_infos_bytes = store_util.synchronize(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/utils/store.py", line 64, in synchronize
+    agent_data = get_all(store, rank, key_prefix, world_size)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/utils/store.py", line 34, in get_all
+    data = store.get(f"{prefix}{idx}")
+RuntimeError: Socket Timeout
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 798, in <module>
+    main()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 794, in main
+    run(args)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 241, in launch_agent
+    result = agent.run()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 723, in run
+    result = self._invoke_run(role)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 858, in _invoke_run
+    self._initialize_workers(self._worker_group)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 692, in _initialize_workers
+    self._rendezvous(worker_group)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 549, in _rendezvous
+    workers = self._assign_worker_ranks(store, group_rank, group_world_size, spec)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 624, in _assign_worker_ranks
+    role_infos = self._share_and_gather(store, group_rank, group_world_size, spec)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 661, in _share_and_gather
+    role_infos_bytes = store_util.synchronize(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/utils/store.py", line 64, in synchronize
+    agent_data = get_all(store, rank, key_prefix, world_size)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/utils/store.py", line 34, in get_all
+    data = store.get(f"{prefix}{idx}")
+RuntimeError: Socket Timeout
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 798, in <module>
+    main()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 794, in main
+    run(args)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 241, in launch_agent
+    result = agent.run()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 723, in run
+    result = self._invoke_run(role)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 858, in _invoke_run
+    self._initialize_workers(self._worker_group)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 692, in _initialize_workers
+    self._rendezvous(worker_group)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 549, in _rendezvous
+    workers = self._assign_worker_ranks(store, group_rank, group_world_size, spec)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/metrics/api.py", line 129, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 624, in _assign_worker_ranks
+    role_infos = self._share_and_gather(store, group_rank, group_world_size, spec)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/agent/server/api.py", line 661, in _share_and_gather
+    role_infos_bytes = store_util.synchronize(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/utils/store.py", line 64, in synchronize
+    agent_data = get_all(store, rank, key_prefix, world_size)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/utils/store.py", line 34, in get_all
+    data = store.get(f"{prefix}{idx}")
+RuntimeError: Socket Timeout

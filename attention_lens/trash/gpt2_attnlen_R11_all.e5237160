@@ -1,0 +1,33 @@
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+master_addr is only used for static rdzv_backend and when rdzv_endpoint is not specified.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+initializing deepspeed distributed: GLOBAL_RANK: 2, MEMBER: 3/4
+initializing deepspeed distributed: GLOBAL_RANK: 1, MEMBER: 2/4
+initializing deepspeed distributed: GLOBAL_RANK: 3, MEMBER: 4/4
+initializing deepspeed distributed: GLOBAL_RANK: 0, MEMBER: 1/4
+Enabling DeepSpeed FP16.
+You are using a CUDA device ('NVIDIA A100-SXM4-40GB') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+Resolving data files:   0%|          | 0/1962 [00:00<?, ?it/s]Resolving data files:   0%|          | 0/1962 [00:00<?, ?it/s]Resolving data files:   0%|          | 0/1962 [00:00<?, ?it/s]Resolving data files:  38%|███▊      | 753/1962 [00:00<00:00, 7445.37it/s]Resolving data files:  84%|████████▍ | 1656/1962 [00:00<00:00, 16189.02it/s]Resolving data files: 100%|██████████| 1962/1962 [00:00<00:00, 12573.07it/s]
+Resolving data files:  40%|███▉      | 783/1962 [00:00<00:00, 7630.63it/s]Resolving data files:  76%|███████▋  | 1498/1962 [00:00<00:00, 5572.72it/s]Resolving data files:   0%|          | 0/1962 [00:00<?, ?it/s]Resolving data files: 100%|██████████| 1962/1962 [00:00<00:00, 5811.98it/s]
+Resolving data files:  79%|███████▉  | 1547/1962 [00:00<00:00, 5832.27it/s]WARNING:Found cached dataset arrow (/grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137)
+Resolving data files:  81%|████████  | 1586/1962 [00:00<00:00, 15786.55it/s]Resolving data files: 100%|██████████| 1962/1962 [00:00<00:00, 6007.67it/s]
+Resolving data files: 100%|██████████| 1962/1962 [00:00<00:00, 11448.37it/s]
+WARNING:Found cached dataset arrow (/grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137)
+WARNING:Found cached dataset arrow (/grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137)
+WARNING:Found cached dataset arrow (/grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137)

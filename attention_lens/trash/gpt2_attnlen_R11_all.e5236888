@@ -1,0 +1,157 @@
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+master_addr is only used for static rdzv_backend and when rdzv_endpoint is not specified.
+baseline/attention_lens/../train.py", line 46, in main
+    model, tokenizer = get_model(config)
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/model/get_model.py", line 23, in get_model
+    model, tokenizer = get_model(config)
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baTraceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/utils/hub.py", line 402, in cached_file
+Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/utils/hub.py", line 402, in cached_file
+Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/utils/hub.py", line 402, in cached_file
+    resolved_file = hf_hub_download(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 106, in _inner_fn
+    resolved_file = hf_hub_download(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 106, in _inner_fn
+    validate_repo_id(arg_value)    
+resolved_file = hf_hub_download(  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 154, in validate_repo_id
+
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 106, in _inner_fn
+    validate_repo_id(arg_value)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 154, in validate_repo_id
+    raise HFValidationError(
+huggingface_hub.errors.HFValidationError: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'TrainConfig(lr=0.005, max_epochs=11, max_checkpoint_num=1, num_nodes=1, mixed_precision=True, checkpoint_mode='step', num_steps_per_checkpoint=5, accumulate_grad_batches=10, stopping_delta=1e-07, stopping_patience=2, reload_checkpoint=None, strategy='deepspeed_stage_2', checkpoint_dir=PosixPath('/grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_'), model_name='gpt2', lora_rank=11, data_dir='/grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile_512', split='train', batch_size=12, data_num_workers=1, data_pin_memory=True, chunk_size=256, chunk=False)'. Use `repo_type` argument if needed.    raise HFValidationError(
+    
+
+The above exception was the direct cause of the following exception:
+
+validate_repo_id(arg_value)
+Traceback (most recent call last):
+huggingface_hub.errors.  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 154, in validate_repo_id
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 70, in <module>
+HFValidationError: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'TrainConfig(lr=0.005, max_epochs=11, max_checkpoint_num=1, num_nodes=1, mixed_precision=True, checkpoint_mode='step', num_steps_per_checkpoint=5, accumulate_grad_batches=10, stopping_delta=1e-07, stopping_patience=2, reload_checkpoint=None, strategy='deepspeed_stage_2', checkpoint_dir=PosixPath('/grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_'), model_name='gpt2', lora_rank=11, data_dir='/grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile_512', split='train', batch_size=12, data_num_workers=1, data_pin_memory=True, chunk_size=256, chunk=False)'. Use `repo_type` argument if needed.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 70, in <module>
+    raise HFValidationError(
+huggingface_hub.errors.HFValidationError: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'TrainConfig(lr=0.005, max_epochs=11, max_checkpoint_num=1, num_nodes=1, mixed_precision=True, checkpoint_mode='step', num_steps_per_checkpoint=5, accumulate_grad_batches=10, stopping_delta=1e-07, stopping_patience=2, reload_checkpoint=None, strategy='deepspeed_stage_2', checkpoint_dir=PosixPath('/grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_'), model_name='gpt2', lora_rank=11, data_dir='/grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile_512', split='train', batch_size=12, data_num_workers=1, data_pin_memory=True, chunk_size=256, chunk=False)'. Use `repo_type` argument if needed.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 70, in <module>
+    main(get_args())
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 46, in main
+    main(get_args())
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 46, in main
+    main(get_args())
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/seline/attention_lens/model/get_model.py", line 23, in get_model
+    model, tokenizer = get_model(config)
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/model/get_model.py", line 23, in get_model
+    model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16)
+    model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16)  File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/models/auto/auto_factory.py", line 485, in from_pretrained
+
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/models/auto/auto_factory.py", line 485, in from_pretrained
+    model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16)
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/models/auto/auto_factory.py", line 485, in from_pretrained
+    resolved_config_file = cached_file(
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/utils/hub.py", line 466, in cached_file
+    resolved_config_file = cached_file(
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/utils/hub.py", line 466, in cached_file
+    raise EnvironmentError(
+OSError: Incorrect path_or_model_id: 'TrainConfig(lr=0.005, max_epochs=11, max_checkpoint_num=1, num_nodes=1, mixed_precision=True, checkpoint_mode='step', num_steps_per_checkpoint=5, accumulate_grad_batches=10, stopping_delta=1e-07, stopping_patience=2, reload_checkpoint=None, strategy='deepspeed_stage_2', checkpoint_dir=PosixPath('/grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_'), model_name='gpt2', lora_rank=11, data_dir='/grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile_512', split='train', batch_size=12, data_num_workers=1, data_pin_memory=True, chunk_size=256, chunk=False)'. Please provide either the path to a local folder or the repo_id of a model on the Hub.
+    resolved_config_file = cached_file(
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/utils/hub.py", line 466, in cached_file
+    raise EnvironmentError(
+OSError: Incorrect path_or_model_id: 'TrainConfig(lr=0.005, max_epochs=11, max_checkpoint_num=1, num_nodes=1, mixed_precision=True, checkpoint_mode='step', num_steps_per_checkpoint=5, accumulate_grad_batches=10, stopping_delta=1e-07, stopping_patience=2, reload_checkpoint=None, strategy='deepspeed_stage_2', checkpoint_dir=PosixPath('/grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_'), model_name='gpt2', lora_rank=11, data_dir='/grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile_512', split='train', batch_size=12, data_num_workers=1, data_pin_memory=True, chunk_size=256, chunk=False)'. Please provide either the path to a local folder or the repo_id of a model on the Hub.
+    raise EnvironmentError(
+OSError: Incorrect path_or_model_id: 'TrainConfig(lr=0.005, max_epochs=11, max_checkpoint_num=1, num_nodes=1, mixed_precision=True, checkpoint_mode='step', num_steps_per_checkpoint=5, accumulate_grad_batches=10, stopping_delta=1e-07, stopping_patience=2, reload_checkpoint=None, strategy='deepspeed_stage_2', checkpoint_dir=PosixPath('/grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_'), model_name='gpt2', lora_rank=11, data_dir='/grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile_512', split='train', batch_size=12, data_num_workers=1, data_pin_memory=True, chunk_size=256, chunk=False)'. Please provide either the path to a local folder or the repo_id of a model on the Hub.
+Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/utils/hub.py", line 402, in cached_file
+    resolved_file = hf_hub_download(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 106, in _inner_fn
+    validate_repo_id(arg_value)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 154, in validate_repo_id
+    raise HFValidationError(
+huggingface_hub.errors.HFValidationError: Repo id must be in the form 'repo_name' or 'namespace/repo_name': 'TrainConfig(lr=0.005, max_epochs=11, max_checkpoint_num=1, num_nodes=1, mixed_precision=True, checkpoint_mode='step', num_steps_per_checkpoint=5, accumulate_grad_batches=10, stopping_delta=1e-07, stopping_patience=2, reload_checkpoint=None, strategy='deepspeed_stage_2', checkpoint_dir=PosixPath('/grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_'), model_name='gpt2', lora_rank=11, data_dir='/grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile_512', split='train', batch_size=12, data_num_workers=1, data_pin_memory=True, chunk_size=256, chunk=False)'. Use `repo_type` argument if needed.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 70, in <module>
+    main(get_args())
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 46, in main
+    model, tokenizer = get_model(config)
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/model/get_model.py", line 23, in get_model
+    model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16)
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/models/auto/auto_factory.py", line 485, in from_pretrained
+    resolved_config_file = cached_file(
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/transformers/src/transformers/utils/hub.py", line 466, in cached_file
+    raise EnvironmentError(
+OSError: Incorrect path_or_model_id: 'TrainConfig(lr=0.005, max_epochs=11, max_checkpoint_num=1, num_nodes=1, mixed_precision=True, checkpoint_mode='step', num_steps_per_checkpoint=5, accumulate_grad_batches=10, stopping_delta=1e-07, stopping_patience=2, reload_checkpoint=None, strategy='deepspeed_stage_2', checkpoint_dir=PosixPath('/grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_'), model_name='gpt2', lora_rank=11, data_dir='/grand/SuperBERT/pettyjohnjn/cache/datasets/chunked_pile_512', split='train', batch_size=12, data_num_workers=1, data_pin_memory=True, chunk_size=256, chunk=False)'. Please provide either the path to a local folder or the repo_id of a model on the Hub.
+ERROR:torch.distributed.elastic.multiprocessing.api:failed (exitcode: 1) local_rank: 0 (pid: 167448) of binary: /home/pettyjohnjn/.conda/envs/LoRA_Lens/bin/python
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 798, in <module>
+    main()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 794, in main
+    run(args)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 250, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+../train.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2025-06-23_21:08:31
+  host      : x3005c0s37b1n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 167449)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2025-06-23_21:08:31
+  host      : x3005c0s37b1n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 2 (local_rank: 2)
+  exitcode  : 1 (pid: 167450)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[3]:
+  time      : 2025-06-23_21:08:31
+  host      : x3005c0s37b1n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 3 (local_rank: 3)
+  exitcode  : 1 (pid: 167451)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-06-23_21:08:31
+  host      : x3005c0s37b1n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 167448)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

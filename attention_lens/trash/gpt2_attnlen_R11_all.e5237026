@@ -1,0 +1,447 @@
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+master_addr is only used for static rdzv_backend and when rdzv_endpoint is not specified.
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+Retrying in 1s [Retry 1/5].
+WARNING:Retrying in 1s [Retry 1/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+Retrying in 1s [Retry 1/5].
+WARNING:Retrying in 1s [Retry 1/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+Retrying in 1s [Retry 1/5].
+WARNING:Retrying in 1s [Retry 1/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+Retrying in 1s [Retry 1/5].
+WARNING:Retrying in 1s [Retry 1/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+Retrying in 2s [Retry 2/5].
+WARNING:Retrying in 2s [Retry 2/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+Retrying in 2s [Retry 2/5].
+WARNING:Retrying in 2s [Retry 2/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+Retrying in 2s [Retry 2/5].
+WARNING:Retrying in 2s [Retry 2/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+Retrying in 2s [Retry 2/5].
+WARNING:Retrying in 2s [Retry 2/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+Retrying in 4s [Retry 3/5].
+WARNING:Retrying in 4s [Retry 3/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+Retrying in 4s [Retry 3/5].
+WARNING:Retrying in 4s [Retry 3/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+Retrying in 4s [Retry 3/5].
+WARNING:Retrying in 4s [Retry 3/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+Retrying in 4s [Retry 3/5].
+WARNING:Retrying in 4s [Retry 3/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+Retrying in 8s [Retry 4/5].
+WARNING:Retrying in 8s [Retry 4/5].
+Retrying in 8s [Retry 4/5].
+WARNING:Retrying in 8s [Retry 4/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+Retrying in 8s [Retry 4/5].
+WARNING:Retrying in 8s [Retry 4/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+Retrying in 8s [Retry 4/5].
+WARNING:Retrying in 8s [Retry 4/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+Retrying in 8s [Retry 5/5].
+WARNING:Retrying in 8s [Retry 5/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+Retrying in 8s [Retry 5/5].
+WARNING:Retrying in 8s [Retry 5/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+Retrying in 8s [Retry 5/5].
+WARNING:Retrying in 8s [Retry 5/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+Retrying in 8s [Retry 5/5].
+WARNING:Retrying in 8s [Retry 5/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+Retrying in 1s [Retry 1/5].
+WARNING:Retrying in 1s [Retry 1/5].
+Retrying in 1s [Retry 1/5].
+WARNING:Retrying in 1s [Retry 1/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+Retrying in 1s [Retry 1/5].
+WARNING:Retrying in 1s [Retry 1/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+Retrying in 1s [Retry 1/5].
+WARNING:Retrying in 1s [Retry 1/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+Retrying in 2s [Retry 2/5].
+WARNING:Retrying in 2s [Retry 2/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+Retrying in 2s [Retry 2/5].
+WARNING:Retrying in 2s [Retry 2/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+Retrying in 2s [Retry 2/5].
+WARNING:Retrying in 2s [Retry 2/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+Retrying in 2s [Retry 2/5].
+WARNING:Retrying in 2s [Retry 2/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+Retrying in 4s [Retry 3/5].
+WARNING:Retrying in 4s [Retry 3/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+Retrying in 4s [Retry 3/5].
+WARNING:Retrying in 4s [Retry 3/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+Retrying in 4s [Retry 3/5].
+WARNING:Retrying in 4s [Retry 3/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+Retrying in 4s [Retry 3/5].
+WARNING:Retrying in 4s [Retry 3/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+Retrying in 8s [Retry 4/5].
+WARNING:Retrying in 8s [Retry 4/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+Retrying in 8s [Retry 4/5].
+WARNING:Retrying in 8s [Retry 4/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+Retrying in 8s [Retry 4/5].
+WARNING:Retrying in 8s [Retry 4/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+Retrying in 8s [Retry 4/5].
+WARNING:Retrying in 8s [Retry 4/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+Retrying in 8s [Retry 5/5].
+WARNING:Retrying in 8s [Retry 5/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+Retrying in 8s [Retry 5/5].
+WARNING:Retrying in 8s [Retry 5/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+Retrying in 8s [Retry 5/5].
+WARNING:Retrying in 8s [Retry 5/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+Retrying in 8s [Retry 5/5].
+WARNING:Retrying in 8s [Retry 5/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/generation_config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+Retrying in 1s [Retry 1/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:Retrying in 1s [Retry 1/5].
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+Retrying in 1s [Retry 1/5].
+WARNING:Retrying in 1s [Retry 1/5].
+Retrying in 1s [Retry 1/5].
+WARNING:Retrying in 1s [Retry 1/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+Retrying in 1s [Retry 1/5].
+WARNING:Retrying in 1s [Retry 1/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+Retrying in 2s [Retry 2/5].
+WARNING:Retrying in 2s [Retry 2/5].
+Retrying in 2s [Retry 2/5].
+WARNING:Retrying in 2s [Retry 2/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+Retrying in 2s [Retry 2/5].
+WARNING:Retrying in 2s [Retry 2/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+Retrying in 2s [Retry 2/5].
+WARNING:Retrying in 2s [Retry 2/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+Retrying in 4s [Retry 3/5].
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+Retrying in 4s [Retry 3/5].
+WARNING:Retrying in 4s [Retry 3/5].
+WARNING:Retrying in 4s [Retry 3/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+Retrying in 4s [Retry 3/5].
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:Retrying in 4s [Retry 3/5].
+Retrying in 4s [Retry 3/5].
+WARNING:Retrying in 4s [Retry 3/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+Retrying in 8s [Retry 4/5].
+WARNING:Retrying in 8s [Retry 4/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+Retrying in 8s [Retry 4/5].
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:Retrying in 8s [Retry 4/5].
+Retrying in 8s [Retry 4/5].
+Retrying in 8s [Retry 4/5].
+WARNING:Retrying in 8s [Retry 4/5].
+WARNING:Retrying in 8s [Retry 4/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+Retrying in 8s [Retry 5/5].
+WARNING:Retrying in 8s [Retry 5/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+Retrying in 8s [Retry 5/5].
+Retrying in 8s [Retry 5/5].
+WARNING:Retrying in 8s [Retry 5/5].
+WARNING:Retrying in 8s [Retry 5/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+Retrying in 8s [Retry 5/5].
+WARNING:Retrying in 8s [Retry 5/5].
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+WARNING:HTTP Error 429 thrown while requesting HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+initializing deepspeed distributed: GLOBAL_RANK: 3, MEMBER: 4/4
+initializing deepspeed distributed: GLOBAL_RANK: 0, MEMBER: 1/4
+initializing deepspeed distributed: GLOBAL_RANK: 1, MEMBER: 2/4
+initializing deepspeed distributed: GLOBAL_RANK: 2, MEMBER: 3/4
+Enabling DeepSpeed FP16.
+You are using a CUDA device ('NVIDIA A100-SXM4-40GB') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 70, in <module>
+Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 70, in <module>
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 70, in <module>
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 70, in <module>
+        main(get_args())main(get_args())
+
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 63, in main
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 63, in main
+    main(get_args())
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 63, in main
+    main(get_args())
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 63, in main
+    train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 109, in train_lens
+    train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 109, in train_lens
+    train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 109, in train_lens
+    train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 109, in train_lens
+    trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+    trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+    trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+    trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+    call._call_and_handle_interrupt(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+    call._call_and_handle_interrupt(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+    call._call_and_handle_interrupt(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+    call._call_and_handle_interrupt(
+    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+        return function(*args, **kwargs)return function(*args, **kwargs)
+
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+    return function(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+    return function(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+        self._run(model, ckpt_path=ckpt_path)self._run(model, ckpt_path=ckpt_path)
+
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 934, in _run
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 934, in _run
+    self._run(model, ckpt_path=ckpt_path)
+    self._run(model, ckpt_path=ckpt_path)  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 934, in _run
+
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 934, in _run
+    call._call_setup_hook(self)  # allow user to setup lightning_module in accelerator environment
+      File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 83, in _call_setup_hook
+call._call_setup_hook(self)  # allow user to setup lightning_module in accelerator environment
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 83, in _call_setup_hook
+    call._call_setup_hook(self)  # allow user to setup lightning_module in accelerator environment
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 83, in _call_setup_hook
+        _call_lightning_datamodule_hook(trainer, "setup", stage=fn)call._call_setup_hook(self)  # allow user to setup lightning_module in accelerator environment
+
+      File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 164, in _call_lightning_datamodule_hook
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 83, in _call_setup_hook
+_call_lightning_datamodule_hook(trainer, "setup", stage=fn)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 164, in _call_lightning_datamodule_hook
+    _call_lightning_datamodule_hook(trainer, "setup", stage=fn)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 164, in _call_lightning_datamodule_hook
+    _call_lightning_datamodule_hook(trainer, "setup", stage=fn)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 164, in _call_lightning_datamodule_hook
+    return fn(*args, **kwargs)
+      File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/data/get_data_pl.py", line 58, in setup
+return fn(*args, **kwargs)
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/data/get_data_pl.py", line 58, in setup
+    return fn(*args, **kwargs)
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/data/get_data_pl.py", line 58, in setup
+    return fn(*args, **kwargs)
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/data/get_data_pl.py", line 58, in setup
+    raw = load_from_disk(self.name)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/load.py", line 1906, in load_from_disk
+    raw = load_from_disk(self.name)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/load.py", line 1906, in load_from_disk
+    raw = load_from_disk(self.name)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/load.py", line 1906, in load_from_disk
+    raw = load_from_disk(self.name)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/load.py", line 1906, in load_from_disk
+    raise FileNotFoundError(
+    raise FileNotFoundError(
+FileNotFoundError    : raise FileNotFoundError(Directory /grand/SuperBERT/pettyjohnjn/cache/datasets/monology___pile-uncopyrighted is neither a `Dataset` directory nor a `DatasetDict` directory.FileNotFoundError
+
+: Directory /grand/SuperBERT/pettyjohnjn/cache/datasets/monology___pile-uncopyrighted is neither a `Dataset` directory nor a `DatasetDict` directory.
+FileNotFoundError: Directory /grand/SuperBERT/pettyjohnjn/cache/datasets/monology___pile-uncopyrighted is neither a `Dataset` directory nor a `DatasetDict` directory.
+    raise FileNotFoundError(
+FileNotFoundError: Directory /grand/SuperBERT/pettyjohnjn/cache/datasets/monology___pile-uncopyrighted is neither a `Dataset` directory nor a `DatasetDict` directory.
+ERROR:torch.distributed.elastic.multiprocessing.api:failed (exitcode: 1) local_rank: 0 (pid: 514356) of binary: /home/pettyjohnjn/.conda/envs/LoRA_Lens/bin/python
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 798, in <module>
+    main()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 794, in main
+    run(args)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 250, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+../train.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2025-06-23_23:50:32
+  host      : x3005c0s7b0n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 514357)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2025-06-23_23:50:32
+  host      : x3005c0s7b0n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 2 (local_rank: 2)
+  exitcode  : 1 (pid: 514358)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[3]:
+  time      : 2025-06-23_23:50:32
+  host      : x3005c0s7b0n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 3 (local_rank: 3)
+  exitcode  : 1 (pid: 514359)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-06-23_23:50:32
+  host      : x3005c0s7b0n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 514356)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

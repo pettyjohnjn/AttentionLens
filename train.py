@@ -8,6 +8,7 @@ from attention_lens.data.get_data_pl import DataModule
 from attention_lens.train.config import TrainConfig
 from attention_lens.train.lightning_lens import LightningLens
 from attention_lens.train.train_lens import train_lens
+from attention_lens.model.get_model import get_model
 from load_args import get_args
 
 from logging import basicConfig
@@ -42,9 +43,13 @@ def main(args: argparse.Namespace):
     )
     device_stats = DeviceStatsMonitor(cpu_stats = False)
 
+    model, tokenizer = get_model(model_name = config.model_name)
+
     callbacks = []
     lens = LightningLens(
-        model_name = config.model_name, 
+        # model_name = config.model_name, 
+        model = model,
+        tokenizer = tokenizer,
         lens_cls="lenslr", 
         lr = config.lr,
         r = config.lora_rank,
@@ -53,6 +58,7 @@ def main(args: argparse.Namespace):
     data = DataModule(
         name=config.data_dir,
         batch_size=config.batch_size,
+        tokenizer=tokenizer,
     )
     train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
 

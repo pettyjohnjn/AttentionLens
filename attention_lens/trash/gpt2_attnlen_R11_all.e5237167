@@ -1,0 +1,257 @@
+
+Lmod is automatically replacing "nvhpc/23.9" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-nvhpc/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) cray-mpich/8.1.28
+
+master_addr is only used for static rdzv_backend and when rdzv_endpoint is not specified.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+initializing deepspeed distributed: GLOBAL_RANK: 3, MEMBER: 4/4
+initializing deepspeed distributed: GLOBAL_RANK: 0, MEMBER: 1/4
+initializing deepspeed distributed: GLOBAL_RANK: 1, MEMBER: 2/4
+initializing deepspeed distributed: GLOBAL_RANK: 2, MEMBER: 3/4
+Enabling DeepSpeed FP16.
+You are using a CUDA device ('NVIDIA A100-SXM4-40GB') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+Missing logger folder: /grand/SuperBERT/pettyjohnjn/baseline/checkpoint/full/R11/gpt2/ckpt_/lightning_logs
+Resolving data files:   0%|          | 0/1962 [00:00<?, ?it/s]Resolving data files:   0%|          | 0/1962 [00:00<?, ?it/s]Resolving data files:  36%|███▌      | 706/1962 [00:00<00:00, 7018.29it/s]Resolving data files:  38%|███▊      | 748/1962 [00:00<00:00, 7468.27it/s]Resolving data files:   0%|          | 0/1962 [00:00<?, ?it/s]Resolving data files:  72%|███████▏  | 1408/1962 [00:00<00:00, 6006.59it/s]Resolving data files:  76%|███████▌  | 1495/1962 [00:00<00:00, 5588.56it/s]Resolving data files: 100%|██████████| 1962/1962 [00:00<00:00, 6301.35it/s]
+Resolving data files:  86%|████████▌ | 1680/1962 [00:00<00:00, 16167.66it/s]Resolving data files: 100%|██████████| 1962/1962 [00:00<00:00, 5761.29it/s]
+Resolving data files: 100%|██████████| 1962/1962 [00:00<00:00, 13512.44it/s]
+Resolving data files:   0%|          | 0/1962 [00:00<?, ?it/s]WARNING:Found cached dataset arrow (/grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137)
+Resolving data files:  35%|███▌      | 696/1962 [00:00<00:00, 6199.80it/s]Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 70, in <module>
+    main(get_args())
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 63, in main
+    train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 109, in train_lens
+    trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+    call._call_and_handle_interrupt(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+    return function(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+    self._run(model, ckpt_path=ckpt_path)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 934, in _run
+    call._call_setup_hook(self)  # allow user to setup lightning_module in accelerator environment
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 83, in _call_setup_hook
+    _call_lightning_datamodule_hook(trainer, "setup", stage=fn)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 164, in _call_lightning_datamodule_hook
+    return fn(*args, **kwargs)
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/data/get_data_pl.py", line 58, in setup
+    raw = load_dataset(self.name, split="train[:0.05%]")
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/load.py", line 1822, in load_dataset
+    ds = builder_instance.as_dataset(split=split, verification_mode=verification_mode, in_memory=keep_in_memory)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/builder.py", line 1145, in as_dataset
+    datasets = map_nested(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/utils/py_utils.py", line 436, in map_nested
+    return function(data_struct)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/builder.py", line 1175, in _build_single_dataset
+    ds = self._as_dataset(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/builder.py", line 1246, in _as_dataset
+    dataset_kwargs = ArrowReader(cache_dir, self.info).read(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 240, in read
+    files = self.get_file_instructions(name, instructions, split_infos)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 213, in get_file_instructions
+    file_instructions = make_file_instructions(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 128, in make_file_instructions
+    instruction = ReadInstruction.from_spec(instruction)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 597, in from_spec
+    instruction = _str_to_read_instruction(subs[0])
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 429, in _str_to_read_instruction
+    raise ValueError(f"Unrecognized instruction format: {spec}")
+ValueError: Unrecognized instruction format: train[:0.05%]
+WARNING:Found cached dataset arrow (/grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137)
+Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 70, in <module>
+    main(get_args())
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 63, in main
+    train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 109, in train_lens
+    trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+    call._call_and_handle_interrupt(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+    return function(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+    self._run(model, ckpt_path=ckpt_path)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 934, in _run
+    call._call_setup_hook(self)  # allow user to setup lightning_module in accelerator environment
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 83, in _call_setup_hook
+    _call_lightning_datamodule_hook(trainer, "setup", stage=fn)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 164, in _call_lightning_datamodule_hook
+WARNING:Found cached dataset arrow (/grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137)
+    return fn(*args, **kwargs)
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/data/get_data_pl.py", line 58, in setup
+    raw = load_dataset(self.name, split="train[:0.05%]")
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/load.py", line 1822, in load_dataset
+    ds = builder_instance.as_dataset(split=split, verification_mode=verification_mode, in_memory=keep_in_memory)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/builder.py", line 1145, in as_dataset
+    datasets = map_nested(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/utils/py_utils.py", line 436, in map_nested
+    return function(data_struct)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/builder.py", line 1175, in _build_single_dataset
+    ds = self._as_dataset(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/builder.py", line 1246, in _as_dataset
+    dataset_kwargs = ArrowReader(cache_dir, self.info).read(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 240, in read
+    files = self.get_file_instructions(name, instructions, split_infos)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 213, in get_file_instructions
+    file_instructions = make_file_instructions(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 128, in make_file_instructions
+    instruction = ReadInstruction.from_spec(instruction)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 597, in from_spec
+    instruction = _str_to_read_instruction(subs[0])
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 429, in _str_to_read_instruction
+    raise ValueError(f"Unrecognized instruction format: {spec}")
+ValueError: Unrecognized instruction format: train[:0.05%]
+Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 70, in <module>
+    main(get_args())
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 63, in main
+    train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 109, in train_lens
+    trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+    call._call_and_handle_interrupt(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+    return function(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+    self._run(model, ckpt_path=ckpt_path)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 934, in _run
+    call._call_setup_hook(self)  # allow user to setup lightning_module in accelerator environment
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 83, in _call_setup_hook
+    _call_lightning_datamodule_hook(trainer, "setup", stage=fn)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 164, in _call_lightning_datamodule_hook
+    return fn(*args, **kwargs)
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/data/get_data_pl.py", line 58, in setup
+    raw = load_dataset(self.name, split="train[:0.05%]")
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/load.py", line 1822, in load_dataset
+    ds = builder_instance.as_dataset(split=split, verification_mode=verification_mode, in_memory=keep_in_memory)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/builder.py", line 1145, in as_dataset
+    datasets = map_nested(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/utils/py_utils.py", line 436, in map_nested
+    return function(data_struct)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/builder.py", line 1175, in _build_single_dataset
+    ds = self._as_dataset(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/builder.py", line 1246, in _as_dataset
+    dataset_kwargs = ArrowReader(cache_dir, self.info).read(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 240, in read
+    files = self.get_file_instructions(name, instructions, split_infos)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 213, in get_file_instructions
+    file_instructions = make_file_instructions(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 128, in make_file_instructions
+    instruction = ReadInstruction.from_spec(instruction)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 597, in from_spec
+    instruction = _str_to_read_instruction(subs[0])
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 429, in _str_to_read_instruction
+    raise ValueError(f"Unrecognized instruction format: {spec}")
+ValueError: Unrecognized instruction format: train[:0.05%]
+Resolving data files:  67%|██████▋   | 1316/1962 [00:00<00:00, 4556.40it/s]Resolving data files:  91%|█████████▏| 1794/1962 [00:00<00:00, 4415.82it/s]Resolving data files: 100%|██████████| 1962/1962 [00:00<00:00, 4748.74it/s]
+WARNING:Found cached dataset arrow (/grand/SuperBERT/pettyjohnjn/cache/datasets/arrow/0.0.0-56d801f353c6aa51/0.0.0/74f69db2c14c2860059d39860b1f400a03d11bf7fb5a8258ca38c501c878c137)
+Traceback (most recent call last):
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 70, in <module>
+    main(get_args())
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/../train.py", line 63, in main
+    train_lens(lens, data, config, callbacks=[checkpoint_callback, early_stop_callback, device_stats])
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/train/train_lens.py", line 109, in train_lens
+    trainer.fit(lens, data_module, ckpt_path=config.reload_checkpoint)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+    call._call_and_handle_interrupt(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+    return function(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+    self._run(model, ckpt_path=ckpt_path)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 934, in _run
+    call._call_setup_hook(self)  # allow user to setup lightning_module in accelerator environment
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 83, in _call_setup_hook
+    _call_lightning_datamodule_hook(trainer, "setup", stage=fn)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 164, in _call_lightning_datamodule_hook
+    return fn(*args, **kwargs)
+  File "/lus/grand/projects/SuperBERT/pettyjohnjn/baseline/attention_lens/data/get_data_pl.py", line 58, in setup
+    raw = load_dataset(self.name, split="train[:0.05%]")
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/load.py", line 1822, in load_dataset
+    ds = builder_instance.as_dataset(split=split, verification_mode=verification_mode, in_memory=keep_in_memory)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/builder.py", line 1145, in as_dataset
+    datasets = map_nested(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/utils/py_utils.py", line 436, in map_nested
+    return function(data_struct)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/builder.py", line 1175, in _build_single_dataset
+    ds = self._as_dataset(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/builder.py", line 1246, in _as_dataset
+    dataset_kwargs = ArrowReader(cache_dir, self.info).read(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 240, in read
+    files = self.get_file_instructions(name, instructions, split_infos)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 213, in get_file_instructions
+    file_instructions = make_file_instructions(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 128, in make_file_instructions
+    instruction = ReadInstruction.from_spec(instruction)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 597, in from_spec
+    instruction = _str_to_read_instruction(subs[0])
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/datasets/arrow_reader.py", line 429, in _str_to_read_instruction
+    raise ValueError(f"Unrecognized instruction format: {spec}")
+ValueError: Unrecognized instruction format: train[:0.05%]
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 844378 closing signal SIGTERM
+ERROR:torch.distributed.elastic.multiprocessing.api:failed (exitcode: 1) local_rank: 0 (pid: 844376) of binary: /home/pettyjohnjn/.conda/envs/LoRA_Lens/bin/python
+Traceback (most recent call last):
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 798, in <module>
+    main()
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 346, in wrapper
+    return f(*args, **kwargs)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 794, in main
+    run(args)
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/run.py", line 785, in run
+    elastic_launch(
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 134, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/pettyjohnjn/.conda/envs/LoRA_Lens/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 250, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+../train.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2025-06-24_03:00:46
+  host      : x3003c0s1b1n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 844377)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2025-06-24_03:00:46
+  host      : x3003c0s1b1n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 3 (local_rank: 3)
+  exitcode  : 1 (pid: 844379)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-06-24_03:00:46
+  host      : x3003c0s1b1n0.hsn.cm.polaris.alcf.anl.gov
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 844376)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

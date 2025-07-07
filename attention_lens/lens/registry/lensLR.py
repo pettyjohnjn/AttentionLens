@@ -50,7 +50,7 @@ class LensLR(Lens):
             ]
         )
 
-        print("LoRA Approximation Rank set to: {self.r}")
+        print(f"LoRA Approximation Rank set to: {r}")
 
         # Replace each linear's original weight with the single shared_unembed
         # and initialize its bias from the original bias
@@ -92,35 +92,40 @@ class LensLR(Lens):
         self,
         input_tensor: torch.Tensor,      # [B, S, n_layers, D]
         mask: Optional[torch.Tensor] = None,  # [B, S], 1 for real tokens, 0 for pad
-    ) -> torch.Tensor:                  # returns [B, S, V]
+        sum_logits: bool = True,         # control whether to sum layer outputs
+    ) -> torch.Tensor:
         B, S, n_layers, D = input_tensor.size()
         V = self.bias.numel()  # vocab size
 
-        # If no mask, fall back to original full-compute:
+        # If not summing logits, return all per-layer outputs [B, S, n_layers, V]
+        if not sum_logits:
+            outputs = []
+            for i in range(n_layers):
+                head_i = input_tensor[:, :, i, :].reshape(-1, D)
+                out_i = self.linears[i](head_i).view(B, S, V)
+                outputs.append(out_i.unsqueeze(2))  # [B, S, 1, V]
+            return torch.cat(outputs, dim=2)
+
+        # sum_logits == True: original behavior
+        # If no mask, sum over all tokens and layers directly
         if mask is None:
             output = torch.zeros((B, S, V), device=input_tensor.device)
             for i in range(n_layers):
-                head_i = input_tensor[:, :, i, :]            # [B, S, D]
-                flat = head_i.reshape(-1, D)                # [B·S, D]
-                out = self.linears[i](flat)                 # [B·S, V]
-                output += out.view(B, S, V)
+                head_i = input_tensor[:, :, i, :].reshape(-1, D)
+                out = self.linears[i](head_i).view(B, S, V)
+                output += out
             return output
 
-        # 1) flatten batch & seq, select real tokens only
+        # With mask: compute only for real tokens
         flat_cache = input_tensor.view(-1, n_layers, D)         # [B·S, n_layers, D]
         flat_mask  = mask.view(-1).bool()                       # [B·S]
         valid_cache = flat_cache[flat_mask]                     # [N, n_layers, D]
 
-        # 2) run only on real tokens
-        #    accumulate layer-wise
         valid_out = torch.zeros((valid_cache.size(0), V), device=input_tensor.device)
         for i in range(n_layers):
-            head_i = valid_cache[:, i, :]                       # [N, D]
-            valid_out += self.linears[i](head_i)                # [N, V]
+            head_i = valid_cache[:, i, :]
+            valid_out += self.linears[i](head_i)
 
-        # 3) scatter back into full [B·S, V], zeros for pads
         flat_out = torch.zeros((B * S, V), device=input_tensor.device)
-        flat_out[flat_mask] = valid_out                        # pads stay 0
-
-        # 4) reshape to [B, S, V]
+        flat_out[flat_mask] = valid_out
         return flat_out.view(B, S, V)
